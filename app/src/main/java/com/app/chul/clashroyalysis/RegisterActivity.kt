@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
+import com.app.chul.clashroyalysis.preference.RoyalysisPreferenceManager
 import kotlinx.android.synthetic.main.activity_register.*
 
 class RegisterActivity: AppCompatActivity() {
@@ -13,6 +14,7 @@ class RegisterActivity: AppCompatActivity() {
         setContentView(R.layout.activity_register)
         register_btn.setOnClickListener {
             if(checkUserTag()){
+                RoyalysisPreferenceManager.setRegisters(this@RegisterActivity, getUserTag())
                 val intent = Intent(this, MainActivity::class.java)
                 intent.putExtra("tag", getUserTag())
                 startActivity(intent)
