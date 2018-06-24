@@ -8,7 +8,9 @@ import kotlinx.android.synthetic.main.activity_register.*
 
 class RegisterActivity: AppCompatActivity() {
 
-    init {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_register)
         register_btn.setOnClickListener {
             if(checkUserTag()){
                 val intent = Intent(this, MainActivity::class.java)
@@ -16,11 +18,6 @@ class RegisterActivity: AppCompatActivity() {
                 startActivity(intent)
             }
         }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_register)
     }
 
     private fun checkUserTag(): Boolean {
