@@ -1,8 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/profile_user_trophy"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="50dp"
+        android:textColor="@color/defaultColor"
+        android:textStyle="bold"
+        android:gravity="center"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/profile_user_rank"/>
+
+    <TextView
+        android:id="@+id/profile_user_rank"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:textColor="@color/defaultColor"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/profile_user_trophy"
+        app:layout_constraintBottom_toTopOf="@+id/profile_user_name"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/profile_user_arena"/>
+
+    <TextView
+        android:id="@+id/profile_user_arena"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:textColor="@color/defaultColor"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/profile_user_trophy"
+        app:layout_constraintBottom_toTopOf="@+id/profile_user_name"
+        app:layout_constraintLeft_toRightOf="@id/profile_user_rank"
+        app:layout_constraintRight_toRightOf="parent"/>
 
     <TextView
         android:id="@+id/profile_user_name"
@@ -11,19 +48,32 @@
         android:textColor="@color/defaultColor"
         android:textSize="20dp"
         android:gravity="left|center_vertical"
+        android:layout_marginLeft="20dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/profile_user_trophy"/>
+        app:layout_constraintRight_toLeftOf="@+id/profile_user_clan_img"
+        app:layout_constraintTop_toBottomOf="@id/profile_user_rank"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <ImageView
+        android:id="@+id/profile_user_clan_img"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginLeft="20dp"
+        app:layout_constraintTop_toBottomOf="@id/profile_user_rank"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/profile_user_name"
+        app:layout_constraintRight_toLeftOf="@id/profile_user_clan_name" />
 
     <TextView
-        android:id="@+id/profile_user_trophy"
+        android:id="@+id/profile_user_clan_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textSize="20dp"
+        android:textColor="@color/defaultColor"
         android:gravity="left|center_vertical"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profile_user_name"/>
+        app:layout_constraintTop_toBottomOf="@id/profile_user_rank"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/profile_user_clan_img"
+        app:layout_constraintRight_toRightOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

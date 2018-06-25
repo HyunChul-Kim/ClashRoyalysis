@@ -37,8 +37,8 @@ class HomeRecyclerAdapter(private val mContext: Context): Adapter<RecyclerView.V
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        mUserData?.run {
-            (holder as UserProfileViewHolder).bind(name, trophies)
+        mUserData?.let {
+            (holder as UserProfileViewHolder).bind(it)
         }
     }
 

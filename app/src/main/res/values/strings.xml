@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ClashRoyalysis</string>
+    <string name="register_text">Add Player</string>
 </resources>
