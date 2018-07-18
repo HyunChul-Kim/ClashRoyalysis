@@ -6,12 +6,12 @@ import android.content.SharedPreferences
 
 object RoyalysisPreferenceManager {
 
-    fun getRegisters(context: Context): String {
+    fun getUsers(context: Context): String {
         val pref: SharedPreferences = context.getSharedPreferences("UserInfo", Activity.MODE_PRIVATE)
         return pref.getString("tag", "")
     }
 
-    fun setRegisters(context: Context, tag: String) {
+    fun setUsers(context: Context, tag: String) {
         val pref = context.getSharedPreferences("UserInfo", Activity.MODE_PRIVATE)
         val editor = pref.edit()
         editor.putString("tag", tag)

@@ -7,4 +7,5 @@ class UserData {
     val rank: Int = 0
     val arena: ArenaData? = null
     val clan: ClanData? = null
+    val currentDeck: List<CardData>? = null
 }

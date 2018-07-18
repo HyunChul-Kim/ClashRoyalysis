@@ -1,10 +1,15 @@
 package com.app.chul.clashroyalysis
 
+import android.content.Context
 import android.content.Intent
+import android.graphics.Rect
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
+import android.view.MotionEvent
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.app.chul.clashroyalysis.adapter.RegisterRecyclerAdapter
 import com.app.chul.clashroyalysis.jsonobject.UserData
@@ -30,7 +35,7 @@ class RegisterActivity: AppCompatActivity() {
 
         register_btn.setOnClickListener {
             if(checkUserTag()){
-                RoyalysisPreferenceManager.setRegisters(this@RegisterActivity, getUserTag())
+                RoyalysisPreferenceManager.setUsers(this@RegisterActivity, getUserTag())
                 val intent = Intent(this, MainActivity::class.java)
                 intent.putExtra("tag", getUserTag())
                 startActivity(intent)
@@ -54,6 +59,7 @@ class RegisterActivity: AppCompatActivity() {
                 }
 
                 override fun onResponse(call: Call<UserData>?, response: Response<UserData>?) {
+                    register_loading_cover.visibility = View.GONE
                     if(response?.body() != null){
                         mAdapter?.setData(response.body() as UserData)
                     }
@@ -78,5 +84,20 @@ class RegisterActivity: AppCompatActivity() {
         }else{
             register_id.text.toString()
         }
+    }
+
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        if(ev?.action == MotionEvent.ACTION_UP){
+            if(register_id.isFocusable){
+                val outRect = Rect()
+                register_id.getGlobalVisibleRect(outRect)
+                if(!outRect.contains(ev.rawX.toInt(), ev.rawY.toInt())){
+                    register_id.clearFocus()
+                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(register_id.windowToken, 0)
+                }
+            }
+        }
+        return super.dispatchTouchEvent(ev)
     }
 }
