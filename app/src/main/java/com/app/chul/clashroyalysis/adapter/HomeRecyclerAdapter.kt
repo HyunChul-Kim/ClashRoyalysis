@@ -28,8 +28,7 @@ class HomeRecyclerAdapter(private val mContext: Context): Adapter<RecyclerView.V
     }
 
     override fun getItemCount(): Int {
-        return if(mHolderList != null) mHolderList.size
-        else 0
+        return mHolderList.size
     }
 
     override fun getItemViewType(position: Int): Int {

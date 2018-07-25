@@ -10,12 +10,12 @@ import com.bumptech.glide.Glide
 
 class UserProfileViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
-    private val userTrophy = itemView?.findViewById<TextView>(R.id.profile_user_trophy)
-    private val userRank = itemView?.findViewById<TextView>(R.id.profile_user_rank)
-    private val userArena = itemView?.findViewById<TextView>(R.id.profile_user_arena)
-    private val userName = itemView?.findViewById<TextView>(R.id.profile_user_name)
-    private val userClanName = itemView?.findViewById<TextView>(R.id.profile_user_clan_name)
-    private val userClanImg = itemView?.findViewById<ImageView>(R.id.profile_user_clan_img)
+    private val userTrophy = itemView.findViewById<TextView>(R.id.profile_user_trophy)
+    private val userRank = itemView.findViewById<TextView>(R.id.profile_user_rank)
+    private val userArena = itemView.findViewById<TextView>(R.id.profile_user_arena)
+    private val userName = itemView.findViewById<TextView>(R.id.profile_user_name)
+    private val userClanName = itemView.findViewById<TextView>(R.id.profile_user_clan_name)
+    private val userClanImg = itemView.findViewById<ImageView>(R.id.profile_user_clan_img)
 
     fun bind(data: UserData){
         userName.text = data.name

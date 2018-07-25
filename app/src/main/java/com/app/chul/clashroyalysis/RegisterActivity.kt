@@ -61,11 +61,13 @@ class RegisterActivity: AppCompatActivity() {
                 override fun onResponse(call: Call<UserData>?, response: Response<UserData>?) {
                     register_loading_cover.visibility = View.GONE
                     if(response?.body() != null){
-                        mAdapter?.setData(response.body() as UserData)
+                        mAdapter.setData(response.body() as UserData)
                     }
                 }
 
             })
+        }else {
+            register_loading_cover.visibility = View.GONE
         }
     }
 

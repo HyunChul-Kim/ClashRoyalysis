@@ -36,11 +36,7 @@ class RegisterRecyclerAdapter(private val context: Context): RecyclerView.Adapte
     }
 
     override fun getItemCount(): Int {
-        if(mUserList != null){
-            return mUserList.size + 1
-        }else {
-            return 1
-        }
+        return mUserList.size + 1
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
