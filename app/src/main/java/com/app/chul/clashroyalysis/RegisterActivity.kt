@@ -13,6 +13,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.app.chul.clashroyalysis.adapter.RegisterRecyclerAdapter
 import com.app.chul.clashroyalysis.jsonobject.UserData
+import com.app.chul.clashroyalysis.jsonobject.UserDataList
 import com.app.chul.clashroyalysis.preference.RoyalysisPreferenceManager
 import com.app.chul.clashroyalysis.retrofit.ClashRoyaleRetrofit
 import kotlinx.android.synthetic.main.activity_register.*
@@ -34,8 +35,8 @@ class RegisterActivity: AppCompatActivity() {
         initUserInfo()
 
         register_btn.setOnClickListener {
-            if(checkUserTag()){
-                RoyalysisPreferenceManager.setUsers(this@RegisterActivity, getUserTag())
+            if(isAvailableTag(getUserTag())){
+                RoyalysisPreferenceManager.addUser(getUserTag())
                 val intent = Intent(this, MainActivity::class.java)
                 intent.putExtra("tag", getUserTag())
                 startActivity(intent)
@@ -50,7 +51,27 @@ class RegisterActivity: AppCompatActivity() {
     }
 
     private fun initUserInfo() {
-        if(intent.hasExtra("tag")){
+        val userList: ArrayList<String> = RoyalysisPreferenceManager.getUserList()
+        if(userList.size > 0) {
+            val tags:String = convertListToString(userList)
+            val userData = ClashRoyaleRetrofit.getService().getPlayers(tags)
+            userData.enqueue(object: Callback<UserDataList> {
+                override fun onFailure(call: Call<UserDataList>?, t: Throwable?) {
+                    Toast.makeText(this@RegisterActivity, "API Fail", Toast.LENGTH_SHORT).show()
+                }
+
+                override fun onResponse(call: Call<UserDataList>?, response: Response<UserDataList>?) {
+                    register_loading_cover.visibility = View.GONE
+                    if(response?.body() != null){
+                        mAdapter.setData(response.body() as UserDataList)
+                    }
+                }
+
+            })
+        }else {
+            register_loading_cover.visibility = View.GONE
+        }
+        /*if(intent.hasExtra("tag")){
             val tag = intent.getStringExtra("tag")
             val userData = ClashRoyaleRetrofit.getService().getPlayer(tag)
             userData.enqueue(object: Callback<UserData> {
@@ -68,16 +89,7 @@ class RegisterActivity: AppCompatActivity() {
             })
         }else {
             register_loading_cover.visibility = View.GONE
-        }
-    }
-
-    private fun checkUserTag(): Boolean {
-        val tag = getUserTag()
-        return if(!TextUtils.isEmpty(tag)){
-            tag.length == 8
-        }else{
-            false
-        }
+        }*/
     }
 
     private fun getUserTag(): String {

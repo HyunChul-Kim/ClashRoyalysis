@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.app.chul.clashroyalysis.R
 import com.app.chul.clashroyalysis.jsonobject.UserData
+import com.app.chul.clashroyalysis.jsonobject.UserDataList
 import com.app.chul.clashroyalysis.viewholder.EmptySimpleInfoViewHolder
 import com.app.chul.clashroyalysis.viewholder.SimpleInfoViewHolder
 
@@ -19,18 +20,18 @@ class RegisterRecyclerAdapter(private val context: Context): RecyclerView.Adapte
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        when(viewType){
+        return when(viewType){
             ViewType.ADD_VIEW_TYPE -> {
                 val view = LayoutInflater.from(context).inflate(R.layout.empty_simple_info_viewholder, parent, false)
-                return EmptySimpleInfoViewHolder(view)
+                EmptySimpleInfoViewHolder(view)
             }
             ViewType.USER_VIEW_TYPE -> {
                 val view = LayoutInflater.from(context).inflate(R.layout.user_simple_info_viewholder, parent, false)
-                return SimpleInfoViewHolder(view)
+                SimpleInfoViewHolder(view)
             }
             else -> {
                 val view = LayoutInflater.from(context).inflate(R.layout.empty_simple_info_viewholder, parent, false)
-                return EmptySimpleInfoViewHolder(view)
+                EmptySimpleInfoViewHolder(view)
             }
         }
     }
@@ -56,8 +57,8 @@ class RegisterRecyclerAdapter(private val context: Context): RecyclerView.Adapte
         }
     }
 
-    fun setData(data: UserData) {
-        mUserList.add(data)
+    fun setData(data: UserDataList) {
+        mUserList = data.userList as ArrayList<UserData>
         notifyDataSetChanged()
     }
 

@@ -16,7 +16,7 @@ class IntroActivity : AppCompatActivity() {
     }
 
     private fun checkUserInfo(){
-        val tag = RoyalysisPreferenceManager.getUsers(this@IntroActivity)
+        val tag = RoyalysisPreferenceManager.getUsers()
         if(!TextUtils.isEmpty(tag)){
             val intent =  Intent(this, RegisterActivity::class.java)
             intent.putExtra("tag", tag)
