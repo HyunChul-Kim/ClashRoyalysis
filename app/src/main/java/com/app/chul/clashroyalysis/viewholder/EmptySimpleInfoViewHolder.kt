@@ -9,6 +9,8 @@ import android.transition.TransitionManager
 import android.view.View
 import android.widget.TextView
 import com.app.chul.clashroyalysis.R
+import com.app.chul.clashroyalysis.bus.RxBus
+import com.app.chul.clashroyalysis.bus.RxEvent
 import com.app.chul.clashroyalysis.isAvailableTag
 import com.app.chul.clashroyalysis.preference.RoyalysisPreferenceManager
 
@@ -59,7 +61,7 @@ class EmptySimpleInfoViewHolder(itemView: View): RecyclerView.ViewHolder(itemVie
             override fun onTransitionStart(transition: Transition?) {
                 if(isDefault) {
                     if(isAvailableTag(registerTag.text.toString())) {
-                        RoyalysisPreferenceManager.addUser(registerTag.text.toString())
+                        RxBus.publish(RxEvent.EventAddTag(registerTag.text.toString()))
                     }
                 }
             }

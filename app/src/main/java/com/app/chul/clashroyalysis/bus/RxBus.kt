@@ -2,7 +2,9 @@ package com.app.chul.clashroyalysis.bus
 
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import io.reactivex.subjects.PublishSubject
+import org.reactivestreams.Subscription
 
 object RxBus {
 
@@ -15,10 +17,12 @@ object RxBus {
 
     fun <T> listen(eventType: Class<T>): Observable<T> = publisher.ofType(eventType)
 
-    fun register(subscriber: Any) {
+    fun getObservable(): Observable<Any> = publisher
+
+    fun register(subscriber: Any, d: Disposable) {
         if(!disposableMap.containsKey(subscriber)) {
             var disposable = CompositeDisposable()
-
+            disposable.add(d)
         }
     }
 }

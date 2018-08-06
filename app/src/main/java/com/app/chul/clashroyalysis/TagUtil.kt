@@ -11,14 +11,14 @@ fun isAvailableTag(tag: String): Boolean {
 }
 
 fun convertListToString(list: ArrayList<String>): String {
-    val stringBuilder: StringBuilder = StringBuilder("")
+    val stringBuilder = StringBuilder("")
 
     for(tag in list) {
         stringBuilder.append(tag)
         stringBuilder.append(",")
     }
 
-    stringBuilder.deleteCharAt(list.size - 1)
+    stringBuilder.deleteCharAt(stringBuilder.length - 1)
 
     return stringBuilder.toString()
 }

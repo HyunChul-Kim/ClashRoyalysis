@@ -12,6 +12,8 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.app.chul.clashroyalysis.adapter.RegisterRecyclerAdapter
+import com.app.chul.clashroyalysis.bus.RxBus
+import com.app.chul.clashroyalysis.bus.RxEvent
 import com.app.chul.clashroyalysis.jsonobject.UserData
 import com.app.chul.clashroyalysis.jsonobject.UserDataList
 import com.app.chul.clashroyalysis.preference.RoyalysisPreferenceManager
@@ -23,6 +25,19 @@ import retrofit2.Response
 
 class RegisterActivity: AppCompatActivity() {
 
+    private fun registerRxBus() {
+        /*RxBus.getObservable().subscribe {
+            if(it == RxEvent.EventAddTag::class.java) {
+                RoyalysisPreferenceManager.addUser((it as RxEvent.EventAddTag).tag)
+                initUserInfo()
+            }
+        }*/
+        RxBus.register(this, RxBus.listen(RxEvent.EventAddTag::class.java).subscribe {
+            RoyalysisPreferenceManager.addUser(it.tag)
+            initUserInfo()
+        })
+    }
+
     private val mAdapter : RegisterRecyclerAdapter by lazy {
         RegisterRecyclerAdapter(this@RegisterActivity)
     }
@@ -33,6 +48,8 @@ class RegisterActivity: AppCompatActivity() {
 
         initRecyclerView()
         initUserInfo()
+
+        registerRxBus()
 
         register_btn.setOnClickListener {
             if(isAvailableTag(getUserTag())){
@@ -52,23 +69,40 @@ class RegisterActivity: AppCompatActivity() {
 
     private fun initUserInfo() {
         val userList: ArrayList<String> = RoyalysisPreferenceManager.getUserList()
-        if(userList.size > 0) {
+        if(userList.size > 1) {
             val tags:String = convertListToString(userList)
             val userData = ClashRoyaleRetrofit.getService().getPlayers(tags)
-            userData.enqueue(object: Callback<UserDataList> {
-                override fun onFailure(call: Call<UserDataList>?, t: Throwable?) {
+            userData.enqueue(object: Callback<List<UserData>> {
+                override fun onFailure(call: Call<List<UserData>>?, t: Throwable?) {
                     Toast.makeText(this@RegisterActivity, "API Fail", Toast.LENGTH_SHORT).show()
                 }
 
-                override fun onResponse(call: Call<UserDataList>?, response: Response<UserDataList>?) {
+                override fun onResponse(call: Call<List<UserData>>?, response: Response<List<UserData>>?) {
                     register_loading_cover.visibility = View.GONE
                     if(response?.body() != null){
-                        mAdapter.setData(response.body() as UserDataList)
+                        mAdapter.setData(response.body() as List<UserData>)
                     }
                 }
 
             })
-        }else {
+        }else if(userList.size == 1) {
+            val tags:String = convertListToString(userList)
+            val userData = ClashRoyaleRetrofit.getService().getPlayer(tags)
+            userData.enqueue(object: Callback<UserData> {
+                override fun onFailure(call: Call<UserData>?, t: Throwable?) {
+                    Toast.makeText(this@RegisterActivity, "API Fail", Toast.LENGTH_SHORT).show()
+                }
+
+                override fun onResponse(call: Call<UserData>?, response: Response<UserData>?) {
+                    register_loading_cover.visibility = View.GONE
+                    if(response?.body() != null){
+
+                        mAdapter.setData(response.body() as UserData)
+                    }
+                }
+
+            })
+        } else {
             register_loading_cover.visibility = View.GONE
         }
         /*if(intent.hasExtra("tag")){
@@ -113,5 +147,9 @@ class RegisterActivity: AppCompatActivity() {
             }
         }
         return super.dispatchTouchEvent(ev)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
     }
 }

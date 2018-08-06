@@ -57,8 +57,14 @@ class RegisterRecyclerAdapter(private val context: Context): RecyclerView.Adapte
         }
     }
 
-    fun setData(data: UserDataList) {
-        mUserList = data.userList as ArrayList<UserData>
+    fun setData(data: List<UserData>) {
+        mUserList = data as ArrayList<UserData>
+        notifyDataSetChanged()
+    }
+
+    fun setData(data: UserData) {
+        mUserList.clear()
+        mUserList.add(data)
         notifyDataSetChanged()
     }
 
