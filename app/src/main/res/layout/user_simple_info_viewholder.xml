@@ -9,6 +9,15 @@
     android:layout_marginTop="5dp"
     android:layout_marginBottom="5dp">
 
+    <com.app.chul.clashroyalysis.view.StereoLoadingView
+        android:id="@+id/simple_user_loading_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
     <ImageView
         android:id="@+id/simple_user_clan_img"
         android:layout_width="40dp"

@@ -69,61 +69,8 @@ class RegisterActivity: AppCompatActivity() {
 
     private fun initUserInfo() {
         val userList: ArrayList<String> = RoyalysisPreferenceManager.getUserList()
-        if(userList.size > 1) {
-            val tags:String = convertListToString(userList)
-            val userData = ClashRoyaleRetrofit.getService().getPlayers(tags)
-            userData.enqueue(object: Callback<List<UserData>> {
-                override fun onFailure(call: Call<List<UserData>>?, t: Throwable?) {
-                    Toast.makeText(this@RegisterActivity, "API Fail", Toast.LENGTH_SHORT).show()
-                }
-
-                override fun onResponse(call: Call<List<UserData>>?, response: Response<List<UserData>>?) {
-                    register_loading_cover.visibility = View.GONE
-                    if(response?.body() != null){
-                        mAdapter.setData(response.body() as List<UserData>)
-                    }
-                }
-
-            })
-        }else if(userList.size == 1) {
-            val tags:String = convertListToString(userList)
-            val userData = ClashRoyaleRetrofit.getService().getPlayer(tags)
-            userData.enqueue(object: Callback<UserData> {
-                override fun onFailure(call: Call<UserData>?, t: Throwable?) {
-                    Toast.makeText(this@RegisterActivity, "API Fail", Toast.LENGTH_SHORT).show()
-                }
-
-                override fun onResponse(call: Call<UserData>?, response: Response<UserData>?) {
-                    register_loading_cover.visibility = View.GONE
-                    if(response?.body() != null){
-
-                        mAdapter.setData(response.body() as UserData)
-                    }
-                }
-
-            })
-        } else {
-            register_loading_cover.visibility = View.GONE
-        }
-        /*if(intent.hasExtra("tag")){
-            val tag = intent.getStringExtra("tag")
-            val userData = ClashRoyaleRetrofit.getService().getPlayer(tag)
-            userData.enqueue(object: Callback<UserData> {
-                override fun onFailure(call: Call<UserData>?, t: Throwable?) {
-                    Toast.makeText(this@RegisterActivity, "API Fail", Toast.LENGTH_SHORT).show()
-                }
-
-                override fun onResponse(call: Call<UserData>?, response: Response<UserData>?) {
-                    register_loading_cover.visibility = View.GONE
-                    if(response?.body() != null){
-                        mAdapter.setData(response.body() as UserData)
-                    }
-                }
-
-            })
-        }else {
-            register_loading_cover.visibility = View.GONE
-        }*/
+        mAdapter.setData(userList)
+        register_loading_cover.visibility = View.GONE
     }
 
     private fun getUserTag(): String {

@@ -9,10 +9,18 @@ import com.app.chul.clashroyalysis.MainActivity
 import com.app.chul.clashroyalysis.R
 import com.app.chul.clashroyalysis.jsonobject.CardData
 import com.app.chul.clashroyalysis.jsonobject.UserData
+import com.app.chul.clashroyalysis.retrofit.ClashRoyaleRetrofit
+import com.app.chul.clashroyalysis.view.StereoLoadingView
 import com.bumptech.glide.Glide
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class SimpleInfoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
+    private var userData: UserData? = null
+
+    private val loadingView = itemView.findViewById<StereoLoadingView>(R.id.simple_user_loading_view)
     private val userClanImg = itemView.findViewById<ImageView>(R.id.simple_user_clan_img)
     private val userName = itemView.findViewById<TextView>(R.id.simple_user_name)
     private val userInfo = itemView.findViewById<TextView>(R.id.simple_user_info)
@@ -25,7 +33,7 @@ class SimpleInfoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     private val userDeckCard7 = itemView.findViewById<ImageView>(R.id.simple_deck_card7)
     private val userDeckCard8 = itemView.findViewById<ImageView>(R.id.simple_deck_card8)
 
-    fun bind(userData: UserData) {
+    fun setData(userData: UserData) {
         Glide.with(itemView.context).load(userData.clan?.badge?.image).into(userClanImg)
         setUserDeckList(userData.currentDeck)
         userName.text = userData.name
@@ -34,6 +42,28 @@ class SimpleInfoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
             val intent = Intent(itemView.context, MainActivity::class.java)
             intent.putExtra("tag", userData.tag)
             itemView.context.startActivity(intent)
+        }
+    }
+
+    fun bind(userTag: String) {
+        if(userData == null) {
+            loadingView.start()
+            val userDataCall = ClashRoyaleRetrofit.getService().getPlayer(userTag)
+            userDataCall.enqueue(object: Callback<UserData> {
+                override fun onFailure(call: Call<UserData>?, t: Throwable?) {
+                    loadingView.stop()
+                    loadingView.visibility = View.GONE
+                }
+
+                override fun onResponse(call: Call<UserData>?, response: Response<UserData>?) {
+                    if(response?.body() != null){
+                        setData(response.body() as UserData)
+                    }
+                    loadingView.stop()
+                    loadingView.visibility = View.GONE
+                }
+
+            })
         }
     }
 

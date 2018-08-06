@@ -12,7 +12,7 @@ import com.app.chul.clashroyalysis.viewholder.SimpleInfoViewHolder
 
 class RegisterRecyclerAdapter(private val context: Context): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var mUserList = ArrayList<UserData>()
+    private var mUserList = ArrayList<String>()
 
     object ViewType {
         const val ADD_VIEW_TYPE = 0
@@ -57,14 +57,8 @@ class RegisterRecyclerAdapter(private val context: Context): RecyclerView.Adapte
         }
     }
 
-    fun setData(data: List<UserData>) {
-        mUserList = data as ArrayList<UserData>
-        notifyDataSetChanged()
-    }
-
-    fun setData(data: UserData) {
-        mUserList.clear()
-        mUserList.add(data)
+    fun setData(data: List<String>) {
+        mUserList = data as ArrayList<String>
         notifyDataSetChanged()
     }
 
