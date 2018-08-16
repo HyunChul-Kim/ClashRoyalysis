@@ -1,4 +1,4 @@
-package com.app.chul.clashroyalysis
+package com.app.chul.clashroyalysis.utils
 
 import android.text.TextUtils
 

@@ -1,4 +1,4 @@
-package com.app.chul.clashroyalysis.viewholder
+package com.app.chul.clashroyalysis.viewholder.register
 
 import android.support.constraint.ConstraintLayout
 import android.support.constraint.ConstraintSet
@@ -11,8 +11,7 @@ import android.widget.TextView
 import com.app.chul.clashroyalysis.R
 import com.app.chul.clashroyalysis.bus.RxBus
 import com.app.chul.clashroyalysis.bus.RxEvent
-import com.app.chul.clashroyalysis.isAvailableTag
-import com.app.chul.clashroyalysis.preference.RoyalysisPreferenceManager
+import com.app.chul.clashroyalysis.utils.isAvailableTag
 
 class EmptySimpleInfoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 

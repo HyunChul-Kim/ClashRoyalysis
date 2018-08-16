@@ -1,4 +1,4 @@
-package com.app.chul.clashroyalysis.viewholder
+package com.app.chul.clashroyalysis.viewholder.register
 
 import android.content.Intent
 import android.support.v7.widget.RecyclerView
@@ -56,8 +56,8 @@ class SimpleInfoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
                 }
 
                 override fun onResponse(call: Call<UserData>?, response: Response<UserData>?) {
-                    if(response?.body() != null){
-                        setData(response.body() as UserData)
+                    response?.body()?.let {
+                        setData(it)
                     }
                     loadingView.stop()
                     loadingView.visibility = View.GONE

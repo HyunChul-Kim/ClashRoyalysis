@@ -6,22 +6,15 @@ import android.graphics.Rect
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.text.TextUtils
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import com.app.chul.clashroyalysis.adapter.RegisterRecyclerAdapter
 import com.app.chul.clashroyalysis.bus.RxBus
 import com.app.chul.clashroyalysis.bus.RxEvent
-import com.app.chul.clashroyalysis.jsonobject.UserData
-import com.app.chul.clashroyalysis.jsonobject.UserDataList
 import com.app.chul.clashroyalysis.preference.RoyalysisPreferenceManager
-import com.app.chul.clashroyalysis.retrofit.ClashRoyaleRetrofit
+import com.app.chul.clashroyalysis.utils.isAvailableTag
 import kotlinx.android.synthetic.main.activity_register.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class RegisterActivity: AppCompatActivity() {
 
@@ -52,12 +45,14 @@ class RegisterActivity: AppCompatActivity() {
         registerRxBus()
 
         register_btn.setOnClickListener {
-            if(isAvailableTag(getUserTag())){
+            val intent = Intent(this, PopularDeckActivity::class.java)
+            startActivity(intent)
+            /*if(isAvailableTag(getUserTag())){
                 RoyalysisPreferenceManager.addUser(getUserTag())
                 val intent = Intent(this, MainActivity::class.java)
                 intent.putExtra("tag", getUserTag())
                 startActivity(intent)
-            }
+            }*/
         }
     }
 

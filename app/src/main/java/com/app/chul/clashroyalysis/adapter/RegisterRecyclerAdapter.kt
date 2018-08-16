@@ -5,10 +5,8 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.app.chul.clashroyalysis.R
-import com.app.chul.clashroyalysis.jsonobject.UserData
-import com.app.chul.clashroyalysis.jsonobject.UserDataList
-import com.app.chul.clashroyalysis.viewholder.EmptySimpleInfoViewHolder
-import com.app.chul.clashroyalysis.viewholder.SimpleInfoViewHolder
+import com.app.chul.clashroyalysis.viewholder.register.EmptySimpleInfoViewHolder
+import com.app.chul.clashroyalysis.viewholder.register.SimpleInfoViewHolder
 
 class RegisterRecyclerAdapter(private val context: Context): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

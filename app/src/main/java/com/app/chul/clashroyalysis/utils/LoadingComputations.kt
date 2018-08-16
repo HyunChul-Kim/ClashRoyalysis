@@ -1,4 +1,4 @@
-package com.app.chul.clashroyalysis.Utils
+package com.app.chul.clashroyalysis.utils
 
 class LoadingComputations(fl: Float) {
 
