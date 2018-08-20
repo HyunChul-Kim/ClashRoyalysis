@@ -3,32 +3,32 @@ package com.app.chul.clashroyalysis.view
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
-import com.app.chul.clashroyalysis.callbacks.ObservableCallBack
+import com.app.chul.clashroyalysis.callback.ObservableScrollCallback
 
 class ObservableRecyclerView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : RecyclerView(context, attrs, defStyleAttr) {
 
-    private lateinit var mCallBack: ObservableCallBack
+    private lateinit var mCallback: ObservableScrollCallback
 
     init {
-        super.addOnScrollListener(object : OnScrollListener() {
+        init()
+    }
 
-            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-            }
+    private fun init() {
+        super.addOnScrollListener(object: OnScrollListener() {
 
             override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                mCallBack?.run {
+
+                mCallback?.run {
                     onScrollChanged(dy)
                 }
             }
         })
     }
 
-    fun setCallBack(callBack: ObservableCallBack) {
-        mCallBack = callBack
+    fun setCallback(callback: ObservableScrollCallback) {
+        mCallback = callback
     }
-
 }

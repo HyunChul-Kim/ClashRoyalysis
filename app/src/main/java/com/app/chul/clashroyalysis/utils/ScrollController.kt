@@ -14,19 +14,18 @@ class ScrollController: ObservableCallBack {
         val scrollY = dy / HEADER_SPEED
         var headerTranslationY = header.translationY - scrollY
 
-        if(dy >= 0) {
-            if(headerTranslationY < -headerScrollHeight) {
+        if (dy >= 0) {
+            if (headerTranslationY < -headerScrollHeight) {
                 headerTranslationY = headerScrollHeight
             }
         }
 
-        if(dy < 0) {
-            if(headerTranslationY > 0) {
+        if (dy < 0) {
+            if (headerTranslationY > 0) {
                 headerTranslationY = 0f
             }
         }
 
         header.translationY = headerTranslationY
     }
-
 }
