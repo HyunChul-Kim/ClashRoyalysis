@@ -13,7 +13,7 @@ import com.app.chul.clashroyalysis.bus.RxBus
 import com.app.chul.clashroyalysis.bus.RxEvent
 import com.app.chul.clashroyalysis.utils.isAvailableTag
 
-class EmptySimpleInfoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+class RegisterViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
     private val defaultSet: ConstraintSet = ConstraintSet()
     private val addSet: ConstraintSet = ConstraintSet()
@@ -26,7 +26,7 @@ class EmptySimpleInfoViewHolder(itemView: View): RecyclerView.ViewHolder(itemVie
 
     init {
         defaultSet.clone(constraintLayout)
-        addSet.clone(itemView.context, R.layout.empty_simple_info_add_viewholder)
+        addSet.clone(itemView.context, R.layout.register_add_viewholder)
         setTransition()
         itemView.setOnClickListener {
 

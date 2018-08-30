@@ -9,7 +9,7 @@ import com.app.chul.clashroyalysis.jsonobject.DeckInfo
 import com.app.chul.clashroyalysis.utils.getInflatedView
 import com.app.chul.clashroyalysis.viewholder.DeckViewHolder
 
-class DeckListAdapter(private val context: Context): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class DeckListAdapter(private val context: Context?): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var mDeckList = ArrayList<DeckInfo>()
 

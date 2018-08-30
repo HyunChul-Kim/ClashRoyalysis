@@ -5,10 +5,10 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.app.chul.clashroyalysis.R
-import com.app.chul.clashroyalysis.viewholder.register.EmptySimpleInfoViewHolder
+import com.app.chul.clashroyalysis.viewholder.register.RegisterViewHolder
 import com.app.chul.clashroyalysis.viewholder.register.SimpleInfoViewHolder
 
-class RegisterRecyclerAdapter(private val context: Context): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class RegisterRecyclerAdapter(private val context: Context?): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var mUserList = ArrayList<String>()
 
@@ -20,16 +20,16 @@ class RegisterRecyclerAdapter(private val context: Context): RecyclerView.Adapte
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when(viewType){
             ViewType.ADD_VIEW_TYPE -> {
-                val view = LayoutInflater.from(context).inflate(R.layout.empty_simple_info_viewholder, parent, false)
-                EmptySimpleInfoViewHolder(view)
+                val view = LayoutInflater.from(context).inflate(R.layout.register_viewholder, parent, false)
+                RegisterViewHolder(view)
             }
             ViewType.USER_VIEW_TYPE -> {
                 val view = LayoutInflater.from(context).inflate(R.layout.user_simple_info_viewholder, parent, false)
                 SimpleInfoViewHolder(view)
             }
             else -> {
-                val view = LayoutInflater.from(context).inflate(R.layout.empty_simple_info_viewholder, parent, false)
-                EmptySimpleInfoViewHolder(view)
+                val view = LayoutInflater.from(context).inflate(R.layout.register_viewholder, parent, false)
+                RegisterViewHolder(view)
             }
         }
     }

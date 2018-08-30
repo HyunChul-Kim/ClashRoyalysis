@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.app.chul.clashroyalysis.R
-import com.app.chul.clashroyalysis.jsonobject.UserData
+import com.app.chul.clashroyalysis.jsonobject.PlayerData
 import com.app.chul.clashroyalysis.viewholder.home.UserProfileViewHolder
 
 class HomeRecyclerAdapter(private val mContext: Context): Adapter<RecyclerView.ViewHolder>() {
@@ -16,7 +16,7 @@ class HomeRecyclerAdapter(private val mContext: Context): Adapter<RecyclerView.V
     private val EMPTY = 0
 
     private var mHolderList: ArrayList<Int> = ArrayList()
-    private var mUserData: UserData? = null
+    private var mPlayerData: PlayerData? = null
 
     init {
         refreshMap()
@@ -36,7 +36,7 @@ class HomeRecyclerAdapter(private val mContext: Context): Adapter<RecyclerView.V
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        mUserData?.let {
+        mPlayerData?.let {
             (holder as UserProfileViewHolder).bind(it)
         }
     }
@@ -46,8 +46,8 @@ class HomeRecyclerAdapter(private val mContext: Context): Adapter<RecyclerView.V
         mHolderList.add(USER_PROFILE)
     }
 
-    fun setData(data: UserData){
-        mUserData = data
+    fun setData(data: PlayerData){
+        mPlayerData = data
         notifyDataSetChanged()
     }
 

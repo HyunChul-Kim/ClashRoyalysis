@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.widget.Toast
 import com.app.chul.clashroyalysis.adapter.HomeRecyclerAdapter
-import com.app.chul.clashroyalysis.jsonobject.UserData
+import com.app.chul.clashroyalysis.jsonobject.PlayerData
 import com.app.chul.clashroyalysis.retrofit.ClashRoyaleRetrofit
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
@@ -35,14 +35,14 @@ class MainActivity : AppCompatActivity() {
         if(intent.hasExtra("tag")) {
             val tag = intent.getStringExtra("tag")
             val userData = ClashRoyaleRetrofit.getService().getPlayer(tag)
-            userData.enqueue(object: Callback<UserData>{
-                override fun onFailure(call: Call<UserData>?, t: Throwable?) {
+            userData.enqueue(object: Callback<PlayerData>{
+                override fun onFailure(call: Call<PlayerData>?, t: Throwable?) {
                     Toast.makeText(this@MainActivity, "API Fail", Toast.LENGTH_SHORT).show()
                 }
 
-                override fun onResponse(call: Call<UserData>?, response: Response<UserData>?) {
+                override fun onResponse(call: Call<PlayerData>?, response: Response<PlayerData>?) {
                     if(response?.body() != null){
-                        mAdapter?.setData(response.body() as UserData)
+                        mAdapter?.setData(response.body() as PlayerData)
                     }
                 }
 

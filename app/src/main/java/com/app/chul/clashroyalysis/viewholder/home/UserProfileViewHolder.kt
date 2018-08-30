@@ -5,7 +5,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.app.chul.clashroyalysis.R
-import com.app.chul.clashroyalysis.jsonobject.UserData
+import com.app.chul.clashroyalysis.jsonobject.PlayerData
 import com.bumptech.glide.Glide
 
 class UserProfileViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -17,12 +17,12 @@ class UserProfileViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     private val userClanName = itemView.findViewById<TextView>(R.id.profile_user_clan_name)
     private val userClanImg = itemView.findViewById<ImageView>(R.id.profile_user_clan_img)
 
-    fun bind(data: UserData){
+    fun bind(data: PlayerData){
         userName.text = data.name
         userTrophy.text = data.trophies.toString()
         userRank.text = data.rank.toString()
-        userClanName.text = data.clan?.name
+        userClanName.text = data.playerClan?.name
         userArena.text = data.arena?.name
-        Glide.with(itemView.context).load(data.clan?.badge?.image).into(userClanImg)
+        Glide.with(itemView.context).load(data.playerClan?.badge?.image).into(userClanImg)
     }
 }
