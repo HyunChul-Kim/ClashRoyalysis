@@ -1,12 +1,10 @@
 package com.app.chul.clashroyalysis.retrofit
 
-import com.app.chul.clashroyalysis.jsonobject.PopularDeckList
-import com.app.chul.clashroyalysis.jsonobject.PlayerData
-import com.app.chul.clashroyalysis.jsonobject.TopPlayerList
-import com.app.chul.clashroyalysis.jsonobject.UpcomingBoxData
+import com.app.chul.clashroyalysis.jsonobject.*
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ClashRoyaleService {
 
@@ -14,10 +12,13 @@ interface ClashRoyaleService {
     fun getPlayer(@Path("tag") tag: String): Call<PlayerData>
 
     @GET("/player/{tag}")
-    fun getPlayers(@Path("tag") tag: String): Call<List<PlayerData>>
+    fun getPlayers(@Path("tag") tag: String): Call<PlayerDataList>
 
     @GET("/popular/decks?max=10")
     fun getPopularDecks(): Call<PopularDeckList>
+
+    @GET("/popular/decks?max=10")
+    fun getPopularDecks(@Query("page") page: Int): Call<PopularDeckList>
 
     @GET("/top/players/{LOCATION_KEY}")
     fun getTopPlayers(@Path("LOCATION_KEY") location: String): Call<TopPlayerList>

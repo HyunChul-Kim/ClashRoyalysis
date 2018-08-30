@@ -31,4 +31,9 @@ class DeckListAdapter(private val context: Context?): RecyclerView.Adapter<Recyc
         mDeckList = list
         notifyDataSetChanged()
     }
+
+    fun addData(list: ArrayList<DeckInfo>) {
+        mDeckList.addAll(list)
+        notifyDataSetChanged()
+    }
 }

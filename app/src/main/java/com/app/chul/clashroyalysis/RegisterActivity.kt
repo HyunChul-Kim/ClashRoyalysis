@@ -1,23 +1,13 @@
 package com.app.chul.clashroyalysis
 
-import android.content.Context
-import android.content.Intent
-import android.graphics.Rect
 import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.view.MotionEvent
-import android.view.View
-import android.view.inputmethod.InputMethodManager
-import com.app.chul.clashroyalysis.adapter.RegisterRecyclerAdapter
 import com.app.chul.clashroyalysis.adapter.RegisterViewPagerAdapter
 import com.app.chul.clashroyalysis.bus.RxBus
 import com.app.chul.clashroyalysis.bus.RxEvent
 import com.app.chul.clashroyalysis.preference.RoyalysisPreferenceManager
-import com.app.chul.clashroyalysis.retrofit.ClashRoyaleRetrofit
 import com.bumptech.glide.Glide
-import com.app.chul.clashroyalysis.utils.isAvailableTag
 import kotlinx.android.synthetic.main.activity_register.*
 
 class RegisterActivity: AppCompatActivity() {
