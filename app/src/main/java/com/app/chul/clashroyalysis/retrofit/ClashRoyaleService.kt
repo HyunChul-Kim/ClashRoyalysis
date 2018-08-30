@@ -14,9 +14,12 @@ interface ClashRoyaleService {
     @GET("/player/{tag}")
     fun getPlayers(@Path("tag") tag: String): Call<PlayerDataList>
 
-    @GET("/popular/decks?max=10")
+    @GET("/popular/decks")
     fun getPopularDecks(): Call<PopularDeckList>
 
+    /**
+     * @param page is not working (API issue)
+     */
     @GET("/popular/decks?max=10")
     fun getPopularDecks(@Query("page") page: Int): Call<PopularDeckList>
 

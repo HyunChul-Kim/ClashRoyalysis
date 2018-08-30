@@ -38,10 +38,11 @@ class PopularDeckFragment: Fragment() {
         super.onActivityCreated(savedInstanceState)
         initRecyclerView()
         requestPopularDeckList()
-        test.setOnClickListener {
+
+        /*test.setOnClickListener {
             page++
             requestMorePopularDeckList(page)
-        }
+        }*/
     }
 
     private fun initRecyclerView() {
@@ -62,7 +63,6 @@ class PopularDeckFragment: Fragment() {
                 Log.i("Popular Service", "Response Success")
                 response?.body()?.let {
                     adapter.setData(it)
-                    Toast.makeText(context, "Size : " + it.size, Toast.LENGTH_SHORT).show()
                 }
             }
         })
@@ -80,7 +80,6 @@ class PopularDeckFragment: Fragment() {
                 Log.i("Popular Service", "Response Success")
                 response?.body()?.let {
                     adapter.addData(it)
-                    Toast.makeText(context, "Size : " + it.size + "Page : " + page, Toast.LENGTH_SHORT).show()
                 }
             }
         })
