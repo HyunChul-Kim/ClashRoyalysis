@@ -8,7 +8,7 @@ import com.app.chul.clashroyalysis.R
 import com.app.chul.clashroyalysis.viewholder.register.RegisterViewHolder
 import com.app.chul.clashroyalysis.viewholder.register.SimpleInfoViewHolder
 
-class RegisterRecyclerAdapter(private val context: Context?): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class RegisterAdapter(private val context: Context?): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var mUserList = ArrayList<String>()
 

@@ -3,6 +3,7 @@ package com.app.chul.clashroyalysis.retrofit
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 object ClashRoyaleRetrofit {
@@ -13,6 +14,7 @@ object ClashRoyaleRetrofit {
 
     private val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl("https://api.royaleapi.com")
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()

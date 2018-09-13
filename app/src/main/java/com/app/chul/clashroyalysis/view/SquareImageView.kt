@@ -19,7 +19,7 @@ class SquareImageView @JvmOverloads constructor(
         when(fitMode){
             "width" -> super.onMeasure(widthMeasureSpec, widthMeasureSpec)
             "height" -> super.onMeasure(heightMeasureSpec, heightMeasureSpec)
-            else -> super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+            else -> super.onMeasure(widthMeasureSpec, widthMeasureSpec)
         }
     }
 }

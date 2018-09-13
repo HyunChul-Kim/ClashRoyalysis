@@ -21,8 +21,8 @@ class UserProfileViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         userName.text = data.name
         userTrophy.text = data.trophies.toString()
         userRank.text = data.rank.toString()
-        userClanName.text = data.playerClan?.name
+        userClanName.text = data.clan?.name
         userArena.text = data.arena?.name
-        Glide.with(itemView.context).load(data.playerClan?.badge?.image).into(userClanImg)
+        Glide.with(itemView.context).load(data.clan?.badge?.image).into(userClanImg)
     }
 }

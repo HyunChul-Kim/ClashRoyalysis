@@ -7,15 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.app.chul.clashroyalysis.R
-import com.app.chul.clashroyalysis.adapter.RegisterRecyclerAdapter
+import com.app.chul.clashroyalysis.adapter.RegisterAdapter
 import com.app.chul.clashroyalysis.preference.RoyalysisPreferenceManager
-import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.register_fragment.*
 
 class RegisterFragment: Fragment() {
 
-    private val mAdapter : RegisterRecyclerAdapter by lazy {
-        RegisterRecyclerAdapter(context)
+    private val mAdapter : RegisterAdapter by lazy {
+        RegisterAdapter(context)
     }
 
     companion object {

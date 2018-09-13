@@ -1,11 +1,17 @@
 package com.app.chul.clashroyalysis.jsonobject
 
-class PlayerData {
-    val tag: String? = null
-    val name: String? = null
-    val trophies: Int = 0
-    val rank: Int = 0
-    val arena: ArenaData? = null
-    val playerClan: PlayerClanData? = null
-    val currentDeck: List<CardData>? = null
-}
+data class PlayerData (
+        var tag: String,
+        var name: String,
+        var trophies: Int,
+        var rank: Int,
+        var arena: ArenaData,
+        var clan: PlayerClanData,
+        var stats: PlayerStatsData,
+        var games: PlayerGameData,
+        var leagueStatistics: PlayerLeagueData,
+        var deckLink: String,
+        var currentDeck: List<CardData>,
+        var cards: List<CardData>,
+        var achievements: List<AchievementData>
+)

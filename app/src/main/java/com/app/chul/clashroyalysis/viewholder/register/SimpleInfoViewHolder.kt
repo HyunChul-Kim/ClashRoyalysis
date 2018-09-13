@@ -5,14 +5,19 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import com.app.chul.clashroyalysis.MainActivity
+import com.app.chul.clashroyalysis.UserInfoActivity
 import com.app.chul.clashroyalysis.R
-import com.app.chul.clashroyalysis.jsonobject.CardData
 import com.app.chul.clashroyalysis.jsonobject.PlayerData
+import com.app.chul.clashroyalysis.jsonobject.TopPlayerList
 import com.app.chul.clashroyalysis.retrofit.ClashRoyaleRetrofit
 import com.app.chul.clashroyalysis.view.DeckListView
 import com.app.chul.clashroyalysis.view.StereoLoadingView
 import com.bumptech.glide.Glide
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.functions.BiFunction
+import io.reactivex.functions.Function
+import io.reactivex.schedulers.Schedulers
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,12 +33,12 @@ class SimpleInfoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     private val userDeckList = itemView.findViewById<DeckListView>(R.id.simple_user_deck_list)
 
     fun setData(playerData: PlayerData) {
-        Glide.with(itemView.context).load(playerData.playerClan?.badge?.image).into(userClanImg)
+        Glide.with(itemView.context).load(playerData.clan?.badge?.image).into(userClanImg)
         userDeckList.setUserDeckList(playerData.currentDeck)
         userName.text = playerData.name
         userInfo.text = getUserInfoString(playerData)
         itemView.setOnClickListener {
-            val intent = Intent(itemView.context, MainActivity::class.java)
+            val intent = Intent(itemView.context, UserInfoActivity::class.java)
             intent.putExtra("tag", playerData.tag)
             itemView.context.startActivity(intent)
         }
@@ -42,7 +47,18 @@ class SimpleInfoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     fun bind(userTag: String) {
         if(playerData == null) {
             loadingView.start()
-            val userDataCall = ClashRoyaleRetrofit.getService().getPlayer(userTag)
+            ClashRoyaleRetrofit.getService().getPlayer(userTag)
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        setData(it)
+                    }, {
+
+                    }, {
+                        loadingView.stop()
+                        loadingView.visibility = View.GONE
+                    })
+            /*val userDataCall = ClashRoyaleRetrofit.getService().getPlayer(userTag)
             userDataCall.enqueue(object: Callback<PlayerData> {
                 override fun onFailure(call: Call<PlayerData>?, t: Throwable?) {
                     loadingView.stop()
@@ -57,7 +73,7 @@ class SimpleInfoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
                     loadingView.visibility = View.GONE
                 }
 
-            })
+            })*/
         }
     }
 
