@@ -96,7 +96,7 @@ class UserInfoAdapter(private val mContext: Context): Adapter<RecyclerView.ViewH
 
             mHolderList.add(TOP_PLAYER_MAX_PROGRESS)
 
-//            mHolderList.add(WIN_RATE_PROGRESS)
+            mHolderList.add(WIN_RATE_PROGRESS)
         }
     }
 

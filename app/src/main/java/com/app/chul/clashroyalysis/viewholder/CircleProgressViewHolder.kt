@@ -11,6 +11,6 @@ class CircleProgressViewHolder(itemView: View): RecyclerView.ViewHolder(itemView
 
     fun bind(winRate: Float) {
         progress.setMax(100)
-        progress.setProgress((winRate * 100) as Int)
+        progress.setProgress(winRate * 100)
     }
 }
