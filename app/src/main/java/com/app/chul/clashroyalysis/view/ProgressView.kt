@@ -22,9 +22,9 @@ class ProgressView @JvmOverloads constructor(
     private var mTextPaint = Paint()
 
     private var mProgressSweep = 0f
-    private var mProgressWidth = 10f
-    private var mArcWidth = 10f
-    private var mTextSize = 10f
+    private var mProgressWidth = 30f
+    private var mArcWidth = 30f
+    private var mTextSize = 30f
     private var mPoint = 0f
     private var mMax = 100
     private var mMin = 0
@@ -84,7 +84,7 @@ class ProgressView @JvmOverloads constructor(
     }
 
     override fun onDraw(canvas: Canvas?) {
-        var textPoint = String.format("%.1f", mPoint)
+        var textPoint = String.format("%.1f", mPoint) + "%"
         mTextPaint.getTextBounds(textPoint, 0, textPoint.length, mTextRect)
 
         var x = width / 2f - (mTextRect.width() / 2)
@@ -96,23 +96,16 @@ class ProgressView @JvmOverloads constructor(
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-//        val width = getDefaultSize(suggestedMinimumWidth, widthMeasureSpec)
-//        val height = getDefaultSize(suggestedMinimumHeight, heightMeasureSpec)
         var width = View.MeasureSpec.getSize(widthMeasureSpec)
         var height = View.MeasureSpec.getSize(heightMeasureSpec)
         val min = Math.min(width, height)
 
-        var arcWidth = min
+        var arcWidth = min - mArcWidth
         mArcRadius = arcWidth / 2f
         var top = (height / 2f) - mArcRadius
         var left = (width / 2f) - mArcRadius
         mArcRect.set(left, top, left + arcWidth, top + arcWidth)
-        /*var textRadius = Math.sqrt(2.0) / 2f * mArcRadius
-        var textTop = (height / 2f - textRadius) as Int
-        var textLeft = (width / 2f - textRadius) as Int
-        mTextRect.set(textLeft, textTop, (textLeft + (textRadius * 2)) as Int, (textTop + (textRadius * 2)) as Int)*/
 
-//        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         setMeasuredDimension(width, height)
     }
 
