@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.app.chul.clashroyalysis.R
 import com.app.chul.clashroyalysis.jsonobject.PlayerData
+import com.app.chul.clashroyalysis.viewholder.CircleProgressViewHolder
 import com.app.chul.clashroyalysis.viewholder.ProgressViewHolder
 import com.app.chul.clashroyalysis.viewholder.home.UserProfileViewHolder
 
@@ -18,6 +19,7 @@ class UserInfoAdapter(private val mContext: Context): Adapter<RecyclerView.ViewH
         const val USER_PROFILE = 1
         const val USER_MAX_PROGRESS = 2
         const val TOP_PLAYER_MAX_PROGRESS = 3
+        const val WIN_RATE_PROGRESS = 4
     }
 
     private var mHolderList: ArrayList<Int> = ArrayList()
@@ -41,6 +43,10 @@ class UserInfoAdapter(private val mContext: Context): Adapter<RecyclerView.ViewH
             TOP_PLAYER_MAX_PROGRESS -> {
                 val view: View = LayoutInflater.from(mContext).inflate(R.layout.progress_viewholder, parent, false)
                 ProgressViewHolder(view)
+            }
+            WIN_RATE_PROGRESS -> {
+                val view: View = LayoutInflater.from(mContext).inflate(R.layout.circle_progress_viewholder, parent, false)
+                CircleProgressViewHolder(view)
             }
             else -> {
                 val view: View = LayoutInflater.from(mContext).inflate(R.layout.user_profile_viewholder, parent, false)
@@ -74,6 +80,11 @@ class UserInfoAdapter(private val mContext: Context): Adapter<RecyclerView.ViewH
                     (holder as ProgressViewHolder).bind(mTopPlayerTrophy, it.trophies)
                 }
             }
+            WIN_RATE_PROGRESS -> {
+                mPlayerData?.let {
+                    (holder as CircleProgressViewHolder).bind(it.games.winsPercent)
+                }
+            }
         }
     }
 
@@ -82,9 +93,10 @@ class UserInfoAdapter(private val mContext: Context): Adapter<RecyclerView.ViewH
         if(mPlayerData != null) {
             mHolderList.add(USER_PROFILE)
             mHolderList.add(USER_MAX_PROGRESS)
-        }
-        if(mTopPlayerTrophy != 0) {
+
             mHolderList.add(TOP_PLAYER_MAX_PROGRESS)
+
+//            mHolderList.add(WIN_RATE_PROGRESS)
         }
     }
 
