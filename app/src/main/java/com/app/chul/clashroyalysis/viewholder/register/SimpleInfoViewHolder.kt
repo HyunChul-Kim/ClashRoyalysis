@@ -47,7 +47,8 @@ class SimpleInfoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         userInfo.text = getUserInfoString(data)
         itemView.setOnClickListener {
             val intent = Intent(itemView.context, UserInfoActivity::class.java)
-            intent.putExtra("tag", data.tag)
+//            intent.putExtra("tag", data.tag)
+            intent.putExtra("data", data)
             itemView.context.startActivity(intent)
         }
     }

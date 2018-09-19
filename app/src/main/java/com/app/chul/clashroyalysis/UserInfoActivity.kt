@@ -30,7 +30,8 @@ class UserInfoActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         initRecyclerView()
-        loadUserData()
+        loadData()
+//        loadUserData()
     }
 
     private fun initRecyclerView() {
@@ -40,28 +41,16 @@ class UserInfoActivity : AppCompatActivity() {
         main_recycler_view.setHasFixedSize(true)
     }
 
+    private fun loadData() {
+        val data = intent.getParcelableExtra<PlayerData>("data")
+        data?.let {
+            mAdapter?.setData(it, 0)
+        }
+    }
+
     private fun loadUserData() {
         if(intent.hasExtra("tag")) {
             val tag = intent.getStringExtra("tag")
-            /*ClashRoyaleRetrofit.getService().getPlayer(tag)
-                    .timeout(5000, TimeUnit.MILLISECONDS)
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({
-                mAdapter?.setData(it, 5913)
-            })*/
-
-            /*val topPlayerCall = ClashRoyaleRetrofit.getService().getTopPlayers("KR")
-            topPlayerCall.enqueue(object: Callback<TopPlayerList>{
-                override fun onFailure(call: Call<TopPlayerList>?, t: Throwable?) {
-                    Toast.makeText(this@UserInfoActivity, t?.message, Toast.LENGTH_SHORT).show()
-                }
-
-                override fun onResponse(call: Call<TopPlayerList>?, response: Response<TopPlayerList>?) {
-                    mAdapter?.setTopPlayerTrophy(5555)
-                }
-
-            })*/
             ClashRoyaleRetrofit.getService().getPlayer(tag)
                     .zipWith(ClashRoyaleRetrofit.getService().getTopPlayers("KR", 1).onErrorReturn {
                         TopPlayerList()
