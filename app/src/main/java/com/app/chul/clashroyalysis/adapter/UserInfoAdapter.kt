@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import com.app.chul.clashroyalysis.R
 import com.app.chul.clashroyalysis.jsonobject.PlayerData
 import com.app.chul.clashroyalysis.viewholder.CircleProgressViewHolder
+import com.app.chul.clashroyalysis.viewholder.DoubleRateViewHolder
 import com.app.chul.clashroyalysis.viewholder.ProgressViewHolder
 import com.app.chul.clashroyalysis.viewholder.home.UserProfileViewHolder
 
@@ -38,15 +39,15 @@ class UserInfoAdapter(private val mContext: Context): Adapter<RecyclerView.ViewH
             }
             USER_MAX_PROGRESS -> {
                 val view: View = LayoutInflater.from(mContext).inflate(R.layout.progress_viewholder, parent, false)
-                ProgressViewHolder(view)
+                ProgressViewHolder(view, mContext.getString(R.string.max_trophy))
             }
             TOP_PLAYER_MAX_PROGRESS -> {
                 val view: View = LayoutInflater.from(mContext).inflate(R.layout.progress_viewholder, parent, false)
-                ProgressViewHolder(view)
+                ProgressViewHolder(view, mContext.getString(R.string.top_trophy))
             }
             WIN_RATE_PROGRESS -> {
-                val view: View = LayoutInflater.from(mContext).inflate(R.layout.circle_progress_viewholder, parent, false)
-                CircleProgressViewHolder(view)
+                val view: View = LayoutInflater.from(mContext).inflate(R.layout.double_rate_viewholder, parent, false)
+                DoubleRateViewHolder(view, mContext.getString(R.string.win_rate_title), mContext.getString(R.string.three_crown_title))
             }
             else -> {
                 val view: View = LayoutInflater.from(mContext).inflate(R.layout.user_profile_viewholder, parent, false)
@@ -82,7 +83,7 @@ class UserInfoAdapter(private val mContext: Context): Adapter<RecyclerView.ViewH
             }
             WIN_RATE_PROGRESS -> {
                 mPlayerData?.let {
-                    (holder as CircleProgressViewHolder).bind(it.games.winsPercent)
+                    (holder as DoubleRateViewHolder).bind(it.games.winsPercent, (it.stats.threeCrownWins / it.games.wins.toFloat()))
                 }
             }
         }

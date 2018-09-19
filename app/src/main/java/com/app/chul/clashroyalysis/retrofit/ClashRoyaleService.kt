@@ -21,7 +21,7 @@ interface ClashRoyaleService {
     @GET("/player/{tag}/battles")
     fun getPlayerBattles(@Path("tag") tag: String): Call<BattleData>
 
-    @GET("/popular/decks?max=100")
+    @GET("/popular/decks")
     fun getPopularDecks(): Call<PopularDeckList>
 
     /**

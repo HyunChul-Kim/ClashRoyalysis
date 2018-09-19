@@ -6,7 +6,6 @@ import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.view.View
 import com.app.chul.clashroyalysis.R
-import com.app.chul.clashroyalysis.utils.LoadingComputations
 
 class ProgressView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -96,8 +95,16 @@ class ProgressView @JvmOverloads constructor(
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        var width = View.MeasureSpec.getSize(widthMeasureSpec)
-        var height = View.MeasureSpec.getSize(heightMeasureSpec)
+        var desiredWidth = suggestedMinimumWidth + paddingLeft + paddingRight
+        var desiredHeight = suggestedMinimumHeight + paddingTop + paddingBottom
+
+        var width = measureDimension(desiredWidth, widthMeasureSpec)
+        var height = measureDimension(desiredHeight, heightMeasureSpec)
+
+        if(height == 0) {
+            height = width
+        }
+
         val min = Math.min(width, height)
 
         var arcWidth = min - mArcWidth
@@ -106,7 +113,22 @@ class ProgressView @JvmOverloads constructor(
         var left = (width / 2f) - mArcRadius
         mArcRect.set(left, top, left + arcWidth, top + arcWidth)
 
+//        setMeasuredDimension(width, height)
         setMeasuredDimension(width, height)
+    }
+
+    private fun measureDimension(desiredSize: Int, measureSpec: Int): Int {
+        val specMode = MeasureSpec.getMode(measureSpec)
+        val specSize = MeasureSpec.getSize(measureSpec)
+
+        return when(specMode) {
+            MeasureSpec.EXACTLY -> specSize
+            MeasureSpec.AT_MOST -> {
+                Math.min(desiredSize, specSize)
+            }
+            MeasureSpec.UNSPECIFIED -> desiredSize
+            else -> desiredSize
+        }
     }
 
     fun setMax(value: Int) {

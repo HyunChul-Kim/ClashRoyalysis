@@ -1,4 +1,4 @@
-package com.app.chul.clashroyalysis.utils
+    package com.app.chul.clashroyalysis.utils
 
 import android.content.Context
 import android.content.pm.PackageManager
@@ -41,4 +41,8 @@ fun readAssetJson(context: Context, fileName: String): String {
     }
 
     return json
+}
+
+fun dpToPx(context: Context, size: Int): Float {
+    return size * context.resources.displayMetrics.density
 }

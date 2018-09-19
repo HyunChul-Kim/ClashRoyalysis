@@ -1,6 +1,6 @@
 package com.app.chul.clashroyalysis.jsonobject
 
-data class PlayerGameData(
+data class  PlayerGameData(
         var total: Int,
         var tournamentGames: Int,
         var wins: Int,
