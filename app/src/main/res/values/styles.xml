@@ -8,6 +8,11 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="Intro" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
     <declare-styleable name="SquareImageView">
         <attr name="fit" format="string" />
     </declare-styleable>
