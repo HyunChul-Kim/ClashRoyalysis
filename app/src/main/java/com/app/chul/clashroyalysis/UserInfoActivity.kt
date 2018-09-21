@@ -46,6 +46,13 @@ class UserInfoActivity : AppCompatActivity() {
         data?.let {
             mAdapter?.setData(it, 0)
         }
+        ClashRoyaleRetrofit.getService().getTopPlayers("KR", 1)
+                .timeout(10000, TimeUnit.MILLISECONDS)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    mAdapter?.setTopPlayerTrophy(it?.get(0)?.trophies)
+                })
     }
 
     private fun loadUserData() {

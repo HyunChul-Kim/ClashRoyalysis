@@ -61,7 +61,11 @@ class UserInfoAdapter(private val mContext: Context): Adapter<RecyclerView.ViewH
     }
 
     override fun getItemViewType(position: Int): Int {
-        return mHolderList?.get(position)
+        return mHolderList[position]
+    }
+
+    private fun getItemPosition(viewType: Int): Int {
+        return mHolderList.indexOf(viewType)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -108,10 +112,12 @@ class UserInfoAdapter(private val mContext: Context): Adapter<RecyclerView.ViewH
         notifyDataSetChanged()
     }
 
-    fun setTopPlayerTrophy(trophy: Int) {
-        mTopPlayerTrophy = trophy
-        refreshMap()
-        notifyDataSetChanged()
+    fun setTopPlayerTrophy(trophy: Int?) {
+        trophy?.let {
+            mTopPlayerTrophy = trophy
+            refreshMap()
+            notifyItemChanged(getItemPosition(TOP_PLAYER_MAX_PROGRESS))
+        }
     }
 
 }

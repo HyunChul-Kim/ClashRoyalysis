@@ -17,7 +17,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
 
-    <com.app.chul.clashroyalysis.view.ProgressView
+    <com.app.chul.clashroyalysis.view.CircleProgressView
         android:id="@+id/circle_progress"
         android:layout_width="0dp"
         android:layout_height="0dp"

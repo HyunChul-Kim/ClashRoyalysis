@@ -40,20 +40,20 @@ class StereoLoadingView @JvmOverloads constructor(
         canvas?.drawLine(loadingComputations.dpToPx(50) - loadingComputations.dpToPx(12)
                 , loadingComputations.dpToPx(50)
                 , loadingComputations.dpToPx(50) - loadingComputations.dpToPx(12)
-                , loadingComputations.dpToPx(50) - loadingComputations.dpToPx(20) * loadingComputations.verticalPosition(System.currentTimeMillis()
-                , 125).toFloat(), barRedPaint)
+                , loadingComputations.dpToPx(50) - loadingComputations.dpToPx(20) * loadingComputations.verticalPosition(System.currentTimeMillis(), 125).toFloat()
+                , barRedPaint)
 
         canvas?.drawLine(loadingComputations.dpToPx(50)
                 , loadingComputations.dpToPx(50)
                 , loadingComputations.dpToPx(50)
-                , loadingComputations.dpToPx(50) - loadingComputations.dpToPx(20) * loadingComputations.verticalPosition(System.currentTimeMillis()
-                , 0).toFloat(), barYellowPaint)
+                , loadingComputations.dpToPx(50) - loadingComputations.dpToPx(20) * loadingComputations.verticalPosition(System.currentTimeMillis(), 0).toFloat()
+                , barYellowPaint)
 
         canvas?.drawLine(loadingComputations.dpToPx(50) + loadingComputations.dpToPx(12)
                 , loadingComputations.dpToPx(50)
                 , loadingComputations.dpToPx(50) + loadingComputations.dpToPx(12)
-                , loadingComputations.dpToPx(50) - loadingComputations.dpToPx(20) * loadingComputations.verticalPosition(System.currentTimeMillis()
-                , 250).toFloat(), barBluePaint)
+                , loadingComputations.dpToPx(50) - loadingComputations.dpToPx(20) * loadingComputations.verticalPosition(System.currentTimeMillis(), 250).toFloat()
+                , barBluePaint)
 
         if(start) {
             invalidate()

@@ -17,4 +17,9 @@ class LoadingComputations(fl: Float) {
         return (Math.sin(x) + 1) / 2
     }
 
+    fun horizontalPosition(time: Long): Double {
+        val x = Math.PI * time / ANIMATION_LENGTH
+        return (Math.sin(x) + 1) / 2
+    }
+
 }
