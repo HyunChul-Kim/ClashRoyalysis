@@ -9,7 +9,7 @@ data class PlayerStatsData(
         var maxTrophies: Int,
         var threeCrownWins: Int,
         var cardsFound: Int,
-        var favoriteCard: CardData,
+        var favoriteCard: CardData?,
         var totalDonations: Int,
         var challengeMaxWins: Int,
         var challengeCardsWon: Int,

@@ -4,9 +4,9 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class PlayerLeagueData(
-        var currentSeason: SeasonData,
-        var previousSeason: SeasonData,
-        var bestSeason: SeasonData): Parcelable {
+        var currentSeason: SeasonData?,
+        var previousSeason: SeasonData?,
+        var bestSeason: SeasonData?): Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readParcelable(SeasonData::class.java.classLoader),
             parcel.readParcelable(SeasonData::class.java.classLoader),
