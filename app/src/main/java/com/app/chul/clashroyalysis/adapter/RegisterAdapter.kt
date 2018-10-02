@@ -20,15 +20,15 @@ class RegisterAdapter(private val context: Context?): RecyclerView.Adapter<Recyc
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when(viewType){
             ViewType.ADD_VIEW_TYPE -> {
-                val view = LayoutInflater.from(context).inflate(R.layout.register_viewholder, parent, false)
+                val view = LayoutInflater.from(context).inflate(R.layout.viewholder_register, parent, false)
                 RegisterViewHolder(view)
             }
             ViewType.USER_VIEW_TYPE -> {
-                val view = LayoutInflater.from(context).inflate(R.layout.user_simple_info_viewholder, parent, false)
+                val view = LayoutInflater.from(context).inflate(R.layout.viewholder_user_simple_info, parent, false)
                 SimpleInfoViewHolder(view)
             }
             else -> {
-                val view = LayoutInflater.from(context).inflate(R.layout.register_viewholder, parent, false)
+                val view = LayoutInflater.from(context).inflate(R.layout.viewholder_register, parent, false)
                 RegisterViewHolder(view)
             }
         }

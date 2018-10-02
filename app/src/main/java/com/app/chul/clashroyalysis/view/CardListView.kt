@@ -9,7 +9,7 @@ import com.app.chul.clashroyalysis.R
 import com.app.chul.clashroyalysis.jsonobject.CardData
 import com.bumptech.glide.Glide
 
-class DeckListView @JvmOverloads constructor(
+class CardListView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
 
@@ -23,7 +23,7 @@ class DeckListView @JvmOverloads constructor(
     private val userDeckCard8: ImageView
 
     init {
-        LayoutInflater.from(context).inflate(R.layout.deck_list_view, this, true)
+        LayoutInflater.from(context).inflate(R.layout.view_card_list, this, true)
         userDeckCard1 = findViewById(R.id.simple_deck_card1)
         userDeckCard2 = findViewById(R.id.simple_deck_card2)
         userDeckCard3 = findViewById(R.id.simple_deck_card3)

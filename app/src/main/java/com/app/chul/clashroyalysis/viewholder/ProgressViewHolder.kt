@@ -17,14 +17,16 @@ class ProgressViewHolder(itemView: View, _title: String): RecyclerView.ViewHolde
         title.text = _title
     }
 
-    fun bind(maxValue: Int, value: Int) {
-        if(maxValue > 0) {
-            noDataFilter.visibility = View.GONE
-            progress.max = maxValue
-            progress.progress = value
-            max.text = maxValue.toString()
-        }else {
-            noDataFilter.visibility = View.VISIBLE
+    fun bind(maxValue: Int?, value: Int) {
+        maxValue?.let {
+            if (maxValue > 0) {
+                noDataFilter.visibility = View.GONE
+                progress.max = maxValue
+                progress.progress = value
+                max.text = maxValue.toString()
+            } else {
+                noDataFilter.visibility = View.VISIBLE
+            }
         }
     }
 }

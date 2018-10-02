@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.app.chul.clashroyalysis.R
 import com.app.chul.clashroyalysis.jsonobject.PlayerData
-import com.app.chul.clashroyalysis.viewholder.CircleProgressViewHolder
 import com.app.chul.clashroyalysis.viewholder.DoubleRateViewHolder
 import com.app.chul.clashroyalysis.viewholder.ProgressViewHolder
 import com.app.chul.clashroyalysis.viewholder.home.UserProfileViewHolder
@@ -34,23 +33,23 @@ class UserInfoAdapter(private val mContext: Context): Adapter<RecyclerView.ViewH
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when(viewType) {
             USER_PROFILE -> {
-                val view: View = LayoutInflater.from(mContext).inflate(R.layout.user_profile_viewholder, parent, false)
+                val view: View = LayoutInflater.from(mContext).inflate(R.layout.viewholder_user_profile, parent, false)
                 UserProfileViewHolder(view)
             }
             USER_MAX_PROGRESS -> {
-                val view: View = LayoutInflater.from(mContext).inflate(R.layout.progress_viewholder, parent, false)
+                val view: View = LayoutInflater.from(mContext).inflate(R.layout.viewholder_progress, parent, false)
                 ProgressViewHolder(view, mContext.getString(R.string.max_trophy))
             }
             TOP_PLAYER_MAX_PROGRESS -> {
-                val view: View = LayoutInflater.from(mContext).inflate(R.layout.progress_viewholder, parent, false)
+                val view: View = LayoutInflater.from(mContext).inflate(R.layout.viewholder_progress, parent, false)
                 ProgressViewHolder(view, mContext.getString(R.string.top_trophy))
             }
             WIN_RATE_PROGRESS -> {
-                val view: View = LayoutInflater.from(mContext).inflate(R.layout.double_rate_viewholder, parent, false)
+                val view: View = LayoutInflater.from(mContext).inflate(R.layout.viewholder_double_rate, parent, false)
                 DoubleRateViewHolder(view, mContext.getString(R.string.win_rate_title), mContext.getString(R.string.three_crown_title))
             }
             else -> {
-                val view: View = LayoutInflater.from(mContext).inflate(R.layout.user_profile_viewholder, parent, false)
+                val view: View = LayoutInflater.from(mContext).inflate(R.layout.viewholder_user_profile, parent, false)
                 UserProfileViewHolder(view)
             }
         }
@@ -77,7 +76,7 @@ class UserInfoAdapter(private val mContext: Context): Adapter<RecyclerView.ViewH
             }
             USER_MAX_PROGRESS -> {
                 mPlayerData?.let {
-                    (holder as ProgressViewHolder).bind(it.stats.maxTrophies, it.trophies)
+                    (holder as ProgressViewHolder).bind(it.stats?.maxTrophies, it.trophies)
                 }
             }
             TOP_PLAYER_MAX_PROGRESS -> {
@@ -87,7 +86,15 @@ class UserInfoAdapter(private val mContext: Context): Adapter<RecyclerView.ViewH
             }
             WIN_RATE_PROGRESS -> {
                 mPlayerData?.let {
-                    (holder as DoubleRateViewHolder).bind(it.games.winsPercent, (it.stats.threeCrownWins / it.games.wins.toFloat()))
+                    var threeCrownWins = 0
+                    var wins = 0
+                    var winPercent = 0f
+                    it.stats?.let { threeCrownWins = it.threeCrownWins }
+                    it.games?.let {
+                        wins = it.wins
+                        winPercent = it.winsPercent
+                    }
+                    (holder as DoubleRateViewHolder).bind(winPercent, (threeCrownWins / wins.toFloat()))
                 }
             }
         }

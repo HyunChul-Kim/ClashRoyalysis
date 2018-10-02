@@ -62,7 +62,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
 
-    <com.app.chul.clashroyalysis.view.DeckListView
+    <com.app.chul.clashroyalysis.view.CardListView
         android:id="@+id/popular_deck_list"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

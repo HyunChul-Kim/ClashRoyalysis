@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.app.chul.clashroyalysis.R
 import com.app.chul.clashroyalysis.jsonobject.DeckInfo
-import com.app.chul.clashroyalysis.utils.getInflatedView
 import com.app.chul.clashroyalysis.viewholder.DeckViewHolder
 
 class DeckListAdapter(private val context: Context?): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -19,7 +18,7 @@ class DeckListAdapter(private val context: Context?): RecyclerView.Adapter<Recyc
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.deck_view_holder, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.viewholder_deck, parent, false)
         return DeckViewHolder(view)
     }
 

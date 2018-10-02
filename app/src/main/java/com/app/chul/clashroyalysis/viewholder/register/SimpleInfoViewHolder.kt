@@ -10,7 +10,7 @@ import com.app.chul.clashroyalysis.UserInfoActivity
 import com.app.chul.clashroyalysis.R
 import com.app.chul.clashroyalysis.jsonobject.PlayerData
 import com.app.chul.clashroyalysis.retrofit.ClashRoyaleRetrofit
-import com.app.chul.clashroyalysis.view.DeckListView
+import com.app.chul.clashroyalysis.view.CardListView
 import com.app.chul.clashroyalysis.view.RetryView
 import com.app.chul.clashroyalysis.view.StereoLoadingView
 import com.bumptech.glide.Glide
@@ -27,7 +27,7 @@ class SimpleInfoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     private val userClanImg = itemView.findViewById<ImageView>(R.id.simple_user_clan_img)
     private val userName = itemView.findViewById<TextView>(R.id.simple_user_name)
     private val userInfo = itemView.findViewById<TextView>(R.id.simple_user_info)
-    private val userDeckList = itemView.findViewById<DeckListView>(R.id.simple_user_deck_list)
+    private val userDeckList = itemView.findViewById<CardListView>(R.id.simple_user_deck_list)
 
     private var userTag: String = ""
 

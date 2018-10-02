@@ -10,13 +10,13 @@ import com.app.chul.clashroyalysis.CLASH_ROYALE_SCHEME
 import com.app.chul.clashroyalysis.R
 import com.app.chul.clashroyalysis.jsonobject.DeckInfo
 import com.app.chul.clashroyalysis.utils.isInstalled
-import com.app.chul.clashroyalysis.view.DeckListView
+import com.app.chul.clashroyalysis.view.CardListView
 
 class DeckViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     private val popularityTextView = itemView.findViewById<TextView>(R.id.deck_popularity_value)
     private val shareBtn = itemView.findViewById<TextView>(R.id.deck_link_button)
-    private val deckList = itemView.findViewById<DeckListView>(R.id.popular_deck_list)
+    private val deckList = itemView.findViewById<CardListView>(R.id.popular_deck_list)
 
     private lateinit var mDeck: DeckInfo
 

@@ -22,7 +22,7 @@ class RetryView @JvmOverloads constructor(
     }
 
     init {
-        LayoutInflater.from(context).inflate(R.layout.retry_view, this, true)
+        LayoutInflater.from(context).inflate(R.layout.view_retry, this, true)
         retryButton = findViewById(R.id.retry)
         text = findViewById(R.id.simple_user_info_no_data)
 

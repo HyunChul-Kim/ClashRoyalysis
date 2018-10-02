@@ -29,10 +29,10 @@ class SimpleInfoViewPagerAdapter(context: Context): PagerAdapter() {
 
     private fun getItem(position: Int, parent: ViewGroup): View {
         return when(position) {
-            0 -> LayoutInflater.from(context).inflate(R.layout.deck_list_view, parent, false)
-            1 -> LayoutInflater.from(context).inflate(R.layout.user_simple_info_viewholder, parent, false)
-            2 -> LayoutInflater.from(context).inflate(R.layout.user_simple_info_viewholder, parent, false)
-            else -> LayoutInflater.from(context).inflate(R.layout.user_simple_info_viewholder, parent, false)
+            0 -> LayoutInflater.from(context).inflate(R.layout.view_card_list, parent, false)
+            1 -> LayoutInflater.from(context).inflate(R.layout.viewholder_user_simple_info, parent, false)
+            2 -> LayoutInflater.from(context).inflate(R.layout.viewholder_user_simple_info, parent, false)
+            else -> LayoutInflater.from(context).inflate(R.layout.viewholder_user_simple_info, parent, false)
         }
     }
 

@@ -26,7 +26,7 @@ class RegisterViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
     init {
         defaultSet.clone(constraintLayout)
-        addSet.clone(itemView.context, R.layout.register_add_viewholder)
+        addSet.clone(itemView.context, R.layout.viewholder_register_add)
         setTransition()
         itemView.setOnClickListener {
 
