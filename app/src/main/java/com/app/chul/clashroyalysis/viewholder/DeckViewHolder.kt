@@ -39,21 +39,19 @@ class DeckViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bindData(deck: DeckInfo) {
         mDeck = deck
         popularityTextView.text = getCostAvg()
-        deckList.setUserDeckList(mDeck.cards)
+        deckList.bind(mDeck.cards)
     }
 
     private fun getCostAvg(): String {
         var totalCost = 0
-        mDeck?.let {
-            for(card in it.cards) {
-                totalCost += card.elixir
-            }
+        for(card in mDeck.cards) {
+            totalCost += card.elixir
         }
 
         return String.format("%.2f", totalCost / 8f)
     }
 
     private fun getDeckScheme(): String {
-        return CLASH_ROYALE_SCHEME + mDeck?.decklink.removeRange(0, mDeck?.decklink.indexOf("?"))
+        return CLASH_ROYALE_SCHEME + mDeck.decklink.removeRange(0, mDeck.decklink.indexOf("?"))
     }
 }

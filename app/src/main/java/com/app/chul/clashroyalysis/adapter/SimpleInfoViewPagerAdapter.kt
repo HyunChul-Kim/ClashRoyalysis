@@ -38,16 +38,7 @@ class SimpleInfoViewPagerAdapter(context: Context): PagerAdapter() {
 
     private fun setItem(position: Int, itemView: View) {
         when(position) {
-            0 -> {
-                val userDeckCard1 = itemView.findViewById<ImageView>(R.id.simple_deck_card1)
-                val userDeckCard2 = itemView.findViewById<ImageView>(R.id.simple_deck_card2)
-                val userDeckCard3 = itemView.findViewById<ImageView>(R.id.simple_deck_card3)
-                val userDeckCard4 = itemView.findViewById<ImageView>(R.id.simple_deck_card4)
-                val userDeckCard5 = itemView.findViewById<ImageView>(R.id.simple_deck_card5)
-                val userDeckCard6 = itemView.findViewById<ImageView>(R.id.simple_deck_card6)
-                val userDeckCard7 = itemView.findViewById<ImageView>(R.id.simple_deck_card7)
-                val userDeckCard8 = itemView.findViewById<ImageView>(R.id.simple_deck_card8)
-            }
+            0 -> {}
             1 -> {}
             2 -> {}
             else -> {}

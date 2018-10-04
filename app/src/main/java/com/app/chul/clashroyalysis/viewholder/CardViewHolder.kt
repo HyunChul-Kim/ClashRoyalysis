@@ -1,6 +1,8 @@
 package com.app.chul.clashroyalysis.viewholder
 
 import android.support.v7.widget.RecyclerView
+import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import com.app.chul.clashroyalysis.R

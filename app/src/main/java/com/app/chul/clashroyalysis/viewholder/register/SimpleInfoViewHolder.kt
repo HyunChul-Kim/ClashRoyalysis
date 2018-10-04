@@ -27,7 +27,7 @@ class SimpleInfoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     private val userClanImg = itemView.findViewById<ImageView>(R.id.simple_user_clan_img)
     private val userName = itemView.findViewById<TextView>(R.id.simple_user_name)
     private val userInfo = itemView.findViewById<TextView>(R.id.simple_user_info)
-    private val userDeckList = itemView.findViewById<CardListView>(R.id.simple_user_deck_list)
+    private val userDeck = itemView.findViewById<CardListView>(R.id.simple_user_deck_list)
 
     private var userTag: String = ""
 
@@ -42,7 +42,7 @@ class SimpleInfoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
     private fun setData(data: PlayerData) {
         Glide.with(itemView.context).load(data.clan?.badge?.image).into(userClanImg)
-        userDeckList.setUserDeckList(data.currentDeck)
+        userDeck.bind(data.currentDeck)
         userName.text = data.name
         userInfo.text = getUserInfoString(data)
         itemView.setOnClickListener {

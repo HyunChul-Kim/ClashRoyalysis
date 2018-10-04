@@ -14,7 +14,7 @@ data class PlayerData (
         var games: PlayerGameData?,
         var leagueStatistics: PlayerLeagueData?,
         var deckLink: String,
-        var currentDeck: List<CardData>,
+        var currentDeck: ArrayList<CardData>,
         var cards: List<CardData>,
         var achievements: List<AchievementData>): Parcelable {
     constructor(parcel: Parcel) : this(
