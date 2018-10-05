@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.app.chul.clashroyalysis.R
 import com.app.chul.clashroyalysis.adapter.RegisterAdapter
+import com.app.chul.clashroyalysis.bus.RxBus
+import com.app.chul.clashroyalysis.bus.RxEvent
 import com.app.chul.clashroyalysis.preference.RoyalysisPreferenceManager
 import kotlinx.android.synthetic.main.register_fragment.*
 
@@ -18,13 +20,6 @@ class RegisterFragment: Fragment() {
     }
 
     companion object {
-        fun newInstance(arg: String): Fragment {
-            val fragment = RegisterFragment()
-            val args = Bundle()
-            fragment.arguments = args
-            return fragment
-        }
-
         fun newInstance(): Fragment {
             return RegisterFragment()
         }
@@ -37,8 +32,14 @@ class RegisterFragment: Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        registerRxBus()
         initRecyclerView()
         initUserInfo()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        RxBus.unregister(this)
     }
 
     private fun initRecyclerView() {
@@ -50,6 +51,17 @@ class RegisterFragment: Fragment() {
     private fun initUserInfo() {
         val userList: ArrayList<String> = RoyalysisPreferenceManager.getUserList()
         mAdapter.setData(userList)
+    }
+
+    fun addUser(tag: String) {
+        mAdapter.addData(tag)
+    }
+
+    private fun registerRxBus() {
+        RxBus.register(this, RxBus.listen(RxEvent.EventAddTag::class.java).subscribe {
+            RoyalysisPreferenceManager.addUser(it.tag)
+            addUser(it.tag)
+        })
     }
 
 }

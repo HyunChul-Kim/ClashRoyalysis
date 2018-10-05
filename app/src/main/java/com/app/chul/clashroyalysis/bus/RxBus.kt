@@ -25,4 +25,10 @@ object RxBus {
             disposable.add(d)
         }
     }
+
+    fun unregister(subscriber: Any) {
+        if(disposableMap.containsKey(subscriber)) {
+            disposableMap[subscriber]?.clear()
+        }
+    }
 }

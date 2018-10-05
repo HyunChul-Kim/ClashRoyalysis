@@ -42,22 +42,27 @@ class RegisterAdapter(private val context: Context?): RecyclerView.Adapter<Recyc
         when(getItemViewType(position)){
             ViewType.USER_VIEW_TYPE -> {
                 val viewHolder = holder as SimpleInfoViewHolder
-                viewHolder.bind(mUserList.get(index = position))
+                viewHolder.bind(mUserList[position])
             }
         }
     }
 
     override fun getItemViewType(position: Int): Int {
-        if(position == itemCount - 1) {
+        if(position >= mUserList.size) {
             return ViewType.ADD_VIEW_TYPE
         }else {
             return ViewType.USER_VIEW_TYPE
         }
     }
 
-    fun setData(data: List<String>) {
-        mUserList = data as ArrayList<String>
+    fun setData(data: ArrayList<String>) {
+        mUserList = data
         notifyDataSetChanged()
+    }
+
+    fun addData(data: String) {
+        mUserList.add(data)
+        notifyItemInserted(itemCount - 1)
     }
 
 }

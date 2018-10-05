@@ -7,10 +7,12 @@ import android.transition.AutoTransition
 import android.transition.Transition
 import android.transition.TransitionManager
 import android.view.View
+import android.widget.EditText
 import android.widget.TextView
 import com.app.chul.clashroyalysis.R
 import com.app.chul.clashroyalysis.bus.RxBus
 import com.app.chul.clashroyalysis.bus.RxEvent
+import com.app.chul.clashroyalysis.utils.hideKeyboard
 import com.app.chul.clashroyalysis.utils.isAvailableTag
 
 class RegisterViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -18,7 +20,7 @@ class RegisterViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     private val defaultSet: ConstraintSet = ConstraintSet()
     private val addSet: ConstraintSet = ConstraintSet()
     private val constraintLayout: ConstraintLayout = itemView.findViewById(R.id.default_constraint_layout)
-    private val registerTag: TextView = itemView.findViewById(R.id.simple_user_tag)
+    private val registerTag: EditText = itemView.findViewById(R.id.simple_user_tag)
 
     private val transition = AutoTransition()
 
@@ -62,6 +64,7 @@ class RegisterViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
                     if(isAvailableTag(registerTag.text.toString())) {
                         RxBus.publish(RxEvent.EventAddTag(registerTag.text.toString()))
                     }
+                    hideKeyboard(itemView.context, registerTag.windowToken)
                 }
             }
 

@@ -12,12 +12,6 @@ import kotlinx.android.synthetic.main.activity_register.*
 
 class RegisterActivity: AppCompatActivity() {
 
-    private fun registerRxBus() {
-        RxBus.register(this, RxBus.listen(RxEvent.EventAddTag::class.java).subscribe {
-            RoyalysisPreferenceManager.addUser(it.tag)
-        })
-    }
-
     private val mAdapter : RegisterViewPagerAdapter by lazy {
         RegisterViewPagerAdapter(supportFragmentManager, this)
     }
@@ -29,7 +23,6 @@ class RegisterActivity: AppCompatActivity() {
         var uri: Uri = Uri.parse("https://images7.alphacoders.com/856/856231.jpg")
         Glide.with(applicationContext).load(uri).into(header_image_view)
 
-        registerRxBus()
         register_view_pager.adapter = mAdapter
         register_tab.setupWithViewPager(register_view_pager)
     }
