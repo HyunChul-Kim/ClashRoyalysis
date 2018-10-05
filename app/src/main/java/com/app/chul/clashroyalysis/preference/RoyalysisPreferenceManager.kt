@@ -24,12 +24,14 @@ object RoyalysisPreferenceManager{
         return mPref.getString(USER_TAG_PREF, "")
     }
 
-    fun addUser(tag: String) {
+    fun addUser(tag: String): Boolean {
         val list = getUserList()
         if(!list.contains(tag)) {
             list.add(tag)
             setUserList(list)
+            return true
         }
+        return false
     }
 
     private fun setUserList(list: ArrayList<String>) {

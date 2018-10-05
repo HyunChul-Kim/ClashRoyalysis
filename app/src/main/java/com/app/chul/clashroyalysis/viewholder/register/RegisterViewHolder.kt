@@ -44,7 +44,7 @@ class RegisterViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         transition.duration = 300
         transition.addListener(object: Transition.TransitionListener{
             override fun onTransitionEnd(transition: Transition?) {
-
+                registerTag.text.clear()
             }
 
             override fun onTransitionResume(transition: Transition?) {

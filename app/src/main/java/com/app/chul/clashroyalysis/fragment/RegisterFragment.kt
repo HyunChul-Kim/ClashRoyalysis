@@ -53,14 +53,16 @@ class RegisterFragment: Fragment() {
         mAdapter.setData(userList)
     }
 
-    fun addUser(tag: String) {
+    private fun addUser(tag: String) {
         mAdapter.addData(tag)
+        register_recycler_view.smoothScrollToPosition(mAdapter.itemCount - 1)
     }
 
     private fun registerRxBus() {
         RxBus.register(this, RxBus.listen(RxEvent.EventAddTag::class.java).subscribe {
-            RoyalysisPreferenceManager.addUser(it.tag)
-            addUser(it.tag)
+            if(RoyalysisPreferenceManager.addUser(it.tag)) {
+                addUser(it.tag)
+            }
         })
     }
 
