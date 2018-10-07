@@ -2,7 +2,10 @@ package com.app.chul.clashroyalysis
 
 import android.net.Uri
 import android.os.Bundle
+import android.support.design.widget.TabLayout
 import android.support.v7.app.AppCompatActivity
+import android.widget.Toast
+import com.app.chul.clashroyalysis.`interface`.BaseFragmentInterface
 import com.app.chul.clashroyalysis.adapter.RegisterViewPagerAdapter
 import com.app.chul.clashroyalysis.bus.RxBus
 import com.app.chul.clashroyalysis.bus.RxEvent
@@ -25,6 +28,20 @@ class RegisterActivity: AppCompatActivity() {
 
         register_view_pager.adapter = mAdapter
         register_tab.setupWithViewPager(register_view_pager)
+        register_tab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+                (supportFragmentManager.fragments[register_tab.selectedTabPosition] as BaseFragmentInterface).scrollTop()
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+
+            }
+
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+
+            }
+
+        })
     }
 
 }

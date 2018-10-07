@@ -7,13 +7,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.app.chul.clashroyalysis.R
+import com.app.chul.clashroyalysis.`interface`.BaseFragmentInterface
 import com.app.chul.clashroyalysis.adapter.RegisterAdapter
 import com.app.chul.clashroyalysis.bus.RxBus
 import com.app.chul.clashroyalysis.bus.RxEvent
 import com.app.chul.clashroyalysis.preference.RoyalysisPreferenceManager
 import kotlinx.android.synthetic.main.register_fragment.*
 
-class RegisterFragment: Fragment() {
+class RegisterFragment: Fragment(), BaseFragmentInterface {
+
+    override fun scrollTop() {
+        register_recycler_view?.scrollToPosition(0)
+    }
 
     private val mAdapter : RegisterAdapter by lazy {
         RegisterAdapter(context)
