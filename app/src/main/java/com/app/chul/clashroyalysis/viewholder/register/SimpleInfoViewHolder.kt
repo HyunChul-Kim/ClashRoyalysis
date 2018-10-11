@@ -28,6 +28,7 @@ class SimpleInfoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     private val userName = itemView.findViewById<TextView>(R.id.simple_user_name)
     private val userInfo = itemView.findViewById<TextView>(R.id.simple_user_info)
     private val userDeck = itemView.findViewById<CardListView>(R.id.simple_user_deck_list)
+    private val divider = itemView.findViewById<View>(R.id.divider)
 
     private var userTag: String = ""
 
@@ -69,6 +70,7 @@ class SimpleInfoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
                 .subscribe({
                     playerData = it
                     setData(it)
+                    divider.visibility = View.VISIBLE
                     retryView.visibility = View.GONE
                 }, {
                     retryView.visibility = View.VISIBLE
