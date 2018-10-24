@@ -1,5 +1,9 @@
 package com.app.chul.clashroyalysis.viewholder.register
 
+import android.content.ClipData
+import android.content.ClipDescription.MIMETYPE_TEXT_PLAIN
+import android.content.ClipboardManager
+import android.content.Context
 import android.support.constraint.ConstraintLayout
 import android.support.constraint.ConstraintSet
 import android.support.v7.widget.RecyclerView
@@ -25,6 +29,8 @@ class RegisterViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     private val transition = AutoTransition()
 
     private var isDefault: Boolean = true
+    private var clickTime = 0L
+    private var clickCount = 0
 
     init {
         defaultSet.clone(constraintLayout)
@@ -37,6 +43,18 @@ class RegisterViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
             val constraint = if(isDefault) addSet else defaultSet
             constraint.applyTo(constraintLayout)
             isDefault = !isDefault
+        }
+        registerTag.setOnClickListener {
+            if(System.currentTimeMillis() < clickTime + 1000) {
+                clickTime = 0
+                var clipboard = itemView.context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                if(clipboard.hasPrimaryClip() && clipboard.primaryClipDescription.hasMimeType(MIMETYPE_TEXT_PLAIN)) {
+                    val item = clipboard.primaryClip.getItemAt(0)
+                    registerTag.text.append(item.text)
+                }
+            }else {
+                clickTime = System.currentTimeMillis()
+            }
         }
     }
 

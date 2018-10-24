@@ -1,24 +1,18 @@
-package com.app.chul.clashroyalysis
+package com.app.chul.clashroyalysis.activity
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.widget.Toast
+import com.app.chul.clashroyalysis.R
 import com.app.chul.clashroyalysis.adapter.UserInfoAdapter
-import com.app.chul.clashroyalysis.jsonobject.ArenaData
 import com.app.chul.clashroyalysis.jsonobject.PlayerData
-import com.app.chul.clashroyalysis.jsonobject.TopPlayer
 import com.app.chul.clashroyalysis.jsonobject.TopPlayerList
 import com.app.chul.clashroyalysis.retrofit.ClashRoyaleRetrofit
-import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.util.concurrent.TimeUnit
 
 class UserInfoActivity : AppCompatActivity() {

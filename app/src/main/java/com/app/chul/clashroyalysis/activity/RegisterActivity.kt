@@ -1,15 +1,12 @@
-package com.app.chul.clashroyalysis
+package com.app.chul.clashroyalysis.activity
 
 import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v7.app.AppCompatActivity
-import android.widget.Toast
+import com.app.chul.clashroyalysis.R
 import com.app.chul.clashroyalysis.`interface`.BaseFragmentInterface
 import com.app.chul.clashroyalysis.adapter.RegisterViewPagerAdapter
-import com.app.chul.clashroyalysis.bus.RxBus
-import com.app.chul.clashroyalysis.bus.RxEvent
-import com.app.chul.clashroyalysis.preference.RoyalysisPreferenceManager
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_register.*
 

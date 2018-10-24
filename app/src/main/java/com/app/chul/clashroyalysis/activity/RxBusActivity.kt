@@ -1,4 +1,4 @@
-package com.app.chul.clashroyalysis
+package com.app.chul.clashroyalysis.activity
 
 import android.os.Bundle
 import android.os.PersistableBundle

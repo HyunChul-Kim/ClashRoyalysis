@@ -43,11 +43,6 @@ class PopularDeckFragment: Fragment(), BaseFragmentInterface {
         super.onActivityCreated(savedInstanceState)
         initRecyclerView()
         requestPopularDeckList()
-
-        /*test.setOnClickListener {
-            page++
-            requestMorePopularDeckList(page)
-        }*/
     }
 
     private fun initRecyclerView() {

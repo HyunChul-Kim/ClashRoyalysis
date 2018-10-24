@@ -1,9 +1,10 @@
-package com.app.chul.clashroyalysis
+package com.app.chul.clashroyalysis.activity
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import com.app.chul.clashroyalysis.R
 import com.app.chul.clashroyalysis.preference.RoyalysisPreferenceManager
 
 class IntroActivity : AppCompatActivity() {

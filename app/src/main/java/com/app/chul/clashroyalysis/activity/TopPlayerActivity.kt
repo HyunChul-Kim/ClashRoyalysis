@@ -1,7 +1,8 @@
-package com.app.chul.clashroyalysis
+package com.app.chul.clashroyalysis.activity
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.app.chul.clashroyalysis.R
 
 class TopPlayerActivity : AppCompatActivity() {
 

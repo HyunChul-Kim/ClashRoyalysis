@@ -6,7 +6,7 @@ import android.text.TextUtils
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import com.app.chul.clashroyalysis.UserInfoActivity
+import com.app.chul.clashroyalysis.activity.UserInfoActivity
 import com.app.chul.clashroyalysis.R
 import com.app.chul.clashroyalysis.jsonobject.PlayerData
 import com.app.chul.clashroyalysis.retrofit.ClashRoyaleRetrofit
