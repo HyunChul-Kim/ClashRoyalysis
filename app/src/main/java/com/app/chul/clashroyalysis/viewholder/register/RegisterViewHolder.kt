@@ -11,6 +11,7 @@ import android.transition.AutoTransition
 import android.transition.Transition
 import android.transition.TransitionManager
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.EditText
 import android.widget.TextView
 import com.app.chul.clashroyalysis.R
@@ -58,6 +59,11 @@ class RegisterViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         }
     }
 
+    private fun setShakeAnim() {
+        val animation = AnimationUtils.loadAnimation(itemView.context, R.anim.shake_anim)
+        itemView.startAnimation(animation)
+    }
+
     private fun setTransition() {
         transition.duration = 300
         transition.addListener(object: Transition.TransitionListener{
@@ -81,7 +87,11 @@ class RegisterViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
                 if(isDefault) {
                     if(isAvailableTag(registerTag.text.toString())) {
                         RxBus.publish(RxEvent.EventAddTag(registerTag.text.toString()))
+
+                    } else {
+                        setShakeAnim()
                     }
+
                     hideKeyboard(itemView.context, registerTag.windowToken)
                 }
             }
