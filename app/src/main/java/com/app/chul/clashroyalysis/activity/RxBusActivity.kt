@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
 
-abstract class RxBusActivity: AppCompatActivity() {
+abstract class RxBusActivity: BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
         registerRxBus()

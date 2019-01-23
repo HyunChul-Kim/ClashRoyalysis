@@ -15,7 +15,7 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.concurrent.TimeUnit
 
-class UserInfoActivity : AppCompatActivity() {
+class UserInfoActivity : BaseActivity() {
 
     private var mAdapter: UserInfoAdapter? = null
 

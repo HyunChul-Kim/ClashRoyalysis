@@ -10,7 +10,7 @@ import com.app.chul.clashroyalysis.adapter.RegisterViewPagerAdapter
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_register.*
 
-class RegisterActivity: AppCompatActivity() {
+class RegisterActivity: BaseActivity() {
 
     private val mAdapter : RegisterViewPagerAdapter by lazy {
         RegisterViewPagerAdapter(supportFragmentManager, this)
