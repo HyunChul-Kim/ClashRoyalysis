@@ -1,11 +1,11 @@
 package com.app.chul.clashroyalysis.activity
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import com.app.chul.clashroyalysis.R
 import com.app.chul.clashroyalysis.preference.RoyalysisPreferenceManager
+import com.google.android.gms.ads.MobileAds
 
 class IntroActivity : BaseActivity() {
 
@@ -13,6 +13,7 @@ class IntroActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_intro)
 
+        initAds()
         checkUserInfo()
     }
 
@@ -27,5 +28,9 @@ class IntroActivity : BaseActivity() {
             startActivity(intent)
         }
         finish()
+    }
+
+    private fun initAds() {
+        MobileAds.initialize(this, getString(R.string.ad_id))
     }
 }

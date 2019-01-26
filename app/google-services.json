@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "677755400336",
+    "firebase_url": "https://clashroyalysis-a4808.firebaseio.com",
+    "project_id": "clashroyalysis-a4808",
+    "storage_bucket": "clashroyalysis-a4808.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:677755400336:android:01e76904d8a62b2c",
+        "android_client_info": {
+          "package_name": "com.app.chul.clashroyalysis"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "677755400336-2vvuq5m4mu91n5788i6i75cdi3c05n3p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.chul.clashroyalysis",
+            "certificate_hash": "c9db9ecf5c77665ce2a746aa6c5c705998619c6a"
+          }
+        },
+        {
+          "client_id": "677755400336-hph0spg0tnp8f2pq47f5b060ooq1h160.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlkVvCQltZ_sadBDcfDcDVMTM1wYmg5GY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "677755400336-hph0spg0tnp8f2pq47f5b060ooq1h160.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      },
+      "admob_app_id": "ca-app-pub-7690257336944861~6434351535"
+    }
+  ],
+  "configuration_version": "1"
+}

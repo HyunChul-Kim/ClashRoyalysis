@@ -19,6 +19,7 @@ import com.app.chul.clashroyalysis.bus.RxBus
 import com.app.chul.clashroyalysis.bus.RxEvent
 import com.app.chul.clashroyalysis.utils.hideKeyboard
 import com.app.chul.clashroyalysis.utils.isAvailableTag
+import com.crashlytics.android.Crashlytics
 
 class RegisterViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
@@ -38,7 +39,7 @@ class RegisterViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         addSet.clone(itemView.context, R.layout.viewholder_register_add)
         setTransition()
         itemView.setOnClickListener {
-
+            Crashlytics.getInstance().crash()
             TransitionManager.beginDelayedTransition(constraintLayout, transition)
 
             val constraint = if(isDefault) addSet else defaultSet

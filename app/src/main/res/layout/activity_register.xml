@@ -26,13 +26,21 @@
                 app:contentScrim="?attr/colorPrimary"
                 app:titleEnabled="false">
 
-                <ImageView
+                <com.google.android.gms.ads.AdView
+                    xmlns:ads="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/register_top_banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    ads:adSize="SMART_BANNER"
+                    ads:adUnitId="@string/ad_top_banner_test_id"/>
+
+                <!--<ImageView
                     android:id="@+id/header_image_view"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:scaleType="fitXY"
                     android:fitsSystemWindows="true"
-                    app:layout_collapseMode="parallax" />
+                    app:layout_collapseMode="parallax" />-->
 
             </android.support.design.widget.CollapsingToolbarLayout>
 
