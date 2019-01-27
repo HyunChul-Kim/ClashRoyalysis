@@ -12,7 +12,7 @@ import com.app.chul.clashroyalysis.adapter.RegisterAdapter
 import com.app.chul.clashroyalysis.bus.RxBus
 import com.app.chul.clashroyalysis.bus.RxEvent
 import com.app.chul.clashroyalysis.preference.RoyalysisPreferenceManager
-import kotlinx.android.synthetic.main.register_fragment.*
+import kotlinx.android.synthetic.main.fragment_register.*
 
 class RegisterFragment: Fragment(), BaseFragmentInterface {
 
@@ -32,7 +32,7 @@ class RegisterFragment: Fragment(), BaseFragmentInterface {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.register_fragment, container, false)
+        return inflater.inflate(R.layout.fragment_register, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -60,7 +60,6 @@ class RegisterFragment: Fragment(), BaseFragmentInterface {
 
     private fun addUser(tag: String) {
         mAdapter.addData(tag)
-        register_recycler_view.smoothScrollToPosition(mAdapter.itemCount - 1)
     }
 
     private fun registerRxBus() {

@@ -7,13 +7,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.app.chul.clashroyalysis.R
 import com.app.chul.clashroyalysis.`interface`.BaseFragmentInterface
 import com.app.chul.clashroyalysis.adapter.DeckListAdapter
 import com.app.chul.clashroyalysis.jsonobject.PopularDeckList
 import com.app.chul.clashroyalysis.retrofit.ClashRoyaleRetrofit
-import kotlinx.android.synthetic.main.popular_deck_fragment.*
+import kotlinx.android.synthetic.main.fragment_popular_deck.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -36,7 +35,7 @@ class PopularDeckFragment: Fragment(), BaseFragmentInterface {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.popular_deck_fragment, container, false)
+        return inflater.inflate(R.layout.fragment_popular_deck, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

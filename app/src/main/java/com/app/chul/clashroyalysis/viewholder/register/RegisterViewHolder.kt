@@ -1,6 +1,5 @@
 package com.app.chul.clashroyalysis.viewholder.register
 
-import android.content.ClipData
 import android.content.ClipDescription.MIMETYPE_TEXT_PLAIN
 import android.content.ClipboardManager
 import android.content.Context
@@ -13,7 +12,6 @@ import android.transition.TransitionManager
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.EditText
-import android.widget.TextView
 import com.app.chul.clashroyalysis.R
 import com.app.chul.clashroyalysis.bus.RxBus
 import com.app.chul.clashroyalysis.bus.RxEvent
@@ -21,7 +19,7 @@ import com.app.chul.clashroyalysis.utils.hideKeyboard
 import com.app.chul.clashroyalysis.utils.isAvailableTag
 import com.crashlytics.android.Crashlytics
 
-class RegisterViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+class RegisterViewHolder(itemView: View): RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
     private val defaultSet: ConstraintSet = ConstraintSet()
     private val addSet: ConstraintSet = ConstraintSet()
@@ -38,15 +36,19 @@ class RegisterViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         defaultSet.clone(constraintLayout)
         addSet.clone(itemView.context, R.layout.viewholder_register_add)
         setTransition()
-        itemView.setOnClickListener {
-            Crashlytics.getInstance().crash()
+        itemView.setOnClickListener(this)
+        registerTag.setOnClickListener(this)
+    }
+
+    override fun onClick(v: View?) {
+        if(v == itemView) {
             TransitionManager.beginDelayedTransition(constraintLayout, transition)
 
             val constraint = if(isDefault) addSet else defaultSet
             constraint.applyTo(constraintLayout)
             isDefault = !isDefault
-        }
-        registerTag.setOnClickListener {
+
+        } else if(v == registerTag) {
             if(System.currentTimeMillis() < clickTime + 1000) {
                 clickTime = 0
                 var clipboard = itemView.context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager

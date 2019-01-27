@@ -8,7 +8,7 @@ data class CardData (
         val level: Int,
         val maxLevel: Int,
         val rarity: String,
-        val requiredForUpgrade: Int,
+        val requiredForUpgrade: String?,
         val icon: String,
         val key: String,
         val elixir: Int,
@@ -21,7 +21,7 @@ data class CardData (
             parcel.readInt(),
             parcel.readInt(),
             parcel.readString(),
-            parcel.readInt(),
+            parcel.readString(),
             parcel.readString(),
             parcel.readString(),
             parcel.readInt(),
@@ -35,7 +35,7 @@ data class CardData (
         parcel.writeInt(level)
         parcel.writeInt(maxLevel)
         parcel.writeString(rarity)
-        parcel.writeInt(requiredForUpgrade)
+        parcel.writeString(requiredForUpgrade)
         parcel.writeString(icon)
         parcel.writeString(key)
         parcel.writeInt(elixir)
