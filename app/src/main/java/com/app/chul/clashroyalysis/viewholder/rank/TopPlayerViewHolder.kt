@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 
 class TopPlayerViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
+    private val playerRank = itemView.findViewById<TextView>(R.id.top_player_rank)
     private val clanImage = itemView.findViewById<ImageView>(R.id.top_player_clan_image)
     private val playerName = itemView.findViewById<TextView>(R.id.top_player_name)
     private val playerTrophies = itemView.findViewById<TextView>(R.id.top_player_trophies)
@@ -33,6 +34,7 @@ class TopPlayerViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
             it.clan?.let {
                 Glide.with(itemView.context).load(it.badge.image).into(clanImage)
             }
+            playerRank.text = playerData.rank.toString()
             playerName.text = playerData.name
             playerTrophies.text = playerData.trophies.toString()
             playerTag = playerData.tag

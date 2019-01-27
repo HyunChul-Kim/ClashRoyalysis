@@ -25,6 +25,10 @@ class RankFragment: Fragment(), BaseFragmentInterface {
         }
     }
 
+    private var location = "KR"
+    private var page = 1
+    private val max = 50
+
     private val adapter: TopPlayerAdapter by lazy {
         TopPlayerAdapter(context)
     }
@@ -50,7 +54,7 @@ class RankFragment: Fragment(), BaseFragmentInterface {
     }
 
     private fun requestTopPlayerList() {
-        val topPlayerListCall = ClashRoyaleRetrofit.getService().getTopPlayers("KR")
+        val topPlayerListCall = ClashRoyaleRetrofit.getService().getTopPlayers(location, max)
         topPlayerListCall.enqueue(object: Callback<TopPlayerList> {
             override fun onFailure(call: Call<TopPlayerList>?, t: Throwable?) {
                 Log.i("TopPlayer Service", t.toString())
@@ -64,4 +68,4 @@ class RankFragment: Fragment(), BaseFragmentInterface {
 
         })
     }
-} 
+}

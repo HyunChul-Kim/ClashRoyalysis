@@ -40,36 +40,5 @@ class UserInfoActivity : BaseActivity() {
         data?.let {
             mAdapter?.setData(it, 0)
         }
-        ClashRoyaleRetrofit.getService().getTopPlayers("KR", 1)
-                .timeout(10000, TimeUnit.MILLISECONDS)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    mAdapter?.setTopPlayerTrophy(it?.get(0)?.trophies)
-                })
     }
-
-    private fun loadUserData() {
-        if(intent.hasExtra("tag")) {
-            val tag = intent.getStringExtra("tag")
-            ClashRoyaleRetrofit.getService().getPlayer(tag)
-                    .zipWith(ClashRoyaleRetrofit.getService().getTopPlayers("KR", 1).onErrorReturn {
-                        TopPlayerList()
-                    }, BiFunction { userData: PlayerData, topPlayer: TopPlayerList -> Pair(userData, topPlayer)})
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({
-                        if(it.second.size > 0) {
-                            mAdapter?.setData(it.first, it.second[0].trophies)
-                        }else {
-                            mAdapter?.setData(it.first, 0)
-                        }
-                    }, {
-                        Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
-                    }, {
-
-                    })
-        }
-    }
-
 }
