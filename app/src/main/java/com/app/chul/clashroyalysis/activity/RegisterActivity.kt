@@ -34,12 +34,14 @@ class RegisterActivity: BaseActivity() {
     }
 
     private fun initAd() {
-        adView = findViewById(R.id.register_top_banner)
         val adRequest = AdRequest.Builder().build()
+        adView = findViewById(R.id.register_top_banner)
         adView.loadAd(adRequest)
     }
 
     private fun initViewPager() {
+        val limit = if(mAdapter.count > 1) mAdapter.count - 1 else 1
+        register_view_pager.offscreenPageLimit = limit
         register_view_pager.adapter = mAdapter
         register_tab.setupWithViewPager(register_view_pager)
         register_tab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
