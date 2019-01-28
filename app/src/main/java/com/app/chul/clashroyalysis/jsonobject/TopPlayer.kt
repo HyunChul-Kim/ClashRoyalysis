@@ -8,6 +8,6 @@ data class TopPlayer (
         val expLevel: Int,
         val trophies: Int,
         val donationsDelta: String,
-        val clan: PlayerClanData,
+        val clan: PlayerClanData?,
         val arena: ArenaData
 )
