@@ -8,7 +8,6 @@
         android:id="@+id/top_player_rank"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
         android:gravity="center"
         android:textColor="@color/defaultColor"
         android:textSize="15dp"
@@ -31,18 +30,19 @@
 
     <TextView
         android:id="@+id/top_player_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/top_player_clan_image"
+        app:layout_constraintRight_toLeftOf="@+id/top_player_trophies"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/top_player_trophies"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:ellipsize="end"
@@ -55,8 +55,8 @@
 
     <ImageView
         android:id="@+id/top_player_favorites_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_margin="10dp"
         android:src="@drawable/plus_icon_selector"
         app:layout_constraintBottom_toBottomOf="parent"
