@@ -39,7 +39,7 @@
         android:id="@+id/deck_link_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/share_icon"
+        android:src="@drawable/decklink_50x50"
         android:layout_marginRight="10dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/divider"
