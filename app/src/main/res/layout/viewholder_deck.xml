@@ -13,13 +13,13 @@
         android:id="@+id/deck_popularity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cost : "
         android:textSize="15dp"
         android:textColor="@color/defaultColor"
-        android:layout_marginLeft="10dp"
+        android:layout_margin="10dp"
         android:gravity="center_vertical|left"
+        android:drawableLeft="@drawable/elixir_50x50"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/guide_line"
+        app:layout_constraintBottom_toTopOf="@+id/divider"
         app:layout_constraintLeft_toLeftOf="parent"/>
 
     <TextView
@@ -28,28 +28,29 @@
         android:layout_height="wrap_content"
         android:textSize="15dp"
         android:textColor="@color/defaultColor"
+        android:textStyle="bold"
         android:gravity="center_vertical|left"
+        android:layout_marginLeft="5dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/guide_line"
+        app:layout_constraintBottom_toTopOf="@id/divider"
         app:layout_constraintLeft_toRightOf="@id/deck_popularity"/>
 
-    <TextView
+    <ImageView
         android:id="@+id/deck_link_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Share"
-        android:textSize="15dp"
+        android:src="@drawable/share_icon"
         android:layout_marginRight="10dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/guide_line"
+        app:layout_constraintBottom_toTopOf="@id/divider"
         app:layout_constraintRight_toRightOf="parent"/>
 
-    <android.support.constraint.Guideline
+<!--    <android.support.constraint.Guideline
         android:id="@+id/guide_line"
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.2" />
+        app:layout_constraintGuide_percent="0.2" />-->
 
     <View
         android:id="@+id/divider"
@@ -58,7 +59,7 @@
         android:background="#00afff"
         android:layout_marginBottom="10dp"
         android:layout_marginHorizontal="10dp"
-        app:layout_constraintTop_toBottomOf="@id/guide_line"
+        app:layout_constraintTop_toBottomOf="@id/deck_popularity"
         app:layout_constraintBottom_toTopOf="@+id/popular_deck_list"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>

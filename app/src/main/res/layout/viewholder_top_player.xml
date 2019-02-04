@@ -55,10 +55,10 @@
 
     <ImageView
         android:id="@+id/top_player_favorites_button"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:src="@drawable/plus_icon_selector"
+        android:src="@drawable/star_border_36"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/top_player_trophies"
         app:layout_constraintRight_toRightOf="parent"

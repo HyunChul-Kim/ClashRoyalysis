@@ -26,13 +26,19 @@
                 app:contentScrim="?attr/colorPrimary"
                 app:titleEnabled="false">
 
-                <com.google.android.gms.ads.AdView
+                <com.facebook.ads.NativeAdLayout
+                    android:id="@+id/register_native_ad_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+
+                <!--<com.google.android.gms.ads.AdView
                     xmlns:ads="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/register_top_banner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     ads:adSize="SMART_BANNER"
-                    ads:adUnitId="@string/ad_top_banner_test_id"/>
+                    ads:adUnitId="@string/ad_top_banner_test_id"/>-->
 
                 <!--<ImageView
                     android:id="@+id/header_image_view"

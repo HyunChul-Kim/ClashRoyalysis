@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import com.app.chul.clashroyalysis.CLASH_ROYALE_PACKAGE
 import com.app.chul.clashroyalysis.CLASH_ROYALE_SCHEME
@@ -15,7 +16,7 @@ import com.app.chul.clashroyalysis.view.CardListView
 class DeckViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     private val popularityTextView = itemView.findViewById<TextView>(R.id.deck_popularity_value)
-    private val shareBtn = itemView.findViewById<TextView>(R.id.deck_link_button)
+    private val shareBtn = itemView.findViewById<ImageView>(R.id.deck_link_button)
     private val deckList = itemView.findViewById<CardListView>(R.id.popular_deck_list)
 
     private lateinit var mDeck: DeckInfo
