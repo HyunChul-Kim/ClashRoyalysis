@@ -43,6 +43,7 @@
         android:gravity="left|center_vertical"
         android:textSize="10dp"
         android:textColor="@color/defaultColor"
+        android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/simple_user_info"
         app:layout_constraintLeft_toRightOf="@id/horizontal_guide_line"

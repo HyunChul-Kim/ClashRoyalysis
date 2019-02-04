@@ -1,8 +1,12 @@
 package com.app.chul.clashroyalysis.viewholder.register
 
 import android.content.Intent
+import android.graphics.Typeface
 import android.support.v7.widget.RecyclerView
+import android.text.Spannable
+import android.text.SpannableStringBuilder
 import android.text.TextUtils
+import android.text.style.StyleSpan
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -45,7 +49,7 @@ class SimpleInfoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         Glide.with(itemView.context).load(data.clan?.badge?.image).into(userClanImg)
         userDeck.bind(data.currentDeck)
         userName.text = data.name
-        userInfo.text = getUserInfoString(data)
+        userInfo.text = getUserInfoFormat(data)
         itemView.setOnClickListener {
             val intent = Intent(itemView.context, UserInfoActivity::class.java)
             intent.putExtra("data", data)
@@ -79,19 +83,25 @@ class SimpleInfoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
                 })
     }
 
-    private fun getUserInfoString(playerData: PlayerData): String{
-        val stringBuilder = StringBuilder("")
+    private fun getUserInfoFormat(playerData: PlayerData): SpannableStringBuilder{
+        val stringBuilder = SpannableStringBuilder("")
         stringBuilder.append("Trophies ")
-        stringBuilder.append(playerData.trophies)
+        var startIdx = stringBuilder.length
+        stringBuilder.append(playerData.trophies.toString())
+        stringBuilder.setSpan(StyleSpan(Typeface.BOLD), startIdx, stringBuilder.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         stringBuilder.append(" | ")
         playerData.arena?.let {
             stringBuilder.append("Arena ")
-            stringBuilder.append(it.name)
+            startIdx = stringBuilder.length
+            stringBuilder.append(it.arena)
+            stringBuilder.setSpan(StyleSpan(Typeface.BOLD), startIdx, stringBuilder.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
             stringBuilder.append(" | ")
         }
         stringBuilder.append("Rank ")
-        stringBuilder.append(playerData.rank)
+        startIdx = stringBuilder.length
+        stringBuilder.append(playerData.rank.toString())
+        stringBuilder.setSpan(StyleSpan(Typeface.BOLD), startIdx, stringBuilder.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
 
-        return stringBuilder.toString()
+        return stringBuilder
     }
 }
