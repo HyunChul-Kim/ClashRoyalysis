@@ -6,10 +6,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.app.chul.clashroyalysis.R
 import com.app.chul.clashroyalysis.jsonobject.PlayerData
+import com.app.chul.clashroyalysis.utils.ArenaInfo
 import com.bumptech.glide.Glide
 
 class UserProfileViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
+    private val userArenaImage = itemView.findViewById<ImageView>(R.id.profile_user_arena_image)
     private val userTrophy = itemView.findViewById<TextView>(R.id.profile_user_trophy)
     private val userRank = itemView.findViewById<TextView>(R.id.profile_user_rank)
     private val userArena = itemView.findViewById<TextView>(R.id.profile_user_arena)
@@ -24,5 +26,11 @@ class UserProfileViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         userClanName.text = data.clan?.name
         userArena.text = data.arena?.name
         Glide.with(itemView.context).load(data.clan?.badge?.image).into(userClanImg)
+        data.arena?.let { it ->
+            ArenaInfo.get(it.arena)?.let {info ->
+                Glide.with(itemView.context).load(info.resourceId).into(userArenaImage)
+            }
+        }
+
     }
 }
