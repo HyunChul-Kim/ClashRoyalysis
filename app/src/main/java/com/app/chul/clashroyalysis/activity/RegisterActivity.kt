@@ -15,10 +15,10 @@ import kotlinx.android.synthetic.main.activity_register.*
 
 class RegisterActivity: BaseActivity() {
 
-    lateinit var nativeAd: NativeAd
+    private lateinit var nativeAd: NativeAd
 
-    lateinit var nativeAdLayout: NativeAdLayout
-    lateinit var adView: LinearLayout
+    private lateinit var nativeAdLayout: NativeAdLayout
+    private lateinit var adView: LinearLayout
 
     private val mAdapter : RegisterViewPagerAdapter by lazy {
         RegisterViewPagerAdapter(supportFragmentManager, this)
