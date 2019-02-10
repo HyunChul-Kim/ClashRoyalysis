@@ -3,6 +3,8 @@ package com.app.chul.clashroyalysis.fragment
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +14,7 @@ import com.app.chul.clashroyalysis.adapter.RegisterAdapter
 import com.app.chul.clashroyalysis.bus.RxBus
 import com.app.chul.clashroyalysis.bus.RxEvent
 import com.app.chul.clashroyalysis.preference.RoyalysisPreferenceManager
+import com.app.chul.clashroyalysis.viewholder.register.SimpleInfoViewHolder
 import kotlinx.android.synthetic.main.fragment_register.*
 
 class RegisterFragment: Fragment(), BaseFragmentInterface {
@@ -51,6 +54,24 @@ class RegisterFragment: Fragment(), BaseFragmentInterface {
         register_recycler_view.layoutManager = LinearLayoutManager(context)
         register_recycler_view.adapter = mAdapter
         register_recycler_view.setHasFixedSize(true)
+        val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            override fun onMove(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, target: RecyclerView.ViewHolder?): Boolean {
+                return true
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
+                if(viewHolder != null && viewHolder is SimpleInfoViewHolder) {
+                    val tag = viewHolder.getTag()
+                    RoyalysisPreferenceManager.deleteUser(tag)
+                    mAdapter.removeItem(viewHolder.adapterPosition)
+                }
+            }
+
+            override fun getSwipeDirs(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?): Int {
+                return if(viewHolder is SimpleInfoViewHolder) super.getSwipeDirs(recyclerView, viewHolder) else 0
+            }
+        })
+        itemTouchHelper.attachToRecyclerView(register_recycler_view)
     }
 
     private fun initUserInfo() {

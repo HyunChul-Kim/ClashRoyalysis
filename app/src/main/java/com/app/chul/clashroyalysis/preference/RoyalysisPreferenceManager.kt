@@ -34,6 +34,16 @@ object RoyalysisPreferenceManager{
         return false
     }
 
+    fun deleteUser(tag: String): Boolean {
+        val list = getUserList()
+        if(list.contains(tag)) {
+            list.remove(tag)
+            setUserList(list)
+            return  true
+        }
+        return false
+    }
+
     private fun setUserList(list: ArrayList<String>) {
         val dataList: String = Gson().toJson(list)
         setData(dataList)

@@ -104,4 +104,6 @@ class SimpleInfoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
         return stringBuilder
     }
+
+    fun getTag() = userTag
 }

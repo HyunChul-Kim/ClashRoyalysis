@@ -65,4 +65,9 @@ class RegisterAdapter(private val context: Context?): RecyclerView.Adapter<Recyc
         notifyItemInserted(itemCount - 1)
     }
 
+    fun removeItem(position: Int) {
+        mUserList.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
 }
