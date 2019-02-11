@@ -7,7 +7,9 @@ import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.TextUtils
 import android.text.style.StyleSpan
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.app.chul.clashroyalysis.activity.UserInfoActivity
@@ -17,32 +19,46 @@ import com.app.chul.clashroyalysis.retrofit.ClashRoyaleRetrofit
 import com.app.chul.clashroyalysis.view.CardListView
 import com.app.chul.clashroyalysis.view.RetryView
 import com.app.chul.clashroyalysis.view.StereoLoadingView
+import com.app.chul.clashroyalysis.viewholder.SubTaskViewHolder
 import com.bumptech.glide.Glide
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 
-class SimpleInfoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+const val TAG = "SimpleInfo"
+
+class SimpleInfoViewHolder(parent: ViewGroup): SubTaskViewHolder(parent) {
 
     private var playerData: PlayerData? = null
 
-    private val loadingView = itemView.findViewById<StereoLoadingView>(R.id.simple_user_loading_view)
-    private val retryView = itemView.findViewById<RetryView>(R.id.retry_view)
-    private val userClanImg = itemView.findViewById<ImageView>(R.id.simple_user_clan_img)
-    private val userName = itemView.findViewById<TextView>(R.id.simple_user_name)
-    private val userInfo = itemView.findViewById<TextView>(R.id.simple_user_info)
-    private val userDeck = itemView.findViewById<CardListView>(R.id.simple_user_deck_list)
-    private val divider = itemView.findViewById<View>(R.id.divider)
+    private val loadingView: StereoLoadingView
+    private val retryView: RetryView
+    private val userClanImg: ImageView
+    private val userName: TextView
+    private val userInfo: TextView
+    private val userDeck: CardListView
+    private val divider: View
 
     private var userTag: String = ""
 
     init {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.viewholder_user_simple_info, parent, false)
+
+        loadingView = view.findViewById(R.id.simple_user_loading_view)
+        retryView = view.findViewById(R.id.retry_view)
         retryView.setListener {
             if(!TextUtils.isEmpty(userTag)) {
                 retryView.visibility = View.GONE
                 requestPlayerData(userTag)
             }
         }
+        userClanImg = view.findViewById(R.id.simple_user_clan_img)
+        userName = view.findViewById(R.id.simple_user_name)
+        userInfo = view.findViewById(R.id.simple_user_info)
+        userDeck = view.findViewById(R.id.simple_user_deck_list)
+        divider = view.findViewById(R.id.divider)
+
+        addForegroundTask(view)
     }
 
     private fun setData(data: PlayerData) {

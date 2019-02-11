@@ -46,8 +46,12 @@ fun readAssetJson(context: Context, fileName: String): String {
     return json
 }
 
-fun dpToPx(context: Context, size: Int): Float {
-    return size * context.resources.displayMetrics.density
+fun dpToPx(context: Context?, size: Int): Int {
+    context?.let {
+        return (size * context.resources.displayMetrics.density).toInt()
+    }
+
+    return 0
 }
 
 fun hideKeyboard(context: Context, binder: IBinder, flag: Int) {

@@ -1,11 +1,13 @@
 package com.app.chul.clashroyalysis.fragment
 
+import android.graphics.Canvas
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import com.app.chul.clashroyalysis.R
@@ -14,6 +16,7 @@ import com.app.chul.clashroyalysis.adapter.RegisterAdapter
 import com.app.chul.clashroyalysis.bus.RxBus
 import com.app.chul.clashroyalysis.bus.RxEvent
 import com.app.chul.clashroyalysis.preference.RoyalysisPreferenceManager
+import com.app.chul.clashroyalysis.utils.ChulLog
 import com.app.chul.clashroyalysis.viewholder.register.SimpleInfoViewHolder
 import kotlinx.android.synthetic.main.fragment_register.*
 
@@ -69,6 +72,33 @@ class RegisterFragment: Fragment(), BaseFragmentInterface {
 
             override fun getSwipeDirs(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?): Int {
                 return if(viewHolder is SimpleInfoViewHolder) super.getSwipeDirs(recyclerView, viewHolder) else 0
+            }
+
+            override fun onChildDraw(c: Canvas?, recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
+                if(viewHolder != null && viewHolder is SimpleInfoViewHolder) {
+                    if (dX < 0) {
+                        ChulLog.log("Background x = ${viewHolder.getBackgroundTask().x} / Foreground x = ${viewHolder.getForegroundTask().x}, width = ${viewHolder.getForegroundTask().width}")
+                        ItemTouchHelper.Callback.getDefaultUIUtil().onDraw(c, recyclerView, viewHolder.getForegroundTask(), dX, dY, actionState, isCurrentlyActive)
+                    }
+                }
+            }
+
+            override fun onChildDrawOver(c: Canvas?, recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
+                if(viewHolder != null && viewHolder is SimpleInfoViewHolder) {
+                    if(dX < 0) {
+                        ItemTouchHelper.Callback.getDefaultUIUtil().onDraw(c, recyclerView, viewHolder.getForegroundTask(), dX, dY, actionState, isCurrentlyActive)
+                    }
+                }
+            }
+
+            override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
+                if(viewHolder != null && viewHolder is SimpleInfoViewHolder) {
+                    ItemTouchHelper.Callback.getDefaultUIUtil().onSelected(viewHolder.getForegroundTask())
+                }
+            }
+
+            fun undo() {
+
             }
         })
         itemTouchHelper.attachToRecyclerView(register_recycler_view)
