@@ -5,10 +5,10 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.RectF
+import android.os.Vibrator
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.MotionEvent
-import android.view.View
 
 @SuppressLint("ClickableViewAccessibility")
 class SwipeController: ItemTouchHelper.Callback() {
@@ -24,16 +24,8 @@ class SwipeController: ItemTouchHelper.Callback() {
     private var buttonInstance: RectF? = null
     private var selectedViewHolder: RecyclerView.ViewHolder? = null
 
-    override fun getSwipeThreshold(viewHolder: RecyclerView.ViewHolder?): Float {
-        return 1f
-    }
-
-    override fun getSwipeEscapeVelocity(defaultValue: Float): Float {
-        return 2f
-    }
-
-    override fun getSwipeVelocityThreshold(defaultValue: Float): Float {
-        return 2f
+    override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
+        super.onSelectedChanged(viewHolder, actionState)
     }
 
     override fun getMovementFlags(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?): Int {
@@ -73,10 +65,10 @@ class SwipeController: ItemTouchHelper.Callback() {
     }
 
     override fun convertToAbsoluteDirection(flags: Int, layoutDirection: Int): Int {
-        /*if(swipeBack) {
+        if(swipeBack) {
             swipeBack = buttonState != ButtonState.GONE
             return 0
-        }*/
+        }
         return super.convertToAbsoluteDirection(flags, layoutDirection)
     }
 
@@ -137,7 +129,7 @@ class SwipeController: ItemTouchHelper.Callback() {
         val itemView = viewHolder?.itemView
         val paint = Paint()
         val leftButton = RectF(itemView?.left!!.toFloat(), itemView.top.toFloat(), itemView.left.toFloat() + buttonWidthWithoutPadding, itemView.bottom.toFloat())
-        paint.color = Color.BLUE
+        paint.color = Color.parseColor("#3F51B5")
         c?.drawRoundRect(leftButton, corners, corners, paint)
         drawText("DELETE", c, leftButton, paint)
 
