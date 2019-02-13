@@ -26,7 +26,8 @@ class RegisterAdapter(private val context: Context?): RecyclerView.Adapter<Recyc
                 RegisterViewHolder(view)
             }
             ViewType.USER_VIEW_TYPE -> {
-                SimpleInfoViewHolder(parent)
+                val view = LayoutInflater.from(context).inflate(R.layout.viewholder_user_simple_info, parent, false)
+                SimpleInfoViewHolder(view)
             }
             else -> {
                 val view = LayoutInflater.from(context).inflate(R.layout.viewholder_register, parent, false)

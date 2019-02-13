@@ -7,7 +7,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import com.app.chul.clashroyalysis.R
@@ -15,10 +14,8 @@ import com.app.chul.clashroyalysis.`interface`.BaseFragmentInterface
 import com.app.chul.clashroyalysis.adapter.RegisterAdapter
 import com.app.chul.clashroyalysis.bus.RxBus
 import com.app.chul.clashroyalysis.bus.RxEvent
-import com.app.chul.clashroyalysis.listener.SubTaskCallback
 import com.app.chul.clashroyalysis.preference.RoyalysisPreferenceManager
-import com.app.chul.clashroyalysis.utils.ChulLog
-import com.app.chul.clashroyalysis.viewholder.register.SimpleInfoViewHolder
+import com.app.chul.clashroyalysis.utils.SwipeController
 import kotlinx.android.synthetic.main.fragment_register.*
 
 class RegisterFragment: Fragment(), BaseFragmentInterface {
@@ -58,18 +55,14 @@ class RegisterFragment: Fragment(), BaseFragmentInterface {
         register_recycler_view.layoutManager = LinearLayoutManager(context)
         register_recycler_view.adapter = mAdapter
         register_recycler_view.setHasFixedSize(true)
-        val itemTouchHelper = ItemTouchHelper(object : SubTaskCallback(0, ItemTouchHelper.LEFT) {
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
-                super.onSwiped(viewHolder, direction)
-                if(viewHolder != null && viewHolder is SimpleInfoViewHolder) {
-                    /*val tag = viewHolder.getTag()
-                    RoyalysisPreferenceManager.deleteUser(tag)
-                    mAdapter.removeItem(viewHolder.adapterPosition)*/
-                }
+        val swipeController = SwipeController()
+        val itemTouchHelper = ItemTouchHelper(swipeController)
+        itemTouchHelper.attachToRecyclerView(register_recycler_view)
+        register_recycler_view.addItemDecoration(object : RecyclerView.ItemDecoration() {
+            override fun onDraw(c: Canvas?, parent: RecyclerView?, state: RecyclerView.State?) {
+                swipeController.onDraw(c)
             }
         })
-        itemTouchHelper.attachToRecyclerView(register_recycler_view)
     }
 
     private fun initUserInfo() {
