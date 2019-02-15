@@ -29,7 +29,7 @@ class RegisterFragment: Fragment(), BaseFragmentInterface {
     }
 
     companion object {
-        fun newInstance(): Fragment {
+        fun getInstance(): Fragment {
             return RegisterFragment()
         }
     }

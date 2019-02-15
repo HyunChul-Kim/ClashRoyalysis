@@ -13,7 +13,7 @@ import com.app.chul.clashroyalysis.adapter.RegisterViewPagerAdapter
 import com.facebook.ads.*
 import kotlinx.android.synthetic.main.activity_register.*
 
-class RegisterActivity: BaseActivity() {
+class RegisterActivity: BaseActivity(){
 
     private lateinit var nativeAd: NativeAd
 

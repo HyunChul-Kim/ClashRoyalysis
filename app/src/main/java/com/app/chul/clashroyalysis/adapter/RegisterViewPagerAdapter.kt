@@ -14,10 +14,10 @@ class RegisterViewPagerAdapter(fm: FragmentManager, context: Context): FragmentS
 
     override fun getItem(position: Int): Fragment {
         return when(position) {
-            0 -> RegisterFragment.newInstance()
+            0 -> RegisterFragment.getInstance()
             1 -> PopularDeckFragment.newInstance()
             2 -> RankFragment.newInstance()
-            else -> RegisterFragment.newInstance()
+            else -> RegisterFragment.getInstance()
         }
     }
 
