@@ -3,6 +3,7 @@ package com.app.chul.clashroyalysis.view
 import android.content.Context
 import android.support.v4.widget.ViewDragHelper
 import android.util.AttributeSet
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 
@@ -13,12 +14,30 @@ class SwipeMenuLayout
     private val mDragHelper: ViewDragHelper
     private val mDragHelperCallback = MenuDragHelperCallBack()
 
+    private var mLeftWidthRate = 0.3f
+
     init {
         mDragHelper = ViewDragHelper.create(this, 1f, mDragHelperCallback)
     }
 
+    override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
+        return super.onInterceptTouchEvent(ev)
+    }
+
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
 
+    }
+
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+    }
+
+    /**
+     *  rate = 0.0f ~ 1.0f
+     *  default rate = 0.3f
+     */
+    fun setLeftWidthRate(rate: Float) {
+        mLeftWidthRate = rate
     }
 
     class MenuDragHelperCallBack: ViewDragHelper.Callback(){
