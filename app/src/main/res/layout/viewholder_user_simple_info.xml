@@ -1,101 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/outline_bg"
-    android:layout_marginLeft="15dp"
-    android:layout_marginRight="15dp"
-    android:layout_marginTop="5dp"
-    android:layout_marginBottom="5dp">
+    app:cardElevation="@dimen/card_elevation"
+    app:cardCornerRadius="@dimen/card_corner_radius"
+    app:cardUseCompatPadding="true">
 
-    <com.app.chul.clashroyalysis.view.StereoLoadingView
-        android:id="@+id/simple_user_loading_view"
-        android:layout_width="wrap_content"
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        android:paddingTop="5dp">
 
-    <ImageView
-        android:id="@+id/simple_user_clan_img"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginLeft="10dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="@+id/vertical_guide_line"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/simple_user_name"/>
+        <com.app.chul.clashroyalysis.view.StereoLoadingView
+            android:id="@+id/simple_user_loading_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
 
-    <TextView
-        android:id="@+id/simple_user_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="start|center_vertical"
-        android:textSize="12dp"
-        android:textColor="@color/defaultColor"
-        android:textStyle="bold"
-        android:layout_marginStart="10dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/simple_user_info"
-        app:layout_constraintLeft_toRightOf="@id/simple_user_clan_img"
-        app:layout_constraintRight_toRightOf="parent"/>
+        <ImageView
+            android:id="@+id/simple_user_clan_img"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/vertical_guide_line"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/simple_user_name"/>
 
-    <TextView
-        android:id="@+id/simple_user_info"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="start|center_vertical"
-        android:textSize="12dp"
-        android:textColor="@color/defaultColor"
-        android:layout_marginStart="10dp"
-        app:layout_constraintTop_toBottomOf="@id/simple_user_name"
-        app:layout_constraintBottom_toBottomOf="@+id/vertical_guide_line"
-        app:layout_constraintLeft_toRightOf="@id/simple_user_clan_img"
-        app:layout_constraintRight_toRightOf="parent"/>
+        <TextView
+            android:id="@+id/simple_user_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="start|center_vertical"
+            android:textSize="12dp"
+            android:textColor="@color/defaultColor"
+            android:textStyle="bold"
+            android:layout_marginStart="10dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/simple_user_info"
+            app:layout_constraintLeft_toRightOf="@id/simple_user_clan_img"
+            app:layout_constraintRight_toRightOf="parent"/>
 
-    <android.support.constraint.Guideline
-        android:id="@+id/vertical_guide_line"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="50dp" />
+        <TextView
+            android:id="@+id/simple_user_info"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="start|center_vertical"
+            android:textSize="12dp"
+            android:textColor="@color/defaultColor"
+            android:layout_marginStart="10dp"
+            app:layout_constraintTop_toBottomOf="@id/simple_user_name"
+            app:layout_constraintBottom_toBottomOf="@+id/vertical_guide_line"
+            app:layout_constraintLeft_toRightOf="@id/simple_user_clan_img"
+            app:layout_constraintRight_toRightOf="parent"/>
 
-    <View
-        android:id="@+id/divider"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="#00afff"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:visibility="gone"
-        app:layout_constraintTop_toTopOf="@id/vertical_guide_line"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        <android.support.constraint.Guideline
+            android:id="@+id/vertical_guide_line"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="50dp" />
 
-    <com.app.chul.clashroyalysis.view.CardListView
-        android:id="@+id/simple_user_deck_list"
-        android:layout_width="0dp"
-        android:layout_height="120dp"
-        android:layout_marginVertical="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/divider" />
+        <com.app.chul.clashroyalysis.view.CardListView
+            android:id="@+id/simple_user_deck_list"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:layout_marginVertical="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/vertical_guide_line" />
 
-    <com.app.chul.clashroyalysis.view.RetryView
-        android:id="@+id/retry_view"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:visibility="gone"
-        android:layout_margin="1dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        <com.app.chul.clashroyalysis.view.RetryView
+            android:id="@+id/retry_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            android:layout_margin="1dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
 
-</android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.v7.widget.CardView>

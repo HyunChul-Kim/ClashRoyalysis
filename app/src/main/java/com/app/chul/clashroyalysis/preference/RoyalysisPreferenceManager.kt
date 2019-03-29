@@ -58,7 +58,7 @@ object RoyalysisPreferenceManager{
         synchronized(this@RoyalysisPreferenceManager) {
             val editor = mPref.edit()
             editor.putString(USER_TAG_PREF, data)
-            editor.commit()
+            editor.apply()
         }
     }
 

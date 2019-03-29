@@ -18,15 +18,8 @@ class IntroActivity : BaseActivity() {
     }
 
     private fun checkUserInfo(){
-        val tag = RoyalysisPreferenceManager.getUsers()
-        if(!TextUtils.isEmpty(tag)){
-            val intent =  Intent(this, RegisterActivity::class.java)
-            intent.putExtra("tag", tag)
-            startActivity(intent)
-        }else{
-            val intent =  Intent(this, RegisterActivity::class.java)
-            startActivity(intent)
-        }
+        val intent =  Intent(this, RegisterActivity::class.java)
+        startActivity(intent)
         finish()
     }
 

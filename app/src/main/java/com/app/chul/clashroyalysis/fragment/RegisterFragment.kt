@@ -12,6 +12,7 @@ import com.app.chul.clashroyalysis.adapter.RegisterAdapter
 import com.app.chul.clashroyalysis.bus.RxBus
 import com.app.chul.clashroyalysis.bus.RxEvent
 import com.app.chul.clashroyalysis.preference.RoyalysisPreferenceManager
+import com.app.chul.clashroyalysis.utils.UserDataHelper
 import kotlinx.android.synthetic.main.fragment_register.*
 
 class RegisterFragment: Fragment(), BaseFragmentInterface {
@@ -54,7 +55,7 @@ class RegisterFragment: Fragment(), BaseFragmentInterface {
     }
 
     private fun initUserInfo() {
-        val userList: ArrayList<String> = RoyalysisPreferenceManager.getUserList()
+        val userList: ArrayList<String> = UserDataHelper.getInstance(context).getUserList()
         mAdapter.setData(userList)
     }
 
@@ -64,8 +65,8 @@ class RegisterFragment: Fragment(), BaseFragmentInterface {
 
     private fun registerRxBus() {
         RxBus.register(this, RxBus.listen(RxEvent.EventAddTag::class.java).subscribe {
-            if(RoyalysisPreferenceManager.addUser(it.tag)) {
-                addUser(it.tag)
+            if(UserDataHelper.getInstance(context).addUserData(it.tag)) {
+                mAdapter.notifyItemInserted(mAdapter.itemCount - 1)
             }
         })
     }
