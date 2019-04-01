@@ -10,6 +10,8 @@ import android.widget.TextView
 import com.app.chul.clashroyalysis.R
 import com.app.chul.clashroyalysis.`interface`.BaseFragmentInterface
 import com.app.chul.clashroyalysis.adapter.RegisterViewPagerAdapter
+import com.app.chul.clashroyalysis.fragment.RegisterFragment
+import com.app.chul.clashroyalysis.utils.UserDataHelper
 import com.facebook.ads.*
 import kotlinx.android.synthetic.main.activity_register.*
 
@@ -47,7 +49,9 @@ class RegisterActivity: BaseActivity(){
             }
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
-
+                if(supportFragmentManager.fragments[register_tab.selectedTabPosition] is RegisterFragment) {
+                    UserDataHelper.getInstance(applicationContext).updateData()
+                }
             }
 
         })
