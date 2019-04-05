@@ -10,4 +10,8 @@
     <string name="three_crown_title">3Crown Rate</string>
     <string name="max_trophy">Max Trophy</string>
     <string name="top_trophy">Top Trophy</string>
+    <string name="delete_user">Delete User</string>
+    <string name="delete_user_ask">Are you delete this user?</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
 </resources>

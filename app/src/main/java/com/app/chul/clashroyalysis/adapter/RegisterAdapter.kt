@@ -5,12 +5,11 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.app.chul.clashroyalysis.R
-import com.app.chul.clashroyalysis.utils.dpToPx
-import com.app.chul.clashroyalysis.view.SubTaskView
+import com.app.chul.clashroyalysis.utils.DragAndDropHelperCallback
 import com.app.chul.clashroyalysis.viewholder.register.RegisterViewHolder
 import com.app.chul.clashroyalysis.viewholder.register.SimpleInfoViewHolder
 
-class RegisterAdapter(private val context: Context?): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+abstract class RegisterAdapter(private val context: Context?): RecyclerView.Adapter<RecyclerView.ViewHolder>(), DragAndDropHelperCallback.DragAndDropListener {
 
     private var mUserList = ArrayList<String>()
 
@@ -57,6 +56,25 @@ class RegisterAdapter(private val context: Context?): RecyclerView.Adapter<Recyc
         }
     }
 
+    override fun itemMoved(position: Int, targetPosition: Int): Boolean {
+        if(position >= 0 && targetPosition >= 0 && position < mUserList.size && targetPosition < mUserList.size) {
+            val item = mUserList[position]
+            mUserList.remove(item)
+            mUserList.add(targetPosition, item)
+            notifyItemMoved(position, targetPosition)
+
+            return true
+        }
+
+        return false
+    }
+
+    override fun itemSwiped(position: Int) {
+        if(position >= 0 && position < mUserList.size) {
+            showDeleteDialog(mUserList[position])
+        }
+    }
+
     fun setData(data: ArrayList<String>) {
         mUserList = data
         notifyDataSetChanged()
@@ -67,9 +85,20 @@ class RegisterAdapter(private val context: Context?): RecyclerView.Adapter<Recyc
         notifyItemInserted(itemCount - 1)
     }
 
-    fun removeItem(position: Int) {
-        mUserList.removeAt(position)
-        notifyItemRemoved(position)
+    fun deleteItem(tag: String) {
+        val position = mUserList.indexOf(tag)
+        if(position >= 0 && position < mUserList.size) {
+            mUserList.removeAt(position)
+            notifyItemRemoved(position)
+        }
     }
 
+    fun refreshItem(tag: String) {
+        var position = mUserList.indexOf(tag)
+        if(position >= 0 && position < mUserList.size) {
+            notifyItemChanged(position)
+        }
+    }
+
+    abstract fun showDeleteDialog(tag: String)
 }
