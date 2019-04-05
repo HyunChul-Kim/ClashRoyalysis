@@ -29,10 +29,10 @@ class TopPlayerViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
             if(!TextUtils.isEmpty(playerTag)) {
                 RxBus.publish(RxEvent.EventAddTag(playerTag))
                 isChecked = if(isChecked) {
-                    favoritesButton.setImageResource(R.drawable.star_border_36)
+                    favoritesButton.setImageResource(R.drawable.icon_star_unselect)
                     false
                 } else {
-                    favoritesButton.setImageResource(R.drawable.star_black_36)
+                    favoritesButton.setImageResource(R.drawable.icon_star_select)
                     true
                 }
             }
@@ -49,10 +49,10 @@ class TopPlayerViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
             playerTrophies.text = playerData.trophies.toString()
             playerTag = playerData.tag
             isChecked = if(UserDataHelper.getInstance(itemView.context).getUserList().contains(playerTag)) {
-                favoritesButton.setImageResource(R.drawable.star_black_36)
+                favoritesButton.setImageResource(R.drawable.icon_star_select)
                 true
             } else {
-                favoritesButton.setImageResource(R.drawable.star_border_36)
+                favoritesButton.setImageResource(R.drawable.icon_star_unselect)
                 false
             }
         }
