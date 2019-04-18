@@ -1,7 +1,7 @@
 package com.app.chul.clashroyalysis.activity
 
+import android.app.Fragment
 import android.os.Bundle
-import android.support.design.widget.TabLayout
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
@@ -9,11 +9,18 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.app.chul.clashroyalysis.R
 import com.app.chul.clashroyalysis.`interface`.BaseFragmentInterface
-import com.app.chul.clashroyalysis.adapter.RegisterViewPagerAdapter
+import com.app.chul.clashroyalysis.fragment.PopularDeckFragment
+import com.app.chul.clashroyalysis.fragment.RankFragment
 import com.app.chul.clashroyalysis.fragment.RegisterFragment
-import com.app.chul.clashroyalysis.utils.UserDataHelper
+import com.app.chul.clashroyalysis.jsonobject.PopularDeckList
+import com.app.chul.clashroyalysis.jsonobject.TopPlayerList
+import com.app.chul.clashroyalysis.listener.TabChangedListener
+import com.app.chul.clashroyalysis.presenter.FragmentDataPresenter
+import com.app.chul.clashroyalysis.view.FragmentTabView
 import com.facebook.ads.*
 import kotlinx.android.synthetic.main.activity_register.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class RegisterActivity: BaseActivity(){
 
@@ -22,39 +29,102 @@ class RegisterActivity: BaseActivity(){
     private lateinit var nativeAdLayout: NativeAdLayout
     private lateinit var adView: LinearLayout
 
-    private val mAdapter : RegisterViewPagerAdapter by lazy {
-        RegisterViewPagerAdapter(supportFragmentManager, this)
-    }
+    private val fragmentMap = HashMap<String, Fragment>()
+    private var selectedTab = FragmentTabView.TabType.Home.name
+    private val dataPresenter = FragmentDataPresenter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        initViewPager()
+        initFragmentData()
+        initFragment()
+        initFragmentTab()
+        initSwipeRefresh()
         loadNativeAd()
     }
 
-    private fun initViewPager() {
-        val limit = if(mAdapter.count > 1) mAdapter.count - 1 else 1
-        register_view_pager.offscreenPageLimit = limit
-        register_view_pager.adapter = mAdapter
-        register_tab.setupWithViewPager(register_view_pager)
-        register_tab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-                (supportFragmentManager.fragments[register_tab.selectedTabPosition] as BaseFragmentInterface).scrollTop()
-            }
+    private fun initFragment() {
+        fragmentMap[FragmentTabView.TabType.Home.name] = RegisterFragment.getInstance()
+        fragmentMap[FragmentTabView.TabType.Deck.name] = PopularDeckFragment.getInstance()
+        fragmentMap[FragmentTabView.TabType.Rank.name] = RankFragment.getInstance()
+    }
 
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
+    private fun initFragmentTab() {
+        register_fragment_tab.setTabChangedListener(object: TabChangedListener {
+            override fun onChanged(type: FragmentTabView.TabType) {
+                when(type) {
+                    FragmentTabView.TabType.Home -> {
+                        selectedTab = FragmentTabView.TabType.Home.name
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.register_fragment_container, fragmentMap[selectedTab])
+                                .commit()
+                        (fragmentMap[selectedTab] as RegisterFragment).setData(dataPresenter.getUserList())
+                    }
 
-            }
+                    FragmentTabView.TabType.Deck -> {
+                        selectedTab = FragmentTabView.TabType.Deck.name
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.register_fragment_container, fragmentMap[selectedTab])
+                                .commit()
+                        (fragmentMap[selectedTab] as PopularDeckFragment).setData(dataPresenter.getDeckList())
+                    }
 
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                if(supportFragmentManager.fragments[register_tab.selectedTabPosition] is RegisterFragment) {
-                    UserDataHelper.getInstance(applicationContext).updateData()
+                    FragmentTabView.TabType.Rank -> {
+                        selectedTab = FragmentTabView.TabType.Rank.name
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.register_fragment_container, fragmentMap[selectedTab])
+                                .commit()
+                        (fragmentMap[selectedTab] as RankFragment).setData(dataPresenter.getRankList())
+                    }
                 }
             }
-
         })
+
+        // first visible fragment is Home //
+        selectedTab = FragmentTabView.TabType.Home.name
+        fragmentManager.beginTransaction()
+                .replace(R.id.register_fragment_container, fragmentMap[selectedTab])
+                .commit()
+        (fragmentMap[selectedTab] as RegisterFragment).setData(dataPresenter.getUserList())
+
+    }
+
+    private fun initFragmentData() {
+        dataPresenter.initData("kr", 50)
+    }
+
+    private fun initSwipeRefresh() {
+        register_swipe_refresh.setOnRefreshListener {
+            when(selectedTab) {
+                FragmentTabView.TabType.Home.name -> {
+                    dataPresenter.getRefreshUserList(object: FragmentDataPresenter.ResponseListener<ArrayList<String>>{
+                        override fun onResponse(response: ArrayList<String>) {
+                            (fragmentMap[selectedTab] as RegisterFragment).setData(response)
+                            register_swipe_refresh.isRefreshing = false
+                        }
+                    })
+                }
+
+                FragmentTabView.TabType.Deck.name -> {
+                    dataPresenter.getRefreshDeckList(object : FragmentDataPresenter.ResponseListener<PopularDeckList>{
+                        override fun onResponse(response: PopularDeckList) {
+                            (fragmentMap[selectedTab] as PopularDeckFragment).setData(response)
+                            register_swipe_refresh.isRefreshing = false
+                        }
+                    })
+                }
+
+                FragmentTabView.TabType.Rank.name -> {
+                    dataPresenter.getRefreshRankList("kr", 50, object : FragmentDataPresenter.ResponseListener<TopPlayerList>{
+                        override fun onResponse(response: TopPlayerList) {
+                            (fragmentMap[selectedTab] as RankFragment).setData(response)
+                            register_swipe_refresh.isRefreshing = false
+                        }
+                    })
+                }
+            }
+        }
     }
 
     private fun loadNativeAd() {
@@ -89,7 +159,7 @@ class RegisterActivity: BaseActivity(){
 
 
     private fun inflateAd(nativeAd: NativeAd) {
-        nativeAd.unregisterView()
+        /*nativeAd.unregisterView()
 
         nativeAdLayout = findViewById(R.id.register_native_ad_container)
         adView = LayoutInflater.from(this).inflate(R.layout.view_native_ad, nativeAdLayout, false) as LinearLayout
@@ -119,6 +189,6 @@ class RegisterActivity: BaseActivity(){
         clickableViews.add(nativeAdTitle)
         clickableViews.add(nativeAdCallToAction)
 
-        nativeAd.registerViewForInteraction(adView, nativeAdMedia, nativeAdIcon, clickableViews)
+        nativeAd.registerViewForInteraction(adView, nativeAdMedia, nativeAdIcon, clickableViews)*/
     }
 }

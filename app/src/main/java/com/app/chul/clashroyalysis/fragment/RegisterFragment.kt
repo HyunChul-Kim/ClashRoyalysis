@@ -1,8 +1,7 @@
 package com.app.chul.clashroyalysis.fragment
 
-import android.content.DialogInterface
+import android.app.Fragment
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.helper.ItemTouchHelper
@@ -14,20 +13,27 @@ import com.app.chul.clashroyalysis.`interface`.BaseFragmentInterface
 import com.app.chul.clashroyalysis.adapter.RegisterAdapter
 import com.app.chul.clashroyalysis.bus.RxBus
 import com.app.chul.clashroyalysis.bus.RxEvent
+import com.app.chul.clashroyalysis.utils.ChulLog
 import com.app.chul.clashroyalysis.utils.DragAndDropHelperCallback
 import com.app.chul.clashroyalysis.utils.UserDataHelper
 import kotlinx.android.synthetic.main.fragment_register.*
 
-class RegisterFragment: Fragment(), BaseFragmentInterface {
+class RegisterFragment: Fragment(), BaseFragmentInterface<ArrayList<String>> {
 
     override fun scrollTop() {
         register_recycler_view?.scrollToPosition(0)
     }
 
+    override fun refresh() {
+
+    }
+
+    private var userList = ArrayList<String>()
+
     private val mAdapter : RegisterAdapter by lazy {
-        object: RegisterAdapter(context) {
+        object: RegisterAdapter(activity) {
             override fun showDeleteDialog(tag: String) {
-                context?.let {
+                activity?.let {
                     AlertDialog.Builder(it)
                             .setTitle(R.string.delete_user)
                             .setMessage(R.string.delete_user_ask)
@@ -45,11 +51,17 @@ class RegisterFragment: Fragment(), BaseFragmentInterface {
     }
 
     companion object {
-        fun getInstance(): Fragment {
-            return RegisterFragment()
-        }
+        private var Instance: RegisterFragment? = null
+        fun getInstance(): Fragment =
+            Instance ?: synchronized(this) {
+                Instance ?: RegisterFragment()
+            }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        retainInstance = true
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_register, container, false)
@@ -59,7 +71,6 @@ class RegisterFragment: Fragment(), BaseFragmentInterface {
         super.onActivityCreated(savedInstanceState)
         registerRxBus()
         initRecyclerView()
-        initUserInfo()
     }
 
     override fun onDestroyView() {
@@ -68,16 +79,16 @@ class RegisterFragment: Fragment(), BaseFragmentInterface {
     }
 
     private fun initRecyclerView() {
-        register_recycler_view.layoutManager = LinearLayoutManager(context)
+        register_recycler_view.layoutManager = LinearLayoutManager(activity)
         register_recycler_view.adapter = mAdapter
         register_recycler_view.setHasFixedSize(true)
+        mAdapter.setData(userList)
         var itemTouchHelper = ItemTouchHelper(DragAndDropHelperCallback(mAdapter))
         itemTouchHelper.attachToRecyclerView(register_recycler_view)
     }
 
-    private fun initUserInfo() {
-        val userList: ArrayList<String> = UserDataHelper.getInstance(context).getUserList()
-        mAdapter.setData(userList)
+    override fun setData(data: ArrayList<String>) {
+        userList = data
     }
 
     private fun addUser(tag: String) {
@@ -90,7 +101,7 @@ class RegisterFragment: Fragment(), BaseFragmentInterface {
 
     private fun registerRxBus() {
         RxBus.register(this, RxBus.listen(RxEvent.EventAddTag::class.java).subscribe {
-            if(UserDataHelper.getInstance(context).addUserData(it.tag)) {
+            if(UserDataHelper.getInstance(activity).addUserData(it.tag)) {
                 mAdapter.notifyItemInserted(mAdapter.itemCount - 1)
             }
         })
