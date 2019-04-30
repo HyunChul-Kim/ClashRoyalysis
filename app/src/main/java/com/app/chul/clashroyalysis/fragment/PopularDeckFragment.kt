@@ -25,18 +25,17 @@ class PopularDeckFragment: Fragment(), BaseFragmentInterface<PopularDeckList> {
     }
 
     override fun refresh() {
-
+        adapter?.setData(deckList)
     }
 
     override fun setData(data: PopularDeckList) {
         deckList = data
+        adapter?.setData(deckList)
     }
 
     private var page = 0
     private var deckList = PopularDeckList()
-    private val adapter : DeckListAdapter by lazy {
-        DeckListAdapter(activity)
-    }
+    private var adapter : DeckListAdapter ?= null
 
     companion object {
         fun getInstance(): Fragment {
@@ -51,13 +50,18 @@ class PopularDeckFragment: Fragment(), BaseFragmentInterface<PopularDeckList> {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         initRecyclerView()
+        initAdapter()
     }
 
     private fun initRecyclerView() {
         popular_deck_recycler_view.layoutManager = LinearLayoutManager(activity)
-        popular_deck_recycler_view.adapter = adapter
         popular_deck_recycler_view.setHasFixedSize(true)
-        adapter.setData(deckList)
+    }
+
+    private fun initAdapter() {
+        adapter = DeckListAdapter(activity)
+        adapter?.setData(deckList)
+        popular_deck_recycler_view.adapter = adapter
     }
 
     private fun requestMorePopularDeckList(page: Int) {
@@ -71,7 +75,7 @@ class PopularDeckFragment: Fragment(), BaseFragmentInterface<PopularDeckList> {
             override fun onResponse(call: Call<PopularDeckList>?, response: Response<PopularDeckList>?) {
                 Log.i("Popular Service", "Response Success")
                 response?.body()?.let {
-                    adapter.addData(it)
+                    adapter?.addData(it)
                 }
             }
         })

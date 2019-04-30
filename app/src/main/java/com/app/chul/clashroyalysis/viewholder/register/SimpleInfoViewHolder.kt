@@ -24,10 +24,6 @@ import java.util.concurrent.TimeUnit
 
 class SimpleInfoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
-    private var playerData: PlayerData? = null
-
-    private val loadingView = itemView.findViewById<StereoLoadingView>(R.id.simple_user_loading_view)
-    private val retryView = itemView.findViewById<RetryView>(R.id.retry_view)
     private val userClanImg = itemView.findViewById<ImageView>(R.id.simple_user_clan_img)
     private val userName = itemView.findViewById<TextView>(R.id.simple_user_name)
     private val userInfo = itemView.findViewById<TextView>(R.id.simple_user_info)
@@ -35,50 +31,17 @@ class SimpleInfoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
     private var userTag: String = ""
 
-    init {
-        retryView.setListener {
-            if(!TextUtils.isEmpty(userTag)) {
-                retryView.visibility = View.GONE
-                requestPlayerData(userTag)
-            }
-        }
-    }
-
-    private fun setData(data: PlayerData) {
+    fun bind(data: PlayerData) {
         Glide.with(itemView.context).load(data.clan?.badge?.image).into(userClanImg)
         userDeck.bind(data.currentDeck)
         userName.text = data.name
         userInfo.text = getUserInfoFormat(data)
+        userTag = data.tag
         itemView.setOnClickListener {
             val intent = Intent(itemView.context, UserInfoActivity::class.java)
             intent.putExtra("data", data)
             itemView.context.startActivity(intent)
         }
-    }
-
-    fun bind(tag: String) {
-        playerData?.let { setData(it) } ?: let {
-            userTag = tag
-            requestPlayerData(userTag)
-        }
-    }
-
-    private fun requestPlayerData(tag: String) {
-        loadingView.start()
-        ClashRoyaleRetrofit.getService().getPlayer(tag)
-                .timeout(10000, TimeUnit.MILLISECONDS)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    playerData = it
-                    setData(it)
-                    retryView.visibility = View.GONE
-                }, {
-                    retryView.visibility = View.VISIBLE
-                }, {
-                    loadingView.stop()
-                    loadingView.visibility = View.GONE
-                })
     }
 
     private fun getUserInfoFormat(playerData: PlayerData): SpannableStringBuilder{

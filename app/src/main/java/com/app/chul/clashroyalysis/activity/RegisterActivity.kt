@@ -2,25 +2,24 @@ package com.app.chul.clashroyalysis.activity
 
 import android.app.Fragment
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.widget.Button
 import android.widget.LinearLayout
-import android.widget.TextView
 import com.app.chul.clashroyalysis.R
-import com.app.chul.clashroyalysis.`interface`.BaseFragmentInterface
+import com.app.chul.clashroyalysis.bus.RxBus
+import com.app.chul.clashroyalysis.bus.RxEvent
 import com.app.chul.clashroyalysis.fragment.PopularDeckFragment
 import com.app.chul.clashroyalysis.fragment.RankFragment
 import com.app.chul.clashroyalysis.fragment.RegisterFragment
+import com.app.chul.clashroyalysis.jsonobject.PlayerData
+import com.app.chul.clashroyalysis.jsonobject.PlayerDataList
 import com.app.chul.clashroyalysis.jsonobject.PopularDeckList
 import com.app.chul.clashroyalysis.jsonobject.TopPlayerList
 import com.app.chul.clashroyalysis.listener.TabChangedListener
 import com.app.chul.clashroyalysis.presenter.FragmentDataPresenter
+import com.app.chul.clashroyalysis.utils.UserDataHelper
 import com.app.chul.clashroyalysis.view.FragmentTabView
 import com.facebook.ads.*
 import kotlinx.android.synthetic.main.activity_register.*
 import java.util.*
-import kotlin.collections.ArrayList
 
 class RegisterActivity: BaseActivity(){
 
@@ -37,11 +36,24 @@ class RegisterActivity: BaseActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        initFragmentData()
         initFragment()
         initFragmentTab()
+        initFragmentData()
         initSwipeRefresh()
         loadNativeAd()
+        registerRxBus()
+    }
+
+    private fun registerRxBus() {
+        RxBus.register(this, RxBus.listen(RxEvent.EventAddTag::class.java).subscribe {
+            if(UserDataHelper.getInstance(this).addUserData(it.tag)) {
+                dataPresenter.requestPlayerData(it.tag, true, object : FragmentDataPresenter.ResponseListener<PlayerData>{
+                    override fun onResponse(response: PlayerData) {
+                        (fragmentMap[selectedTab] as RegisterFragment).addUser(response)
+                    }
+                })
+            }
+        })
     }
 
     private fun initFragment() {
@@ -91,16 +103,33 @@ class RegisterActivity: BaseActivity(){
     }
 
     private fun initFragmentData() {
-        dataPresenter.initData("kr", 50)
+        register_swipe_refresh.isRefreshing = true
+        dataPresenter.requestPlayersDataList(object : FragmentDataPresenter.ResponseListener<PlayerDataList>{
+            override fun onResponse(response: PlayerDataList) {
+                (fragmentMap[FragmentTabView.TabType.Home.name] as RegisterFragment).setData(response)
+                register_swipe_refresh.isRefreshing = false
+            }
+        })
+        dataPresenter.requestDeckList(object : FragmentDataPresenter.ResponseListener<PopularDeckList>{
+            override fun onResponse(response: PopularDeckList) {
+                (fragmentMap[FragmentTabView.TabType.Deck.name] as PopularDeckFragment).setData(response)
+            }
+        })
+        dataPresenter.requestRankList("kr", 50, object : FragmentDataPresenter.ResponseListener<TopPlayerList>{
+            override fun onResponse(response: TopPlayerList) {
+                (fragmentMap[FragmentTabView.TabType.Rank.name] as RankFragment).setData(response)
+            }
+        })
     }
 
     private fun initSwipeRefresh() {
         register_swipe_refresh.setOnRefreshListener {
             when(selectedTab) {
                 FragmentTabView.TabType.Home.name -> {
-                    dataPresenter.getRefreshUserList(object: FragmentDataPresenter.ResponseListener<ArrayList<String>>{
-                        override fun onResponse(response: ArrayList<String>) {
+                    dataPresenter.getRefreshUserList(object: FragmentDataPresenter.ResponseListener<PlayerDataList>{
+                        override fun onResponse(response: PlayerDataList) {
                             (fragmentMap[selectedTab] as RegisterFragment).setData(response)
+                            (fragmentMap[selectedTab] as RegisterFragment).refresh()
                             register_swipe_refresh.isRefreshing = false
                         }
                     })
@@ -110,6 +139,7 @@ class RegisterActivity: BaseActivity(){
                     dataPresenter.getRefreshDeckList(object : FragmentDataPresenter.ResponseListener<PopularDeckList>{
                         override fun onResponse(response: PopularDeckList) {
                             (fragmentMap[selectedTab] as PopularDeckFragment).setData(response)
+                            (fragmentMap[selectedTab] as PopularDeckFragment).refresh()
                             register_swipe_refresh.isRefreshing = false
                         }
                     })
@@ -119,6 +149,7 @@ class RegisterActivity: BaseActivity(){
                     dataPresenter.getRefreshRankList("kr", 50, object : FragmentDataPresenter.ResponseListener<TopPlayerList>{
                         override fun onResponse(response: TopPlayerList) {
                             (fragmentMap[selectedTab] as RankFragment).setData(response)
+                            (fragmentMap[selectedTab] as RankFragment).refresh()
                             register_swipe_refresh.isRefreshing = false
                         }
                     })

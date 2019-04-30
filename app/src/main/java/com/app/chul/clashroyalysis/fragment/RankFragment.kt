@@ -30,20 +30,19 @@ class RankFragment: Fragment(), BaseFragmentInterface<TopPlayerList> {
     private val max = 50
 
     private var rankList = TopPlayerList()
-    private val adapter: TopPlayerAdapter by lazy {
-        TopPlayerAdapter(activity)
-    }
+    private var adapter: TopPlayerAdapter ?= null
 
     override fun scrollTop() {
         rank_recycler_view.scrollToPosition(0)
     }
 
     override fun refresh() {
-
+        adapter?.setData(rankList)
     }
 
     override fun setData(data: TopPlayerList) {
         rankList = data
+        adapter?.setData(rankList)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -53,12 +52,17 @@ class RankFragment: Fragment(), BaseFragmentInterface<TopPlayerList> {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         initRecyclerView()
+        initAdapter()
     }
 
     private fun initRecyclerView() {
         rank_recycler_view.layoutManager = LinearLayoutManager(activity)
-        rank_recycler_view.adapter = adapter
         rank_recycler_view.setHasFixedSize(false)
-        adapter.setData(rankList)
+    }
+
+    private fun initAdapter() {
+        adapter = TopPlayerAdapter(activity)
+        adapter?.setData(rankList)
+        rank_recycler_view.adapter = adapter
     }
 }

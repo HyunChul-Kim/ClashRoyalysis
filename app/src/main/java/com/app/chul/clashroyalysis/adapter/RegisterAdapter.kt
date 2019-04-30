@@ -5,13 +5,16 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.app.chul.clashroyalysis.R
+import com.app.chul.clashroyalysis.jsonobject.PlayerData
+import com.app.chul.clashroyalysis.jsonobject.PlayerDataList
+import com.app.chul.clashroyalysis.utils.ChulLog
 import com.app.chul.clashroyalysis.utils.DragAndDropHelperCallback
 import com.app.chul.clashroyalysis.viewholder.register.RegisterViewHolder
 import com.app.chul.clashroyalysis.viewholder.register.SimpleInfoViewHolder
 
 abstract class RegisterAdapter(private val context: Context?): RecyclerView.Adapter<RecyclerView.ViewHolder>(), DragAndDropHelperCallback.DragAndDropListener {
 
-    private var mUserList = ArrayList<String>()
+    private var mUserList = PlayerDataList()
 
     object ViewType {
         const val ADD_VIEW_TYPE = 0
@@ -71,34 +74,33 @@ abstract class RegisterAdapter(private val context: Context?): RecyclerView.Adap
 
     override fun itemSwiped(position: Int) {
         if(position >= 0 && position < mUserList.size) {
-            showDeleteDialog(mUserList[position])
+            showDeleteDialog(position)
         }
     }
 
-    fun setData(data: ArrayList<String>) {
+    fun setData(data: PlayerDataList) {
+        ChulLog.log("Register Adapter SetData(), Data size is ${data.size}")
         mUserList = data
         notifyDataSetChanged()
     }
 
-    fun addData(data: String) {
+    fun addData(data: PlayerData) {
         mUserList.add(data)
         notifyItemInserted(itemCount - 1)
     }
 
-    fun deleteItem(tag: String) {
-        val position = mUserList.indexOf(tag)
+    fun deleteItem(position: Int) {
         if(position >= 0 && position < mUserList.size) {
             mUserList.removeAt(position)
             notifyItemRemoved(position)
         }
     }
 
-    fun refreshItem(tag: String) {
-        var position = mUserList.indexOf(tag)
+    fun refreshItem(position: Int) {
         if(position >= 0 && position < mUserList.size) {
             notifyItemChanged(position)
         }
     }
 
-    abstract fun showDeleteDialog(tag: String)
+    abstract fun showDeleteDialog(position: Int)
 }

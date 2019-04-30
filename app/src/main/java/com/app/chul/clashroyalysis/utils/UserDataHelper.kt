@@ -3,6 +3,7 @@ package com.app.chul.clashroyalysis.utils
 import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
+import android.text.TextUtils
 import com.app.chul.clashroyalysis.App
 import com.app.chul.clashroyalysis.jsonobject.TagList
 import com.google.gson.Gson
@@ -30,6 +31,17 @@ class UserDataHelper {
     }
 
     fun getUserList() = mUserList
+
+    fun getUserListToString(): String {
+        var tags = ""
+        mUserList.forEach {
+            if(!TextUtils.isEmpty(tags)) {
+                tags += ","
+            }
+            tags += it
+        }
+        return tags
+    }
 
     fun addUserData(tag: String): Boolean {
         if(!mUserList.contains(tag)) {

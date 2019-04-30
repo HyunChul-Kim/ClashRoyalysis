@@ -9,8 +9,11 @@ import retrofit2.http.Query
 
 interface ClashRoyaleService {
 
+    /*@GET("/player/{tag}")
+    fun getPlayer(@Path("tag") tag: String): Observable<PlayerData>*/
+
     @GET("/player/{tag}")
-    fun getPlayer(@Path("tag") tag: String): Observable<PlayerData>
+    fun getPlayer(@Path("tag") tag: String): Call<PlayerData>
 
     @GET("/player/{tag}")
     fun getPlayers(@Path("tag") tag: String): Call<PlayerDataList>
