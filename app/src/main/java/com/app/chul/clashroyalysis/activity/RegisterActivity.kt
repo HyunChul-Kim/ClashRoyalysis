@@ -53,6 +53,10 @@ class RegisterActivity: BaseActivity(){
         RxBus.register(this, RxBus.listen(RxEvent.EventAddTag::class.java).subscribe {
             if(UserDataHelper.getInstance(this).addUserData(it.tag)) {
                 dataPresenter.requestPlayerData(it.tag, true, object : FragmentDataPresenter.ResponseListener<PlayerData>{
+                    override fun onError(message: String) {
+
+                    }
+
                     override fun onResponse(response: PlayerData) {
                         (fragmentMap[selectedTab] as RegisterFragment).addUser(response)
                     }
@@ -113,17 +117,29 @@ class RegisterActivity: BaseActivity(){
     private fun initFragmentData() {
         register_swipe_refresh.isRefreshing = true
         dataPresenter.requestPlayersDataList(object : FragmentDataPresenter.ResponseListener<PlayerDataList>{
+            override fun onError(message: String) {
+                register_swipe_refresh.isRefreshing = false
+            }
+
             override fun onResponse(response: PlayerDataList) {
                 (fragmentMap[FragmentTabView.TabType.Home.name] as RegisterFragment).setData(response)
                 register_swipe_refresh.isRefreshing = false
             }
         })
         dataPresenter.requestDeckList(object : FragmentDataPresenter.ResponseListener<PopularDeckList>{
+            override fun onError(message: String) {
+
+            }
+
             override fun onResponse(response: PopularDeckList) {
                 (fragmentMap[FragmentTabView.TabType.Deck.name] as PopularDeckFragment).setData(response)
             }
         })
         dataPresenter.requestRankList("kr", 50, object : FragmentDataPresenter.ResponseListener<TopPlayerList>{
+            override fun onError(message: String) {
+
+            }
+
             override fun onResponse(response: TopPlayerList) {
                 (fragmentMap[FragmentTabView.TabType.Rank.name] as RankFragment).setData(response)
             }
@@ -152,7 +168,11 @@ class RegisterActivity: BaseActivity(){
         register_swipe_refresh.setOnRefreshListener {
             when(selectedTab) {
                 FragmentTabView.TabType.Home.name -> {
-                    dataPresenter.getRefreshUserList(object: FragmentDataPresenter.ResponseListener<PlayerDataList>{
+                    dataPresenter.requestPlayersDataList(object: FragmentDataPresenter.ResponseListener<PlayerDataList>{
+                        override fun onError(message: String) {
+                            register_swipe_refresh.isRefreshing = false
+                        }
+
                         override fun onResponse(response: PlayerDataList) {
                             (fragmentMap[selectedTab] as RegisterFragment).setData(response)
                             (fragmentMap[selectedTab] as RegisterFragment).refresh()
@@ -162,7 +182,11 @@ class RegisterActivity: BaseActivity(){
                 }
 
                 FragmentTabView.TabType.Deck.name -> {
-                    dataPresenter.getRefreshDeckList(object : FragmentDataPresenter.ResponseListener<PopularDeckList>{
+                    dataPresenter.requestDeckList(object : FragmentDataPresenter.ResponseListener<PopularDeckList>{
+                        override fun onError(message: String) {
+                            register_swipe_refresh.isRefreshing = false
+                        }
+
                         override fun onResponse(response: PopularDeckList) {
                             (fragmentMap[selectedTab] as PopularDeckFragment).setData(response)
                             (fragmentMap[selectedTab] as PopularDeckFragment).refresh()
@@ -172,7 +196,11 @@ class RegisterActivity: BaseActivity(){
                 }
 
                 FragmentTabView.TabType.Rank.name -> {
-                    dataPresenter.getRefreshRankList("kr", 50, object : FragmentDataPresenter.ResponseListener<TopPlayerList>{
+                    dataPresenter.requestRankList("kr", 50, object : FragmentDataPresenter.ResponseListener<TopPlayerList>{
+                        override fun onError(message: String) {
+                            register_swipe_refresh.isRefreshing = false
+                        }
+
                         override fun onResponse(response: TopPlayerList) {
                             (fragmentMap[selectedTab] as RankFragment).setData(response)
                             (fragmentMap[selectedTab] as RankFragment).refresh()

@@ -40,6 +40,6 @@ interface ClashRoyaleService {
     fun getTopPlayers(@Path("LOCATION_KEY") location: String, @Query("max") max: Int): Call<TopPlayerList>
 
     @GET("/top/players/{LOCATION_KEY}")
-    fun getTopPlayers(@Path("LOCATION_KEY") location: String, @Query("max") max: Int, @Query("page") page: Int): Call<TopPlayerList>
+    fun getTopPlayers(@Path("LOCATION_KEY") location: String, @Query("max") max: Int, @Query("page") page: Int): Observable<TopPlayerList>
 
 }

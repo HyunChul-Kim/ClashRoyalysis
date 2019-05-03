@@ -20,6 +20,7 @@ class UserInfoAdapter(private val mContext: Context): Adapter<RecyclerView.ViewH
         const val USER_MAX_PROGRESS = 2
         const val TOP_PLAYER_MAX_PROGRESS = 3
         const val WIN_RATE_PROGRESS = 4
+        const val USER_SIMPLE_INFO = 5
     }
 
     private var mHolderList: ArrayList<Int> = ArrayList()

@@ -5,7 +5,12 @@ import android.support.v7.widget.LinearLayoutManager
 import com.app.chul.clashroyalysis.R
 import com.app.chul.clashroyalysis.adapter.UserInfoAdapter
 import com.app.chul.clashroyalysis.jsonobject.PlayerData
+import com.app.chul.clashroyalysis.retrofit.ClashRoyaleRetrofit
+import com.app.chul.clashroyalysis.utils.ChulLog
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.concurrent.TimeUnit
 
 class UserInfoActivity : BaseActivity() {
 
@@ -32,5 +37,14 @@ class UserInfoActivity : BaseActivity() {
         data?.let {
             mAdapter?.setData(it, 0)
         }
+
+        ClashRoyaleRetrofit.getService().getTopPlayers("KR", 1, 0)
+                .timeout(10000, TimeUnit.MILLISECONDS)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    ChulLog.log("Data size is ${it?.size}")
+                    mAdapter?.setTopPlayerTrophy(it?.get(0)?.trophies)
+                })
     }
 }
