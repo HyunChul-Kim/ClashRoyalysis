@@ -52,11 +52,13 @@ class SimpleInfoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         stringBuilder.setSpan(StyleSpan(Typeface.BOLD), startIdx, stringBuilder.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         stringBuilder.append(" | ")
         playerData.arena?.let {
-            stringBuilder.append("Arena ")
-            startIdx = stringBuilder.length
-            stringBuilder.append(it.arena)
-            stringBuilder.setSpan(StyleSpan(Typeface.BOLD), startIdx, stringBuilder.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-            stringBuilder.append(" | ")
+            if(!TextUtils.isEmpty(it.arena)) {
+                stringBuilder.append("Arena ")
+                startIdx = stringBuilder.length
+                stringBuilder.append(it.arena)
+                stringBuilder.setSpan(StyleSpan(Typeface.BOLD), startIdx, stringBuilder.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                stringBuilder.append(" | ")
+            }
         }
         stringBuilder.append("Rank ")
         startIdx = stringBuilder.length

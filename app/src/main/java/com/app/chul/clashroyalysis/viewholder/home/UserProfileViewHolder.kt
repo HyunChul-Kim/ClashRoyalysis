@@ -1,6 +1,7 @@
 package com.app.chul.clashroyalysis.viewholder.home
 
 import android.support.v7.widget.RecyclerView
+import android.text.TextUtils
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -27,8 +28,10 @@ class UserProfileViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         userArena.text = data.arena?.name
         Glide.with(itemView.context).load(data.clan?.badge?.image).into(userClanImg)
         data.arena?.let { it ->
-            ArenaInfo.get(it.arena)?.let {info ->
-                Glide.with(itemView.context).load(info.resourceId).into(userArenaImage)
+            if(!TextUtils.isEmpty(it.arena)) {
+                ArenaInfo.get(it.arena)?.let { info ->
+                    Glide.with(itemView.context).load(info.resourceId).into(userArenaImage)
+                }
             }
         }
 

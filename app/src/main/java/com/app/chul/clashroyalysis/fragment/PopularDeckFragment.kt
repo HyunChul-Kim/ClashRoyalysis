@@ -1,10 +1,8 @@
 package com.app.chul.clashroyalysis.fragment
 
 import android.app.Fragment
-import android.content.Context
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,11 +10,9 @@ import com.app.chul.clashroyalysis.R
 import com.app.chul.clashroyalysis.`interface`.BaseFragmentInterface
 import com.app.chul.clashroyalysis.adapter.DeckListAdapter
 import com.app.chul.clashroyalysis.jsonobject.PopularDeckList
-import com.app.chul.clashroyalysis.retrofit.ClashRoyaleRetrofit
+import com.app.chul.clashroyalysis.listener.FragmentStateListener
+import com.app.chul.clashroyalysis.view.FragmentTabView
 import kotlinx.android.synthetic.main.fragment_popular_deck.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class PopularDeckFragment: Fragment(), BaseFragmentInterface<PopularDeckList> {
 
@@ -37,6 +33,8 @@ class PopularDeckFragment: Fragment(), BaseFragmentInterface<PopularDeckList> {
     private var deckList = PopularDeckList()
     private var adapter : DeckListAdapter ?= null
 
+    private var fragmentListener: FragmentStateListener?= null
+
     companion object {
         fun getInstance(): Fragment {
             return PopularDeckFragment()
@@ -49,6 +47,7 @@ class PopularDeckFragment: Fragment(), BaseFragmentInterface<PopularDeckList> {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        fragmentListener?.onActivityCreated(FragmentTabView.TabType.Home, popular_deck_recycler_view)
         initRecyclerView()
         initAdapter()
     }
@@ -64,20 +63,7 @@ class PopularDeckFragment: Fragment(), BaseFragmentInterface<PopularDeckList> {
         popular_deck_recycler_view.adapter = adapter
     }
 
-    private fun requestMorePopularDeckList(page: Int) {
-        val popularDeckCall = ClashRoyaleRetrofit.getService().getPopularDecks(page)
-        popularDeckCall.enqueue(object: Callback<PopularDeckList> {
-
-            override fun onFailure(call: Call<PopularDeckList>?, t: Throwable?) {
-                Log.i("Popular Service", t.toString())
-            }
-
-            override fun onResponse(call: Call<PopularDeckList>?, response: Response<PopularDeckList>?) {
-                Log.i("Popular Service", "Response Success")
-                response?.body()?.let {
-                    adapter?.addData(it)
-                }
-            }
-        })
+    fun setFragmentListener(listener: FragmentStateListener?) {
+        fragmentListener = listener
     }
 }

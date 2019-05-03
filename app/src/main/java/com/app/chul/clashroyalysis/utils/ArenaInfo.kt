@@ -27,9 +27,9 @@ enum class ArenaInfo(val league: String, val resourceId: Int) {
     Arena21("League 9", R.drawable.league9);
 
     companion object {
-        fun get(name: String): ArenaInfo? {
+        fun get(name: String?): ArenaInfo? {
             for(info in values()) {
-                if(name.equals(info.name, true) || name.equals(info.league, true)) {
+                if(info.name.equals(name, true) || info.league.equals(name, true)) {
                     return info
                 }
             }

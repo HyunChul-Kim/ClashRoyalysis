@@ -5,7 +5,7 @@ import android.os.Parcelable
 
 data class ArenaData(
         var name: String,
-        var arena: String,
+        var arena: String?,
         var arenaID: Int,
         var trophyLimit: Int): Parcelable {
     constructor(parcel: Parcel) : this(

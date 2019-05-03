@@ -1,11 +1,13 @@
 package com.app.chul.clashroyalysis.view
 
 import android.content.Context
+import android.support.v4.view.ViewCompat
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
 import android.view.MotionEvent
+import android.view.View
 import android.view.ViewConfiguration
 
 class FixedSwipeRefreshLayout @JvmOverloads constructor(context: Context, attrs: AttributeSet ?= null)
@@ -13,6 +15,11 @@ class FixedSwipeRefreshLayout @JvmOverloads constructor(context: Context, attrs:
 
     private var touchSlop: Int = ViewConfiguration.get(context).scaledTouchSlop
     private var prevX = 0f
+    private var childView: View ?= null
+
+    fun setChildView(child: View) {
+        childView = child
+    }
 
     override fun onInterceptTouchEvent(event: MotionEvent?): Boolean {
         when(event?.action) {
@@ -28,7 +35,7 @@ class FixedSwipeRefreshLayout @JvmOverloads constructor(context: Context, attrs:
     }
 
     override fun canChildScrollUp(): Boolean {
-        val child = getChildAt(0)
+        val child = childView ?: childView ?: getChildAt(0)
 
         if(child is RecyclerView) {
             val layoutManager = child.layoutManager
@@ -37,6 +44,6 @@ class FixedSwipeRefreshLayout @JvmOverloads constructor(context: Context, attrs:
                             layoutManager is LinearLayoutManager &&
                             layoutManager.findFirstVisibleItemPosition() > 0)
         }
-        return false
+        return child.canScrollVertically(-1) || child.scrollY > 0
     }
 }

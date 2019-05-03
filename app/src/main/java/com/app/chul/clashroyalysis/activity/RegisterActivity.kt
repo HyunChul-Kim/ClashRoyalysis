@@ -2,6 +2,7 @@ package com.app.chul.clashroyalysis.activity
 
 import android.app.Fragment
 import android.os.Bundle
+import android.support.v7.widget.RecyclerView
 import android.widget.LinearLayout
 import com.app.chul.clashroyalysis.R
 import com.app.chul.clashroyalysis.bus.RxBus
@@ -13,6 +14,7 @@ import com.app.chul.clashroyalysis.jsonobject.PlayerData
 import com.app.chul.clashroyalysis.jsonobject.PlayerDataList
 import com.app.chul.clashroyalysis.jsonobject.PopularDeckList
 import com.app.chul.clashroyalysis.jsonobject.TopPlayerList
+import com.app.chul.clashroyalysis.listener.FragmentStateListener
 import com.app.chul.clashroyalysis.listener.TabChangedListener
 import com.app.chul.clashroyalysis.presenter.FragmentDataPresenter
 import com.app.chul.clashroyalysis.utils.UserDataHelper
@@ -32,10 +34,13 @@ class RegisterActivity: BaseActivity(){
     private var selectedTab = FragmentTabView.TabType.Home.name
     private val dataPresenter = FragmentDataPresenter(this)
 
+    private var fragmentStateListener: FragmentStateListener ?= null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
+        initFragmentListener()
         initFragment()
         initFragmentTab()
         initFragmentData()
@@ -72,6 +77,7 @@ class RegisterActivity: BaseActivity(){
                                 .replace(R.id.register_fragment_container, fragmentMap[selectedTab])
                                 .commit()
                         (fragmentMap[selectedTab] as RegisterFragment).setData(dataPresenter.getUserList())
+                        (fragmentMap[selectedTab] as RegisterFragment).setFragmentListener(fragmentStateListener)
                     }
 
                     FragmentTabView.TabType.Deck -> {
@@ -80,6 +86,7 @@ class RegisterActivity: BaseActivity(){
                                 .replace(R.id.register_fragment_container, fragmentMap[selectedTab])
                                 .commit()
                         (fragmentMap[selectedTab] as PopularDeckFragment).setData(dataPresenter.getDeckList())
+                        (fragmentMap[selectedTab] as PopularDeckFragment).setFragmentListener(fragmentStateListener)
                     }
 
                     FragmentTabView.TabType.Rank -> {
@@ -88,6 +95,7 @@ class RegisterActivity: BaseActivity(){
                                 .replace(R.id.register_fragment_container, fragmentMap[selectedTab])
                                 .commit()
                         (fragmentMap[selectedTab] as RankFragment).setData(dataPresenter.getRankList())
+                        (fragmentMap[selectedTab] as RankFragment).setFragmentListener(fragmentStateListener)
                     }
                 }
             }
@@ -99,7 +107,7 @@ class RegisterActivity: BaseActivity(){
                 .replace(R.id.register_fragment_container, fragmentMap[selectedTab])
                 .commit()
         (fragmentMap[selectedTab] as RegisterFragment).setData(dataPresenter.getUserList())
-
+        (fragmentMap[selectedTab] as RegisterFragment).setFragmentListener(fragmentStateListener)
     }
 
     private fun initFragmentData() {
@@ -120,6 +128,24 @@ class RegisterActivity: BaseActivity(){
                 (fragmentMap[FragmentTabView.TabType.Rank.name] as RankFragment).setData(response)
             }
         })
+    }
+
+    private fun initFragmentListener() {
+        fragmentStateListener = object: FragmentStateListener {
+            override fun onActivityCreated(type: FragmentTabView.TabType, recyclerView: RecyclerView) {
+                when(type) {
+                    FragmentTabView.TabType.Home -> {
+                        register_swipe_refresh.setChildView(recyclerView)
+                    }
+                    FragmentTabView.TabType.Deck -> {
+                        register_swipe_refresh.setChildView(recyclerView)
+                    }
+                    FragmentTabView.TabType.Rank -> {
+                        register_swipe_refresh.setChildView(recyclerView)
+                    }
+                }
+            }
+        }
     }
 
     private fun initSwipeRefresh() {

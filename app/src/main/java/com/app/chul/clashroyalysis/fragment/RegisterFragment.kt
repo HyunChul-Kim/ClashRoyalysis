@@ -15,9 +15,11 @@ import com.app.chul.clashroyalysis.bus.RxBus
 import com.app.chul.clashroyalysis.bus.RxEvent
 import com.app.chul.clashroyalysis.jsonobject.PlayerData
 import com.app.chul.clashroyalysis.jsonobject.PlayerDataList
+import com.app.chul.clashroyalysis.listener.FragmentStateListener
 import com.app.chul.clashroyalysis.utils.ChulLog
 import com.app.chul.clashroyalysis.utils.DragAndDropHelperCallback
 import com.app.chul.clashroyalysis.utils.UserDataHelper
+import com.app.chul.clashroyalysis.view.FragmentTabView
 import kotlinx.android.synthetic.main.fragment_register.*
 
 class RegisterFragment: Fragment(), BaseFragmentInterface<PlayerDataList> {
@@ -31,8 +33,9 @@ class RegisterFragment: Fragment(), BaseFragmentInterface<PlayerDataList> {
     }
 
     private var userList = PlayerDataList()
-
     private var mAdapter : RegisterAdapter ?= null
+
+    private var fragmentListener: FragmentStateListener ?= null
 
     companion object {
         private var Instance: RegisterFragment? = null
@@ -53,6 +56,7 @@ class RegisterFragment: Fragment(), BaseFragmentInterface<PlayerDataList> {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        fragmentListener?.onActivityCreated(FragmentTabView.TabType.Home, register_recycler_view)
         initRecyclerView()
         initAdapter()
     }
@@ -100,8 +104,13 @@ class RegisterFragment: Fragment(), BaseFragmentInterface<PlayerDataList> {
         mAdapter?.setData(userList)
     }
 
+    fun setFragmentListener(listener: FragmentStateListener?) {
+        fragmentListener = listener
+    }
+
     fun addUser(data: PlayerData) {
         mAdapter?.addData(data)
     }
 
+    fun getRecyclerView() = register_recycler_view
 }
