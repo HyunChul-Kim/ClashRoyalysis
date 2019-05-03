@@ -8,19 +8,21 @@ import android.view.View
 import android.view.ViewGroup
 import com.app.chul.clashroyalysis.R
 import com.app.chul.clashroyalysis.jsonobject.PlayerData
+import com.app.chul.clashroyalysis.utils.UserInfoPayloads
 import com.app.chul.clashroyalysis.viewholder.DoubleRateViewHolder
 import com.app.chul.clashroyalysis.viewholder.ProgressViewHolder
-import com.app.chul.clashroyalysis.viewholder.home.UserProfileViewHolder
+import com.app.chul.clashroyalysis.viewholder.userInfo.TrophyInfoViewHolder
+import com.app.chul.clashroyalysis.viewholder.userInfo.UserProfileInfoViewHolder
+import com.app.chul.clashroyalysis.viewholder.userInfo.UserProfileViewHolder
 
 class UserInfoAdapter(private val mContext: Context): Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         const val EMPTY = 0
         const val USER_PROFILE = 1
-        const val USER_MAX_PROGRESS = 2
-        const val TOP_PLAYER_MAX_PROGRESS = 3
+        const val USER_SIMPLE_INFO = 2
+        const val USER_TROPHY_INFO = 3
         const val WIN_RATE_PROGRESS = 4
-        const val USER_SIMPLE_INFO = 5
     }
 
     private var mHolderList: ArrayList<Int> = ArrayList()
@@ -37,13 +39,13 @@ class UserInfoAdapter(private val mContext: Context): Adapter<RecyclerView.ViewH
                 val view: View = LayoutInflater.from(mContext).inflate(R.layout.viewholder_user_profile, parent, false)
                 UserProfileViewHolder(view)
             }
-            USER_MAX_PROGRESS -> {
-                val view: View = LayoutInflater.from(mContext).inflate(R.layout.viewholder_progress, parent, false)
-                ProgressViewHolder(view, mContext.getString(R.string.max_trophy))
+            USER_SIMPLE_INFO -> {
+                val view: View = LayoutInflater.from(mContext).inflate(R.layout.viewholder_user_profile_info, parent, false)
+                UserProfileInfoViewHolder(view)
             }
-            TOP_PLAYER_MAX_PROGRESS -> {
-                val view: View = LayoutInflater.from(mContext).inflate(R.layout.viewholder_progress, parent, false)
-                ProgressViewHolder(view, mContext.getString(R.string.top_trophy))
+            USER_TROPHY_INFO -> {
+                val view: View = LayoutInflater.from(mContext).inflate(R.layout.viewholder_trophy_info, parent, false)
+                TrophyInfoViewHolder(view)
             }
             WIN_RATE_PROGRESS -> {
                 val view: View = LayoutInflater.from(mContext).inflate(R.layout.viewholder_double_rate, parent, false)
@@ -68,21 +70,37 @@ class UserInfoAdapter(private val mContext: Context): Adapter<RecyclerView.ViewH
         return mHolderList.indexOf(viewType)
     }
 
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int, payloads: MutableList<Any>) {
+        if(payloads.isEmpty()) {
+            super.onBindViewHolder(holder, position, payloads)
+        } else {
+            payloads.forEach {
+                when(it) {
+                    UserInfoPayloads.TOP_TROPHY -> {
+                        if(holder is TrophyInfoViewHolder) {
+                            holder.onTopTrophyUpdate(mTopPlayerTrophy, mPlayerData?.trophies)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(holder.itemViewType) {
             USER_PROFILE -> {
                 mPlayerData?.let {
-                    (holder as UserProfileViewHolder).bind(it)
+                    (holder as UserProfileViewHolder).bind(it.name, it.arena)
                 }
             }
-            USER_MAX_PROGRESS -> {
+            USER_SIMPLE_INFO -> {
                 mPlayerData?.let {
-                    (holder as ProgressViewHolder).bind(it.stats?.maxTrophies, it.trophies)
+                    (holder as UserProfileInfoViewHolder).bind(it)
                 }
             }
-            TOP_PLAYER_MAX_PROGRESS -> {
+            USER_TROPHY_INFO -> {
                 mPlayerData?.let {
-                    (holder as ProgressViewHolder).bind(mTopPlayerTrophy, it.trophies)
+                    (holder as TrophyInfoViewHolder).bind(it.stats?.maxTrophies, mTopPlayerTrophy, it.trophies)
                 }
             }
             WIN_RATE_PROGRESS -> {
@@ -105,10 +123,8 @@ class UserInfoAdapter(private val mContext: Context): Adapter<RecyclerView.ViewH
         mHolderList = ArrayList()
         if(mPlayerData != null) {
             mHolderList.add(USER_PROFILE)
-            mHolderList.add(USER_MAX_PROGRESS)
-
-            mHolderList.add(TOP_PLAYER_MAX_PROGRESS)
-
+            mHolderList.add(USER_SIMPLE_INFO)
+            mHolderList.add(USER_TROPHY_INFO)
             mHolderList.add(WIN_RATE_PROGRESS)
         }
     }
@@ -124,7 +140,7 @@ class UserInfoAdapter(private val mContext: Context): Adapter<RecyclerView.ViewH
         trophy?.let {
             mTopPlayerTrophy = trophy
             refreshMap()
-            notifyItemChanged(getItemPosition(TOP_PLAYER_MAX_PROGRESS))
+            notifyItemChanged(getItemPosition(USER_TROPHY_INFO), UserInfoPayloads.TOP_TROPHY)
         }
     }
 
