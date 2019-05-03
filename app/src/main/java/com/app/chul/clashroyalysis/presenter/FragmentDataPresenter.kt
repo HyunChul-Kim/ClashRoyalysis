@@ -8,14 +8,15 @@ import com.app.chul.clashroyalysis.jsonobject.PopularDeckList
 import com.app.chul.clashroyalysis.jsonobject.TopPlayerList
 import com.app.chul.clashroyalysis.retrofit.ClashRoyaleRetrofit
 import com.app.chul.clashroyalysis.utils.ChulLog
+import com.app.chul.clashroyalysis.utils.SingletonHolder
 import com.app.chul.clashroyalysis.utils.UserDataHelper
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class FragmentDataPresenter(context: Context) {
+class FragmentDataPresenter private constructor(context: Context) {
 
-    private val mContext = context
+    private var mUserDataHelper = UserDataHelper.getInstance(context)
 
     private var mUserList = PlayerDataList()
     private var mDeckList = PopularDeckList()
@@ -26,8 +27,10 @@ class FragmentDataPresenter(context: Context) {
         fun onResponse(response: T)
     }
 
+    companion object: SingletonHolder<FragmentDataPresenter, Context>(::FragmentDataPresenter)
+
     fun requestPlayersDataList(listener: ResponseListener<PlayerDataList>?) {
-        val tags = UserDataHelper.getInstance(mContext).getUserListToString()
+        val tags = mUserDataHelper.getUserListToString()
         val playersDataCall = ClashRoyaleRetrofit.getService().getPlayers(tags)
         playersDataCall.enqueue(object : Callback<PlayerDataList> {
             override fun onFailure(call: Call<PlayerDataList>?, t: Throwable?) {
@@ -123,4 +126,12 @@ class FragmentDataPresenter(context: Context) {
     fun getDeckList() = mDeckList
 
     fun getRankList() = mRankList
+
+    fun getFirstRankTrophy(): Int {
+        return if(mRankList.size > 0) {
+            mRankList[0].trophies
+        } else {
+            0
+        }
+    }
 }

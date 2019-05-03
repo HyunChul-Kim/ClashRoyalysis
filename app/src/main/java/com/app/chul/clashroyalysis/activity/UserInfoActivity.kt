@@ -5,6 +5,8 @@ import android.support.v7.widget.LinearLayoutManager
 import com.app.chul.clashroyalysis.R
 import com.app.chul.clashroyalysis.adapter.UserInfoAdapter
 import com.app.chul.clashroyalysis.jsonobject.PlayerData
+import com.app.chul.clashroyalysis.jsonobject.TopPlayerList
+import com.app.chul.clashroyalysis.presenter.FragmentDataPresenter
 import com.app.chul.clashroyalysis.retrofit.ClashRoyaleRetrofit
 import com.app.chul.clashroyalysis.utils.ChulLog
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -22,7 +24,6 @@ class UserInfoActivity : BaseActivity() {
 
         initRecyclerView()
         loadData()
-//        loadUserData()
     }
 
     private fun initRecyclerView() {
@@ -38,13 +39,28 @@ class UserInfoActivity : BaseActivity() {
             mAdapter?.setData(it, 0)
         }
 
-        ClashRoyaleRetrofit.getService().getTopPlayers("KR", 1, 0)
+        val topTrophy = FragmentDataPresenter.getInstance(this).getFirstRankTrophy()
+        if(topTrophy > 0) {
+            mAdapter?.setTopPlayerTrophy(topTrophy)
+        } else {
+            FragmentDataPresenter.getInstance(this).requestRankList("KR", 1, object: FragmentDataPresenter.ResponseListener<TopPlayerList>{
+                override fun onError(message: String) {
+
+                }
+
+                override fun onResponse(response: TopPlayerList) {
+                    mAdapter?.setTopPlayerTrophy(response?.get(0)?.trophies)
+                }
+            })
+        }
+
+        /*ClashRoyaleRetrofit.getService().getTopPlayers("KR", 1, 0)
                 .timeout(10000, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     ChulLog.log("Data size is ${it?.size}")
                     mAdapter?.setTopPlayerTrophy(it?.get(0)?.trophies)
-                })
+                })*/
     }
 }

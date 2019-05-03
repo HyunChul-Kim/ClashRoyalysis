@@ -10,7 +10,6 @@ import com.app.chul.clashroyalysis.R
 import com.app.chul.clashroyalysis.jsonobject.PlayerData
 import com.app.chul.clashroyalysis.utils.UserInfoPayloads
 import com.app.chul.clashroyalysis.viewholder.DoubleRateViewHolder
-import com.app.chul.clashroyalysis.viewholder.ProgressViewHolder
 import com.app.chul.clashroyalysis.viewholder.userInfo.TrophyInfoViewHolder
 import com.app.chul.clashroyalysis.viewholder.userInfo.UserProfileInfoViewHolder
 import com.app.chul.clashroyalysis.viewholder.userInfo.UserProfileViewHolder

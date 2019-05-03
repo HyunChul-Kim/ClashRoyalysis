@@ -8,25 +8,16 @@ import com.app.chul.clashroyalysis.App
 import com.app.chul.clashroyalysis.jsonobject.TagList
 import com.google.gson.Gson
 
-class UserDataHelper {
+class UserDataHelper private constructor(context: Context?) {
 
-    companion object {
+    companion object: SingletonHolder<UserDataHelper, Context>(::UserDataHelper) {
         private const val USER_TAG_PREF = "user_tag"
-
-        private var Instance: UserDataHelper? = null
-
-        fun getInstance(context: Context?): UserDataHelper =
-                Instance ?: synchronized(this) {
-                    Instance ?: UserDataHelper(context)
-                }
     }
 
-    private var mPref: SharedPreferences?
+    private var mPref: SharedPreferences? = context?.getSharedPreferences(App.instance.packageName, Activity.MODE_PRIVATE)
     private var mUserList: ArrayList<String>
 
-    private constructor(context: Context?) {
-        Instance = this
-        mPref = context?.getSharedPreferences(App.instance.packageName, Activity.MODE_PRIVATE)
+    init {
         mUserList = getUserDataToList()
     }
 

@@ -32,7 +32,7 @@ class RegisterActivity: BaseActivity(){
 
     private val fragmentMap = HashMap<String, Fragment>()
     private var selectedTab = FragmentTabView.TabType.Home.name
-    private val dataPresenter = FragmentDataPresenter(this)
+    private val dataPresenter = FragmentDataPresenter.getInstance(this)
 
     private var fragmentStateListener: FragmentStateListener ?= null
 
