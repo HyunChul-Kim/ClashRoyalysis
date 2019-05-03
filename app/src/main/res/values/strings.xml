@@ -17,4 +17,7 @@
     <string name="home">Home</string>
     <string name="popular_deck">Deck</string>
     <string name="rank">Rank</string>
+    <string name="arena">Arena</string>
+    <string name="trophy">Trophy</string>
+    <string name="clan">Clan</string>
 </resources>
