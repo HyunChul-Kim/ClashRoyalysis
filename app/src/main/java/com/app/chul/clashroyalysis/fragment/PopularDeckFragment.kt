@@ -35,12 +35,6 @@ class PopularDeckFragment: Fragment(), BaseFragmentInterface<PopularDeckList> {
 
     private var fragmentListener: FragmentStateListener?= null
 
-    companion object {
-        fun getInstance(): Fragment {
-            return PopularDeckFragment()
-        }
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_popular_deck, container, false)
     }

@@ -18,6 +18,7 @@ import com.app.chul.clashroyalysis.jsonobject.PlayerDataList
 import com.app.chul.clashroyalysis.listener.FragmentStateListener
 import com.app.chul.clashroyalysis.utils.ChulLog
 import com.app.chul.clashroyalysis.utils.DragAndDropHelperCallback
+import com.app.chul.clashroyalysis.utils.SingletonHolder
 import com.app.chul.clashroyalysis.utils.UserDataHelper
 import com.app.chul.clashroyalysis.view.FragmentTabView
 import kotlinx.android.synthetic.main.fragment_register.*
@@ -36,14 +37,6 @@ class RegisterFragment: Fragment(), BaseFragmentInterface<PlayerDataList> {
     private var mAdapter : RegisterAdapter ?= null
 
     private var fragmentListener: FragmentStateListener ?= null
-
-    companion object {
-        private var Instance: RegisterFragment? = null
-        fun getInstance(): Fragment =
-            Instance ?: synchronized(this) {
-                Instance ?: RegisterFragment()
-            }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

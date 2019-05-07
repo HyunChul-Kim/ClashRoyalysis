@@ -16,12 +16,6 @@ import kotlinx.android.synthetic.main.fragment_rank.*
 
 class RankFragment: Fragment(), BaseFragmentInterface<TopPlayerList> {
 
-    companion object {
-        fun getInstance(): Fragment {
-            return RankFragment()
-        }
-    }
-
     private var location = "KR"
     private var page = 1
     private val max = 50

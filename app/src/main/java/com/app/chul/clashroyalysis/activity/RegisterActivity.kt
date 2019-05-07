@@ -66,9 +66,9 @@ class RegisterActivity: BaseActivity(){
     }
 
     private fun initFragment() {
-        fragmentMap[FragmentTabView.TabType.Home.name] = RegisterFragment.getInstance()
-        fragmentMap[FragmentTabView.TabType.Deck.name] = PopularDeckFragment.getInstance()
-        fragmentMap[FragmentTabView.TabType.Rank.name] = RankFragment.getInstance()
+        fragmentMap[FragmentTabView.TabType.Home.name] = RegisterFragment()
+        fragmentMap[FragmentTabView.TabType.Deck.name] = PopularDeckFragment()
+        fragmentMap[FragmentTabView.TabType.Rank.name] = RankFragment()
     }
 
     private fun initFragmentTab() {
