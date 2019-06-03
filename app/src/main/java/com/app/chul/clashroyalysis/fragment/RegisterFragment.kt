@@ -11,14 +11,11 @@ import android.view.ViewGroup
 import com.app.chul.clashroyalysis.R
 import com.app.chul.clashroyalysis.`interface`.BaseFragmentInterface
 import com.app.chul.clashroyalysis.adapter.RegisterAdapter
-import com.app.chul.clashroyalysis.bus.RxBus
-import com.app.chul.clashroyalysis.bus.RxEvent
 import com.app.chul.clashroyalysis.jsonobject.PlayerData
 import com.app.chul.clashroyalysis.jsonobject.PlayerDataList
 import com.app.chul.clashroyalysis.listener.FragmentStateListener
 import com.app.chul.clashroyalysis.utils.ChulLog
 import com.app.chul.clashroyalysis.utils.DragAndDropHelperCallback
-import com.app.chul.clashroyalysis.utils.SingletonHolder
 import com.app.chul.clashroyalysis.utils.UserDataHelper
 import com.app.chul.clashroyalysis.view.FragmentTabView
 import kotlinx.android.synthetic.main.fragment_register.*
@@ -52,11 +49,6 @@ class RegisterFragment: Fragment(), BaseFragmentInterface<PlayerDataList> {
         fragmentListener?.onActivityCreated(FragmentTabView.TabType.Home, register_recycler_view)
         initRecyclerView()
         initAdapter()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        RxBus.unregister(this)
     }
 
     private fun initRecyclerView() {
@@ -106,6 +98,12 @@ class RegisterFragment: Fragment(), BaseFragmentInterface<PlayerDataList> {
 
     fun addUser(data: PlayerData) {
         mAdapter?.addData(data)
+    }
+
+    fun addUser() {
+        mAdapter?.let { adapter ->
+            adapter.notifyItemInserted(adapter.itemCount - 1)
+        }
     }
 
     fun getRecyclerView() = register_recycler_view

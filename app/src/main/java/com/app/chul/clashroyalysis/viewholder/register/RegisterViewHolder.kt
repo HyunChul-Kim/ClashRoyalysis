@@ -13,11 +13,9 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.EditText
 import com.app.chul.clashroyalysis.R
-import com.app.chul.clashroyalysis.bus.RxBus
-import com.app.chul.clashroyalysis.bus.RxEvent
+import com.app.chul.clashroyalysis.`interface`.BaseInterface
 import com.app.chul.clashroyalysis.utils.hideKeyboard
 import com.app.chul.clashroyalysis.utils.isAvailableTag
-import com.crashlytics.android.Crashlytics
 
 class RegisterViewHolder(itemView: View): RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
@@ -89,7 +87,9 @@ class RegisterViewHolder(itemView: View): RecyclerView.ViewHolder(itemView), Vie
             override fun onTransitionStart(transition: Transition?) {
                 if(isDefault) {
                     if(isAvailableTag(registerTag.text.toString())) {
-                        RxBus.publish(RxEvent.EventAddTag(registerTag.text.toString()))
+                        if(itemView.context is BaseInterface) {
+                            (itemView.context as BaseInterface).addUser(registerTag.text.toString())
+                        }
 
                     } else {
                         setShakeAnim()

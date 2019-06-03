@@ -6,10 +6,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.app.chul.clashroyalysis.R
-import com.app.chul.clashroyalysis.bus.RxBus
-import com.app.chul.clashroyalysis.bus.RxEvent
 import com.app.chul.clashroyalysis.jsonobject.TopPlayer
-import com.app.chul.clashroyalysis.preference.RoyalysisPreferenceManager
 import com.app.chul.clashroyalysis.utils.UserDataHelper
 import com.bumptech.glide.Glide
 
@@ -27,11 +24,13 @@ class TopPlayerViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     init {
         favoritesButton.setOnClickListener {
             if(!TextUtils.isEmpty(playerTag)) {
-                RxBus.publish(RxEvent.EventAddTag(playerTag))
+//                RxBus.publish(RxEvent.EventAddTag(playerTag))
                 isChecked = if(isChecked) {
+                    UserDataHelper.getInstance(itemView.context).deleteUserData(playerTag)
                     favoritesButton.setImageResource(R.drawable.icon_star_unselect)
                     false
                 } else {
+                    UserDataHelper.getInstance(itemView.context).addUserData(playerTag)
                     favoritesButton.setImageResource(R.drawable.icon_star_select)
                     true
                 }

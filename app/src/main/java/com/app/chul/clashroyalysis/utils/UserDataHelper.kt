@@ -53,7 +53,7 @@ class UserDataHelper private constructor(context: Context?) {
         return false
     }
 
-    fun updateData() {
+    private fun updateData() {
         // convert ArrayList to JsonArray
         setUserData(Gson().toJson(mUserList))
     }

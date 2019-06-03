@@ -5,8 +5,7 @@ import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.widget.LinearLayout
 import com.app.chul.clashroyalysis.R
-import com.app.chul.clashroyalysis.bus.RxBus
-import com.app.chul.clashroyalysis.bus.RxEvent
+import com.app.chul.clashroyalysis.`interface`.BaseInterface
 import com.app.chul.clashroyalysis.fragment.PopularDeckFragment
 import com.app.chul.clashroyalysis.fragment.RankFragment
 import com.app.chul.clashroyalysis.fragment.RegisterFragment
@@ -23,7 +22,7 @@ import com.facebook.ads.*
 import kotlinx.android.synthetic.main.activity_register.*
 import java.util.*
 
-class RegisterActivity: BaseActivity(){
+class RegisterActivity: BaseActivity(), BaseInterface{
 
     private lateinit var nativeAd: NativeAd
 
@@ -46,23 +45,6 @@ class RegisterActivity: BaseActivity(){
         initFragmentData()
         initSwipeRefresh()
         loadNativeAd()
-        registerRxBus()
-    }
-
-    private fun registerRxBus() {
-        RxBus.register(this, RxBus.listen(RxEvent.EventAddTag::class.java).subscribe {
-            if(UserDataHelper.getInstance(this).addUserData(it.tag)) {
-                dataPresenter.requestPlayerData(it.tag, true, object : FragmentDataPresenter.ResponseListener<PlayerData>{
-                    override fun onError(message: String) {
-
-                    }
-
-                    override fun onResponse(response: PlayerData) {
-//                        (fragmentMap[selectedTab] as RegisterFragment).addUser(response)
-                    }
-                })
-            }
-        })
     }
 
     private fun initFragment() {
@@ -174,8 +156,10 @@ class RegisterActivity: BaseActivity(){
                         }
 
                         override fun onResponse(response: PlayerDataList) {
-                            (fragmentMap[selectedTab] as RegisterFragment).setData(response)
-                            (fragmentMap[selectedTab] as RegisterFragment).refresh()
+                            if(fragmentMap[selectedTab] is RegisterFragment) {
+                                (fragmentMap[selectedTab] as RegisterFragment).setData(response)
+                                (fragmentMap[selectedTab] as RegisterFragment).refresh()
+                            }
                             register_swipe_refresh.isRefreshing = false
                         }
                     })
@@ -188,8 +172,10 @@ class RegisterActivity: BaseActivity(){
                         }
 
                         override fun onResponse(response: PopularDeckList) {
-                            (fragmentMap[selectedTab] as PopularDeckFragment).setData(response)
-                            (fragmentMap[selectedTab] as PopularDeckFragment).refresh()
+                            if(fragmentMap[selectedTab] is PopularDeckFragment) {
+                                (fragmentMap[selectedTab] as PopularDeckFragment).setData(response)
+                                (fragmentMap[selectedTab] as PopularDeckFragment).refresh()
+                            }
                             register_swipe_refresh.isRefreshing = false
                         }
                     })
@@ -202,8 +188,10 @@ class RegisterActivity: BaseActivity(){
                         }
 
                         override fun onResponse(response: TopPlayerList) {
-                            (fragmentMap[selectedTab] as RankFragment).setData(response)
-                            (fragmentMap[selectedTab] as RankFragment).refresh()
+                            if(fragmentMap[selectedTab] is RankFragment) {
+                                (fragmentMap[selectedTab] as RankFragment).setData(response)
+                                (fragmentMap[selectedTab] as RankFragment).refresh()
+                            }
                             register_swipe_refresh.isRefreshing = false
                         }
                     })
@@ -242,7 +230,6 @@ class RegisterActivity: BaseActivity(){
         nativeAd.loadAd()
     }
 
-
     private fun inflateAd(nativeAd: NativeAd) {
         /*nativeAd.unregisterView()
 
@@ -275,5 +262,23 @@ class RegisterActivity: BaseActivity(){
         clickableViews.add(nativeAdCallToAction)
 
         nativeAd.registerViewForInteraction(adView, nativeAdMedia, nativeAdIcon, clickableViews)*/
+    }
+
+    override fun addUser(tag: String) {
+        register_swipe_refresh.isRefreshing = true
+        UserDataHelper.getInstance(this).addUserData(tag)
+        dataPresenter.requestPlayerData(tag, true, object : FragmentDataPresenter.ResponseListener<PlayerData>{
+            override fun onError(message: String) {
+                register_swipe_refresh.isRefreshing = false
+            }
+
+            override fun onResponse(response: PlayerData) {
+                register_swipe_refresh.isRefreshing = false
+                if(fragmentMap[selectedTab] is RegisterFragment) {
+                    (fragmentMap[selectedTab] as RegisterFragment).addUser()
+                }
+            }
+
+        })
     }
 }
