@@ -1,11 +1,7 @@
 package com.app.chul.clashroyalysis.presenter
 
 import android.content.Context
-import android.util.Log
-import com.app.chul.clashroyalysis.jsonobject.PlayerData
-import com.app.chul.clashroyalysis.jsonobject.PlayerDataList
-import com.app.chul.clashroyalysis.jsonobject.PopularDeckList
-import com.app.chul.clashroyalysis.jsonobject.TopPlayerList
+import com.app.chul.clashroyalysis.jsonobject.*
 import com.app.chul.clashroyalysis.retrofit.ClashRoyaleRetrofit
 import com.app.chul.clashroyalysis.utils.ChulLog
 import com.app.chul.clashroyalysis.utils.SingletonHolder
@@ -14,7 +10,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class FragmentDataPresenter private constructor(context: Context) {
+class BaseDataPresenter private constructor(context: Context) {
 
     private var mUserDataHelper = UserDataHelper.getInstance(context)
 
@@ -27,7 +23,7 @@ class FragmentDataPresenter private constructor(context: Context) {
         fun onResponse(response: T)
     }
 
-    companion object: SingletonHolder<FragmentDataPresenter, Context>(::FragmentDataPresenter)
+    companion object: SingletonHolder<BaseDataPresenter, Context>(::BaseDataPresenter)
 
     fun requestPlayersDataList(listener: ResponseListener<PlayerDataList>?) {
         val tags = mUserDataHelper.getUserListToString()
@@ -115,6 +111,27 @@ class FragmentDataPresenter private constructor(context: Context) {
                         listener?.onResponse(mRankList)
                     } else {
                         it.errorBody()?.let { listener?.onError(it.toString()) }
+                    }
+                }
+            }
+        })
+    }
+
+    fun reqeustChestsData(tag: String, listener: ResponseListener<UpcomingChestsData>?) {
+        val chestsCall = ClashRoyaleRetrofit.getService().getUpcomingChests(tag)
+        chestsCall.enqueue(object : Callback<UpcomingChestsData> {
+            override fun onFailure(call: Call<UpcomingChestsData>?, t: Throwable?) {
+                ChulLog.log("UpcomingChests Service Failed ${t.toString()}")
+                listener?.onError(t.toString())
+            }
+
+            override fun onResponse(call: Call<UpcomingChestsData>?, response: Response<UpcomingChestsData>?) {
+                ChulLog.log("UpcomingChests Service Response Success")
+                response?.let { data ->
+                    if(data.body() != null) {
+                        listener?.onResponse(data.body() as UpcomingChestsData)
+                    } else {
+                        data.errorBody()?.let { listener?.onError(it.toString()) }
                     }
                 }
             }

@@ -19,7 +19,7 @@ interface ClashRoyaleService {
     fun getPlayers(@Path("tag") tag: String): Call<PlayerDataList>
 
     @GET("/player/{tag}/chests")
-    fun getUpcomingBox(@Path("tag") tag: String): Call<UpcomingBoxData>
+    fun getUpcomingChests(@Path("tag") tag: String): Call<UpcomingChestsData>
 
     @GET("/player/{tag}/battles")
     fun getPlayerBattles(@Path("tag") tag: String): Call<BattleData>

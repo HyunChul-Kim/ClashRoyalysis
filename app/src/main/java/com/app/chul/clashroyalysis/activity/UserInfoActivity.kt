@@ -6,13 +6,9 @@ import com.app.chul.clashroyalysis.R
 import com.app.chul.clashroyalysis.adapter.UserInfoAdapter
 import com.app.chul.clashroyalysis.jsonobject.PlayerData
 import com.app.chul.clashroyalysis.jsonobject.TopPlayerList
-import com.app.chul.clashroyalysis.presenter.FragmentDataPresenter
-import com.app.chul.clashroyalysis.retrofit.ClashRoyaleRetrofit
-import com.app.chul.clashroyalysis.utils.ChulLog
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import com.app.chul.clashroyalysis.jsonobject.UpcomingChestsData
+import com.app.chul.clashroyalysis.presenter.BaseDataPresenter
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.concurrent.TimeUnit
 
 class UserInfoActivity : BaseActivity() {
 
@@ -39,20 +35,30 @@ class UserInfoActivity : BaseActivity() {
             mAdapter?.setData(it, 0)
         }
 
-        val topTrophy = FragmentDataPresenter.getInstance(this).getFirstRankTrophy()
+        val topTrophy = BaseDataPresenter.getInstance(this).getFirstRankTrophy()
         if(topTrophy > 0) {
             mAdapter?.setTopPlayerTrophy(topTrophy)
         } else {
-            FragmentDataPresenter.getInstance(this).requestRankList("KR", 1, object: FragmentDataPresenter.ResponseListener<TopPlayerList>{
+            BaseDataPresenter.getInstance(this).requestRankList("KR", 1, object: BaseDataPresenter.ResponseListener<TopPlayerList>{
                 override fun onError(message: String) {
 
                 }
 
                 override fun onResponse(response: TopPlayerList) {
-                    mAdapter?.setTopPlayerTrophy(response?.get(0)?.trophies)
+                    mAdapter?.setTopPlayerTrophy(response[0].trophies)
                 }
             })
         }
+
+        BaseDataPresenter.getInstance(this).reqeustChestsData(data.tag, object : BaseDataPresenter.ResponseListener<UpcomingChestsData>{
+            override fun onError(message: String) {
+
+            }
+
+            override fun onResponse(response: UpcomingChestsData) {
+                mAdapter?.setUpcomingChests(response)
+            }
+        })
 
         /*ClashRoyaleRetrofit.getService().getTopPlayers("KR", 1, 0)
                 .timeout(10000, TimeUnit.MILLISECONDS)

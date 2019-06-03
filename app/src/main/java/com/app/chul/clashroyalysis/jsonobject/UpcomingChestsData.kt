@@ -1,6 +1,6 @@
 package com.app.chul.clashroyalysis.jsonobject
 
-data class UpcomingBoxData (
+data class UpcomingChestsData (
         val upcoming: ArrayList<String>,
         val superMagical: Int,
         val magical: Int,

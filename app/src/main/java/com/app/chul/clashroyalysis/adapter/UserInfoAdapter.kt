@@ -7,10 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.app.chul.clashroyalysis.R
+import com.app.chul.clashroyalysis.dto.Chest
 import com.app.chul.clashroyalysis.jsonobject.PlayerData
+import com.app.chul.clashroyalysis.jsonobject.UpcomingChestsData
 import com.app.chul.clashroyalysis.utils.UserInfoPayloads
 import com.app.chul.clashroyalysis.viewholder.DoubleRateViewHolder
 import com.app.chul.clashroyalysis.viewholder.userInfo.TrophyInfoViewHolder
+import com.app.chul.clashroyalysis.viewholder.userInfo.UpcomingChestsViewHolder
 import com.app.chul.clashroyalysis.viewholder.userInfo.UserProfileInfoViewHolder
 import com.app.chul.clashroyalysis.viewholder.userInfo.UserProfileViewHolder
 
@@ -22,11 +25,13 @@ class UserInfoAdapter(private val mContext: Context): Adapter<RecyclerView.ViewH
         const val USER_SIMPLE_INFO = 2
         const val USER_TROPHY_INFO = 3
         const val WIN_RATE_PROGRESS = 4
+        const val UPCOMING_CHESTS = 5
     }
 
     private var mHolderList: ArrayList<Int> = ArrayList()
     private var mPlayerData: PlayerData? = null
     private var mTopPlayerTrophy: Int = 0
+    private var mChestList = ArrayList<Chest>()
 
     init {
         refreshMap()
@@ -49,6 +54,10 @@ class UserInfoAdapter(private val mContext: Context): Adapter<RecyclerView.ViewH
             WIN_RATE_PROGRESS -> {
                 val view: View = LayoutInflater.from(mContext).inflate(R.layout.viewholder_double_rate, parent, false)
                 DoubleRateViewHolder(view, mContext.getString(R.string.win_rate_title), mContext.getString(R.string.three_crown_title))
+            }
+            UPCOMING_CHESTS -> {
+                val view: View = LayoutInflater.from(mContext).inflate(R.layout.viewholder_upcoming_chests, parent, false)
+                UpcomingChestsViewHolder(view)
             }
             else -> {
                 val view: View = LayoutInflater.from(mContext).inflate(R.layout.viewholder_user_profile, parent, false)
@@ -115,6 +124,9 @@ class UserInfoAdapter(private val mContext: Context): Adapter<RecyclerView.ViewH
                     (holder as DoubleRateViewHolder).bind(winPercent, (threeCrownWins / wins.toFloat()))
                 }
             }
+            UPCOMING_CHESTS -> {
+                (holder as UpcomingChestsViewHolder).bind(mChestList)
+            }
         }
     }
 
@@ -125,6 +137,7 @@ class UserInfoAdapter(private val mContext: Context): Adapter<RecyclerView.ViewH
             mHolderList.add(USER_SIMPLE_INFO)
             mHolderList.add(USER_TROPHY_INFO)
             mHolderList.add(WIN_RATE_PROGRESS)
+            mHolderList.add(UPCOMING_CHESTS)
         }
     }
 
@@ -141,6 +154,19 @@ class UserInfoAdapter(private val mContext: Context): Adapter<RecyclerView.ViewH
             refreshMap()
             notifyItemChanged(getItemPosition(USER_TROPHY_INFO), UserInfoPayloads.TOP_TROPHY)
         }
+    }
+
+    fun setUpcomingChests(chests: UpcomingChestsData) {
+        mChestList.clear()
+        for((index, chest) in chests.upcoming.withIndex()) {
+            mChestList.add(Chest(chest, index))
+        }
+        mChestList.add(Chest("epic", chests.epic))
+        mChestList.add(Chest("giant", chests.giant))
+        mChestList.add(Chest("magical", chests.magical))
+        mChestList.add(Chest("superMagical", chests.superMagical))
+        mChestList.add(Chest("legendary", chests.legendary))
+        notifyItemChanged(getItemPosition(UPCOMING_CHESTS))
     }
 
 }

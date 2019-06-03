@@ -15,7 +15,7 @@ import com.app.chul.clashroyalysis.jsonobject.PopularDeckList
 import com.app.chul.clashroyalysis.jsonobject.TopPlayerList
 import com.app.chul.clashroyalysis.listener.FragmentStateListener
 import com.app.chul.clashroyalysis.listener.TabChangedListener
-import com.app.chul.clashroyalysis.presenter.FragmentDataPresenter
+import com.app.chul.clashroyalysis.presenter.BaseDataPresenter
 import com.app.chul.clashroyalysis.utils.UserDataHelper
 import com.app.chul.clashroyalysis.view.FragmentTabView
 import com.facebook.ads.*
@@ -31,7 +31,7 @@ class RegisterActivity: BaseActivity(), BaseInterface{
 
     private val fragmentMap = HashMap<String, Fragment>()
     private var selectedTab = FragmentTabView.TabType.Home.name
-    private val dataPresenter = FragmentDataPresenter.getInstance(this)
+    private val dataPresenter = BaseDataPresenter.getInstance(this)
 
     private var fragmentStateListener: FragmentStateListener ?= null
 
@@ -98,7 +98,7 @@ class RegisterActivity: BaseActivity(), BaseInterface{
 
     private fun initFragmentData() {
         register_swipe_refresh.isRefreshing = true
-        dataPresenter.requestPlayersDataList(object : FragmentDataPresenter.ResponseListener<PlayerDataList>{
+        dataPresenter.requestPlayersDataList(object : BaseDataPresenter.ResponseListener<PlayerDataList>{
             override fun onError(message: String) {
                 register_swipe_refresh.isRefreshing = false
             }
@@ -108,7 +108,7 @@ class RegisterActivity: BaseActivity(), BaseInterface{
                 register_swipe_refresh.isRefreshing = false
             }
         })
-        dataPresenter.requestDeckList(object : FragmentDataPresenter.ResponseListener<PopularDeckList>{
+        dataPresenter.requestDeckList(object : BaseDataPresenter.ResponseListener<PopularDeckList>{
             override fun onError(message: String) {
 
             }
@@ -117,7 +117,7 @@ class RegisterActivity: BaseActivity(), BaseInterface{
                 (fragmentMap[FragmentTabView.TabType.Deck.name] as PopularDeckFragment).setData(response)
             }
         })
-        dataPresenter.requestRankList("kr", 50, object : FragmentDataPresenter.ResponseListener<TopPlayerList>{
+        dataPresenter.requestRankList("kr", 50, object : BaseDataPresenter.ResponseListener<TopPlayerList>{
             override fun onError(message: String) {
 
             }
@@ -150,7 +150,7 @@ class RegisterActivity: BaseActivity(), BaseInterface{
         register_swipe_refresh.setOnRefreshListener {
             when(selectedTab) {
                 FragmentTabView.TabType.Home.name -> {
-                    dataPresenter.requestPlayersDataList(object: FragmentDataPresenter.ResponseListener<PlayerDataList>{
+                    dataPresenter.requestPlayersDataList(object: BaseDataPresenter.ResponseListener<PlayerDataList>{
                         override fun onError(message: String) {
                             register_swipe_refresh.isRefreshing = false
                         }
@@ -166,7 +166,7 @@ class RegisterActivity: BaseActivity(), BaseInterface{
                 }
 
                 FragmentTabView.TabType.Deck.name -> {
-                    dataPresenter.requestDeckList(object : FragmentDataPresenter.ResponseListener<PopularDeckList>{
+                    dataPresenter.requestDeckList(object : BaseDataPresenter.ResponseListener<PopularDeckList>{
                         override fun onError(message: String) {
                             register_swipe_refresh.isRefreshing = false
                         }
@@ -182,7 +182,7 @@ class RegisterActivity: BaseActivity(), BaseInterface{
                 }
 
                 FragmentTabView.TabType.Rank.name -> {
-                    dataPresenter.requestRankList("kr", 50, object : FragmentDataPresenter.ResponseListener<TopPlayerList>{
+                    dataPresenter.requestRankList("kr", 50, object : BaseDataPresenter.ResponseListener<TopPlayerList>{
                         override fun onError(message: String) {
                             register_swipe_refresh.isRefreshing = false
                         }
@@ -267,7 +267,7 @@ class RegisterActivity: BaseActivity(), BaseInterface{
     override fun addUser(tag: String) {
         register_swipe_refresh.isRefreshing = true
         UserDataHelper.getInstance(this).addUserData(tag)
-        dataPresenter.requestPlayerData(tag, true, object : FragmentDataPresenter.ResponseListener<PlayerData>{
+        dataPresenter.requestPlayerData(tag, true, object : BaseDataPresenter.ResponseListener<PlayerData>{
             override fun onError(message: String) {
                 register_swipe_refresh.isRefreshing = false
             }
