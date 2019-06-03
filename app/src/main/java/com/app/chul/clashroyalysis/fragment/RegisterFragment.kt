@@ -73,13 +73,16 @@ class RegisterFragment: Fragment(), BaseFragmentInterface<PlayerDataList> {
                                 .setTitle(R.string.delete_user)
                                 .setMessage(R.string.delete_user_ask)
                                 .setNegativeButton(R.string.cancel, { dialog, which ->
-                                    mAdapter?.refreshItem(position)
+                                    mAdapter?.insertItem(position)
                                     dialog.dismiss()
                                 })
                                 .setPositiveButton(R.string.ok, { dialog, which ->
-                                    mAdapter?.deleteItem(position)
+                                    UserDataHelper.getInstance(activity).deleteUserData(mAdapter!!.getDeletedItemTag())
+//                                    mAdapter?.deleteItem(position)
                                     dialog.dismiss()
-                                }).show()
+                                })
+                                .setCancelable(false)
+                                .show()
                     }
                 }
             }

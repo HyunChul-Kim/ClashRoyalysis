@@ -37,6 +37,7 @@ class UserDataHelper private constructor(context: Context?) {
     fun addUserData(tag: String): Boolean {
         if(!mUserList.contains(tag)) {
             mUserList.add(tag)
+            updateData()
             return true
         }
         return false
@@ -45,6 +46,7 @@ class UserDataHelper private constructor(context: Context?) {
     fun deleteUserData(tag: String): Boolean {
         if(mUserList.contains(tag)) {
             mUserList.remove(tag)
+            updateData()
             return true
         }
 

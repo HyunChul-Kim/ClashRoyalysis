@@ -58,7 +58,7 @@ class RegisterActivity: BaseActivity(){
                     }
 
                     override fun onResponse(response: PlayerData) {
-                        (fragmentMap[selectedTab] as RegisterFragment).addUser(response)
+//                        (fragmentMap[selectedTab] as RegisterFragment).addUser(response)
                     }
                 })
             }

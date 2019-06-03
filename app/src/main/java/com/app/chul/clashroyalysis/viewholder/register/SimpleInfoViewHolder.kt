@@ -62,7 +62,7 @@ class SimpleInfoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         }
         stringBuilder.append("Rank ")
         startIdx = stringBuilder.length
-        stringBuilder.append(playerData.rank.toString())
+        stringBuilder.append(playerData.getRank())
         stringBuilder.setSpan(StyleSpan(Typeface.BOLD), startIdx, stringBuilder.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
 
         return stringBuilder

@@ -17,8 +17,8 @@ class UserProfileInfoViewHolder(itemView: View): RecyclerView.ViewHolder(itemVie
     private val userClanImg = itemView.findViewById<ImageView>(R.id.profile_user_clan_img)
 
     fun bind(data: PlayerData){
-        userTrophy.text = data.trophies.toString()
-        userRank.text = data.rank.toString()
+        userTrophy.text = data.getTrophy()
+        userRank.text = data.getRank()
         userClanName.text = data.clan?.name ?: itemView.context.getString(R.string.no_clan)
         userArena.text = data.arena?.name
         Glide.with(itemView.context).load(data.clan?.badge?.image).into(userClanImg)

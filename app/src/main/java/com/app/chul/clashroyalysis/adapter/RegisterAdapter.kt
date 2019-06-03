@@ -15,6 +15,7 @@ import com.app.chul.clashroyalysis.viewholder.register.SimpleInfoViewHolder
 abstract class RegisterAdapter(private val context: Context?): RecyclerView.Adapter<RecyclerView.ViewHolder>(), DragAndDropHelperCallback.DragAndDropListener {
 
     private var mUserList = PlayerDataList()
+    private var mDeletedItem: PlayerData? = null
 
     object ViewType {
         const val ADD_VIEW_TYPE = 0
@@ -52,10 +53,10 @@ abstract class RegisterAdapter(private val context: Context?): RecyclerView.Adap
     }
 
     override fun getItemViewType(position: Int): Int {
-        if(position >= mUserList.size) {
-            return ViewType.ADD_VIEW_TYPE
+        return if(position >= mUserList.size) {
+            ViewType.ADD_VIEW_TYPE
         }else {
-            return ViewType.USER_VIEW_TYPE
+            ViewType.USER_VIEW_TYPE
         }
     }
 
@@ -74,12 +75,17 @@ abstract class RegisterAdapter(private val context: Context?): RecyclerView.Adap
 
     override fun itemSwiped(position: Int) {
         if(position >= 0 && position < mUserList.size) {
+            mDeletedItem = mUserList[position]
+            deleteItem(position)
             showDeleteDialog(position)
         }
     }
 
+    fun getDeletedItemTag(): String {
+        return mDeletedItem?.tag ?: ""
+    }
+
     fun setData(data: PlayerDataList) {
-        ChulLog.log("Register Adapter SetData(), Data size is ${data.size}")
         mUserList = data
         notifyDataSetChanged()
     }
@@ -93,6 +99,15 @@ abstract class RegisterAdapter(private val context: Context?): RecyclerView.Adap
         if(position >= 0 && position < mUserList.size) {
             mUserList.removeAt(position)
             notifyItemRemoved(position)
+        }
+    }
+
+    fun insertItem(position: Int) {
+        if(position >= 0) {
+            mDeletedItem?.let {
+                mUserList.add(position, mDeletedItem!!)
+                notifyItemInserted(position)
+            }
         }
     }
 

@@ -48,6 +48,14 @@ data class PlayerData (
         parcel.writeTypedList(achievements)
     }
 
+    fun getTrophy(): String {
+        return if(trophies <= 0) "-" else trophies.toString()
+    }
+
+    fun getRank(): String {
+        return if(rank <= 0) "-" else rank.toString()
+    }
+
     override fun describeContents(): Int {
         return 0
     }
