@@ -34,7 +34,7 @@ class UserInfoAdapter(private val mContext: Context): Adapter<RecyclerView.ViewH
     private var mChestList = ArrayList<Chest>()
 
     init {
-        refreshMap()
+        initViewMap()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -130,7 +130,7 @@ class UserInfoAdapter(private val mContext: Context): Adapter<RecyclerView.ViewH
         }
     }
 
-    private fun refreshMap() {
+    private fun initViewMap() {
         mHolderList = ArrayList()
         if(mPlayerData != null) {
             mHolderList.add(USER_PROFILE)
@@ -144,14 +144,14 @@ class UserInfoAdapter(private val mContext: Context): Adapter<RecyclerView.ViewH
     fun setData(data: PlayerData, trophy: Int){
         mPlayerData = data
         mTopPlayerTrophy = trophy
-        refreshMap()
+        initViewMap()
         notifyDataSetChanged()
     }
 
     fun setTopPlayerTrophy(trophy: Int?) {
         trophy?.let {
             mTopPlayerTrophy = trophy
-            refreshMap()
+            initViewMap()
             notifyItemChanged(getItemPosition(USER_TROPHY_INFO), UserInfoPayloads.TOP_TROPHY)
         }
     }
@@ -161,11 +161,11 @@ class UserInfoAdapter(private val mContext: Context): Adapter<RecyclerView.ViewH
         for((index, chest) in chests.upcoming.withIndex()) {
             mChestList.add(Chest(chest, index))
         }
-        mChestList.add(Chest("epic", chests.epic))
         mChestList.add(Chest("giant", chests.giant))
         mChestList.add(Chest("magical", chests.magical))
-        mChestList.add(Chest("superMagical", chests.superMagical))
+        mChestList.add(Chest("epic", chests.epic))
         mChestList.add(Chest("legendary", chests.legendary))
+        mChestList.add(Chest("megaLightning", chests.megaLightning))
         notifyItemChanged(getItemPosition(UPCOMING_CHESTS))
     }
 

@@ -18,8 +18,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="15dp"
-        android:textColor="@color/defaultColor"
+        android:textColor="@android:color/white"
         android:textStyle="bold"
+        android:shadowRadius="5.0"
+        android:shadowDx="5.0"
+        android:shadowDy="5.0"
+        android:shadowColor="#000000"
+        android:paddingRight="2dp"
         app:layout_constraintRight_toRightOf="@id/chest_viewholder_image_view"
         app:layout_constraintBottom_toBottomOf="@id/chest_viewholder_image_view"/>
 

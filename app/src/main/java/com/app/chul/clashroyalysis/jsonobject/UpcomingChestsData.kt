@@ -2,7 +2,7 @@ package com.app.chul.clashroyalysis.jsonobject
 
 data class UpcomingChestsData (
         val upcoming: ArrayList<String>,
-        val superMagical: Int,
+        val megaLightning: Int,
         val magical: Int,
         val legendary: Int,
         val epic: Int,

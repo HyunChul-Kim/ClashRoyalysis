@@ -19,7 +19,7 @@ class ChestViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         if(image > 0) {
             Glide.with(itemView.context).load(image).into(chestImageView)
         }
-        chestLeftCount.text = chest.leftCount.toString()
+        chestLeftCount.text = if(chest.leftCount == 0) "now" else "+${chest.leftCount}"
     }
 
 }
