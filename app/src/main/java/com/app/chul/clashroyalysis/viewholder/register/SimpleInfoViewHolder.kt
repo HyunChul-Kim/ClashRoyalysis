@@ -18,6 +18,7 @@ import com.app.chul.clashroyalysis.view.CardListView
 import com.app.chul.clashroyalysis.view.RetryView
 import com.app.chul.clashroyalysis.view.StereoLoadingView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
@@ -32,7 +33,12 @@ class SimpleInfoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     private var userTag: String = ""
 
     fun bind(data: PlayerData) {
-        Glide.with(itemView.context).load(data.clan?.badge?.image).into(userClanImg)
+        data.clan?.let {clan ->
+            Glide.with(itemView.context)
+                    .applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.no_clan).error(R.drawable.no_clan))
+                    .load(clan.badge.image)
+                    .into(userClanImg)
+        } ?: Glide.with(itemView.context).load(R.drawable.no_clan).into(userClanImg)
         userDeck.bind(data.currentDeck)
         userName.text = data.name
         userInfo.text = getUserInfoFormat(data)

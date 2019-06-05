@@ -62,12 +62,14 @@
             app:layout_constraintRight_toLeftOf="@+id/top_player_favorites_button"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
+        <ToggleButton
             android:id="@+id/top_player_favorites_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_margin="10dp"
-            android:src="@drawable/icon_star_unselect"
+            android:background="@drawable/selector_favorites"
+            android:textOn=""
+            android:textOff=""
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@id/top_player_trophies"
             app:layout_constraintRight_toRightOf="parent"
