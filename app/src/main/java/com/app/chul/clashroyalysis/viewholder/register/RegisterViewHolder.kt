@@ -6,6 +6,7 @@ import android.content.Context
 import android.support.constraint.ConstraintLayout
 import android.support.constraint.ConstraintSet
 import android.support.v7.widget.RecyclerView
+import android.text.InputFilter
 import android.transition.AutoTransition
 import android.transition.Transition
 import android.transition.TransitionManager
@@ -14,6 +15,9 @@ import android.view.animation.AnimationUtils
 import android.widget.EditText
 import com.app.chul.clashroyalysis.R
 import com.app.chul.clashroyalysis.`interface`.BaseInterface
+import com.app.chul.clashroyalysis.bus.RxBus
+import com.app.chul.clashroyalysis.bus.RxEvent
+import com.app.chul.clashroyalysis.utils.UserDataHelper
 import com.app.chul.clashroyalysis.utils.hideKeyboard
 import com.app.chul.clashroyalysis.utils.isAvailableTag
 
@@ -36,6 +40,7 @@ class RegisterViewHolder(itemView: View): RecyclerView.ViewHolder(itemView), Vie
         setTransition()
         itemView.setOnClickListener(this)
         registerTag.setOnClickListener(this)
+        registerTag.filters = arrayOf<InputFilter>(InputFilter.AllCaps())
     }
 
     override fun onClick(v: View?) {
@@ -87,8 +92,8 @@ class RegisterViewHolder(itemView: View): RecyclerView.ViewHolder(itemView), Vie
             override fun onTransitionStart(transition: Transition?) {
                 if(isDefault) {
                     if(isAvailableTag(registerTag.text.toString())) {
-                        if(itemView.context is BaseInterface) {
-                            (itemView.context as BaseInterface).addUser(registerTag.text.toString())
+                        if(UserDataHelper.getInstance(itemView.context).addUserData(registerTag.text.toString())) {
+                            RxBus.publish(RxEvent.EventAddTag(registerTag.text.toString()))
                         }
 
                     } else {

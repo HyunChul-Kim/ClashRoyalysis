@@ -42,7 +42,8 @@ class FixedSwipeRefreshLayout @JvmOverloads constructor(context: Context, attrs:
             return child.childCount > 0 &&
                     (layoutManager != null &&
                             layoutManager is LinearLayoutManager &&
-                            layoutManager.findFirstVisibleItemPosition() > 0)
+                            layoutManager.findFirstVisibleItemPosition() > 0) &&
+                            layoutManager.getChildAt(0).top < layoutManager.paddingTop
         }
         return child.canScrollVertically(-1) || child.scrollY > 0
     }
