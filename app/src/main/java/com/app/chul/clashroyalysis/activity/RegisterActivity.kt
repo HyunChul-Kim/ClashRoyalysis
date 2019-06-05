@@ -156,10 +156,8 @@ class RegisterActivity: BaseActivity(), BaseInterface{
                         }
 
                         override fun onResponse(response: PlayerDataList) {
-                            if(fragmentMap[selectedTab] is RegisterFragment) {
-                                (fragmentMap[selectedTab] as RegisterFragment).setData(response)
-                                (fragmentMap[selectedTab] as RegisterFragment).refresh()
-                            }
+                            (fragmentMap[FragmentTabView.TabType.Home.name] as RegisterFragment).setData(response)
+                            (fragmentMap[FragmentTabView.TabType.Home.name] as RegisterFragment).refresh()
                             register_swipe_refresh.isRefreshing = false
                         }
                     })
@@ -172,10 +170,8 @@ class RegisterActivity: BaseActivity(), BaseInterface{
                         }
 
                         override fun onResponse(response: PopularDeckList) {
-                            if(fragmentMap[selectedTab] is PopularDeckFragment) {
-                                (fragmentMap[selectedTab] as PopularDeckFragment).setData(response)
-                                (fragmentMap[selectedTab] as PopularDeckFragment).refresh()
-                            }
+                            (fragmentMap[FragmentTabView.TabType.Deck.name] as PopularDeckFragment).setData(response)
+                            (fragmentMap[FragmentTabView.TabType.Deck.name] as PopularDeckFragment).refresh()
                             register_swipe_refresh.isRefreshing = false
                         }
                     })
@@ -188,10 +184,8 @@ class RegisterActivity: BaseActivity(), BaseInterface{
                         }
 
                         override fun onResponse(response: TopPlayerList) {
-                            if(fragmentMap[selectedTab] is RankFragment) {
-                                (fragmentMap[selectedTab] as RankFragment).setData(response)
-                                (fragmentMap[selectedTab] as RankFragment).refresh()
-                            }
+                            (fragmentMap[FragmentTabView.TabType.Rank.name] as RankFragment).setData(response)
+                            (fragmentMap[FragmentTabView.TabType.Rank.name] as RankFragment).refresh()
                             register_swipe_refresh.isRefreshing = false
                         }
                     })
