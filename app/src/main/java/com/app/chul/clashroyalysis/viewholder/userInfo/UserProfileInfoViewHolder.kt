@@ -19,7 +19,7 @@ class UserProfileInfoViewHolder(itemView: View): RecyclerView.ViewHolder(itemVie
     fun bind(data: PlayerData){
         userTrophy.text = data.getTrophy()
         userRank.text = data.getRank()
-        userClanName.text = data.clan?.name ?: itemView.context.getString(R.string.no_clan)
+        userClanName.text = data.clan?.name ?: "-"
         userArena.text = data.arena?.name
         Glide.with(itemView.context).load(data.clan?.badge?.image).into(userClanImg)
 
