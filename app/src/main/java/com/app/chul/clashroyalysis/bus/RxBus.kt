@@ -19,15 +19,23 @@ object RxBus {
 
     fun getObservable(): Observable<Any> = publisher
 
-    fun register(subscriber: Any, d: Disposable) {
-        if(!disposableMap.containsKey(subscriber)) {
-            var disposable = CompositeDisposable()
-            disposable.add(d)
+    fun register(subscriber: Any, vararg disposables: Disposable) {
+        for(d in disposables) {
+            if (!disposableMap.containsKey(subscriber)) {
+                var disposable = CompositeDisposable()
+                disposable.add(d)
+            }
         }
     }
 
     fun unregister(subscriber: Any) {
         if(disposableMap.containsKey(subscriber)) {
+            disposableMap[subscriber]?.clear()
+        }
+    }
+
+    fun unregisterAll() {
+        for(subscriber in disposableMap) {
             disposableMap[subscriber]?.clear()
         }
     }

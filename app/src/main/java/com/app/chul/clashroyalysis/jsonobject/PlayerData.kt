@@ -69,4 +69,11 @@ data class PlayerData (
             return arrayOfNulls(size)
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if(other is PlayerData) {
+            return tag.equals(other.tag, true)
+        }
+        return super.equals(other)
+    }
 }

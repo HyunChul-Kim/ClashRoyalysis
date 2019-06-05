@@ -1,12 +1,13 @@
 package com.app.chul.clashroyalysis.viewholder.rank
 
 import android.support.v7.widget.RecyclerView
-import android.text.TextUtils
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.ToggleButton
 import com.app.chul.clashroyalysis.R
+import com.app.chul.clashroyalysis.bus.RxBus
+import com.app.chul.clashroyalysis.bus.RxEvent
 import com.app.chul.clashroyalysis.jsonobject.TopPlayer
 import com.app.chul.clashroyalysis.utils.UserDataHelper
 import com.bumptech.glide.Glide
@@ -24,8 +25,12 @@ class TopPlayerViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
     init {
         favoritesButton.setOnCheckedChangeListener { buttonView, isChecked ->
-            if(isChecked) UserDataHelper.getInstance(itemView.context).deleteUserData(playerTag)
-            else UserDataHelper.getInstance(itemView.context).addUserData(playerTag)
+            if(isChecked) {
+                if(UserDataHelper.getInstance(itemView.context).addUserData(playerTag)) {
+                    RxBus.publish(RxEvent.EventAddTag(playerTag))
+                }
+
+            }
         }
     }
 

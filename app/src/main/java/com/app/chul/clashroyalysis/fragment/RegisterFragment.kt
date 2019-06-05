@@ -106,5 +106,14 @@ class RegisterFragment: Fragment(), BaseFragmentInterface<PlayerDataList> {
         }
     }
 
+    fun deleteUser(tag: String) {
+        for((index, data)in userList.withIndex()) {
+            if(data.tag.equals(tag, true)) {
+                userList.remove(data)
+                mAdapter?.deleteItem(index)
+            }
+        }
+    }
+
     fun getRecyclerView() = register_recycler_view
 }

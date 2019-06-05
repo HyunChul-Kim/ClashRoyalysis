@@ -6,6 +6,8 @@ import android.support.v7.widget.RecyclerView
 import android.widget.LinearLayout
 import com.app.chul.clashroyalysis.R
 import com.app.chul.clashroyalysis.`interface`.BaseInterface
+import com.app.chul.clashroyalysis.bus.RxBus
+import com.app.chul.clashroyalysis.bus.RxEvent
 import com.app.chul.clashroyalysis.fragment.PopularDeckFragment
 import com.app.chul.clashroyalysis.fragment.RankFragment
 import com.app.chul.clashroyalysis.fragment.RegisterFragment
@@ -39,6 +41,7 @@ class RegisterActivity: BaseActivity(), BaseInterface{
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
+        registerRxBus()
         initFragmentListener()
         initFragment()
         initFragmentTab()
@@ -192,6 +195,21 @@ class RegisterActivity: BaseActivity(), BaseInterface{
                 }
             }
         }
+    }
+
+    private fun registerRxBus() {
+        RxBus.register(this,
+                RxBus.listen(RxEvent.EventAddTag::class.java).subscribe {
+                    dataPresenter.requestPlayerData(it.tag, true, object : BaseDataPresenter.ResponseListener<PlayerData> {
+                        override fun onError(message: String) {
+
+                        }
+
+                        override fun onResponse(response: PlayerData) {
+                            (fragmentMap[FragmentTabView.TabType.Home.name] as RegisterFragment).addUser()
+                        }
+                    })
+                })
     }
 
     private fun loadNativeAd() {

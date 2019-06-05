@@ -60,10 +60,13 @@ class BaseDataPresenter private constructor(context: Context) {
                 ChulLog.log("Player Data Service Response Success")
                 response?.let {
                     if(it.body() != null) {
+                        val playerData = it.body() as PlayerData
                         if(added) {
-                            mUserList.add(it.body() as PlayerData)
+                            if(!mUserList.contains(playerData)) {
+                                mUserList.add(playerData)
+                            }
                         }
-                        listener?.onResponse(it.body() as PlayerData)
+                        listener?.onResponse(playerData)
                     } else {
                         it.errorBody()?.let { listener?.onError(it.toString()) }
                     }
