@@ -5,13 +5,12 @@ import android.support.constraint.ConstraintLayout
 import android.support.design.widget.TabLayout
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.View
 import com.app.chul.clashroyalysis.R
 import com.app.chul.clashroyalysis.listener.TabChangedListener
 
 class FragmentTabView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-): ConstraintLayout(context, attrs, defStyleAttr), View.OnClickListener {
+): ConstraintLayout(context, attrs, defStyleAttr) {
 
     enum class TabType {
         Home, Deck, Rank
@@ -27,7 +26,7 @@ class FragmentTabView @JvmOverloads constructor(
         tabLayout = findViewById(R.id.fragment_tab_layout)
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabReselected(tab: TabLayout.Tab?) {
-
+                tabChangedListener?.onTabReselected()
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {
@@ -47,34 +46,17 @@ class FragmentTabView @JvmOverloads constructor(
         when {
             TabType.Home.name.equals(tab, true) -> {
                 selectedTab = TabType.Home
-                tabChangedListener?.onChanged(TabType.Home)
+                tabChangedListener?.onTabSelected(TabType.Home)
             }
             TabType.Deck.name.equals(tab, true) -> {
                 selectedTab = TabType.Deck
-                tabChangedListener?.onChanged(TabType.Deck)
+                tabChangedListener?.onTabSelected(TabType.Deck)
             }
             TabType.Rank.name.equals(tab, true) -> {
                 selectedTab = TabType.Rank
-                tabChangedListener?.onChanged(TabType.Rank)
+                tabChangedListener?.onTabSelected(TabType.Rank)
             }
         }
-    }
-
-    override fun onClick(v: View?) {
-        /*when (v) {
-            favoriteTab -> {
-                selectedTab = TabType.Home
-                tabChangedListener?.onChanged(TabType.Home)
-            }
-            popularDeckTab -> {
-                selectedTab = TabType.Deck
-                tabChangedListener?.onChanged(TabType.Deck)
-            }
-            topPlayerTab -> {
-                selectedTab = TabType.Rank
-                tabChangedListener?.onChanged(TabType.Rank)
-            }
-        }*/
     }
 
     fun setTabChangedListener(listener: TabChangedListener?) {

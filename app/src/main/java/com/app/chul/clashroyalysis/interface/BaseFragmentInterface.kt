@@ -1,7 +1,6 @@
 package com.app.chul.clashroyalysis.`interface`
 
-interface BaseFragmentInterface<in T> {
+interface BaseFragmentInterface {
     fun scrollTop()
     fun refresh()
-    fun setData(data : T)
 }

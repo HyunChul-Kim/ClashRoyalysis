@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.widget.LinearLayout
 import com.app.chul.clashroyalysis.R
+import com.app.chul.clashroyalysis.`interface`.BaseFragmentInterface
 import com.app.chul.clashroyalysis.`interface`.BaseInterface
 import com.app.chul.clashroyalysis.bus.RxBus
 import com.app.chul.clashroyalysis.bus.RxEvent
@@ -58,7 +59,7 @@ class RegisterActivity: BaseActivity(), BaseInterface{
 
     private fun initFragmentTab() {
         register_fragment_tab.setTabChangedListener(object: TabChangedListener {
-            override fun onChanged(type: FragmentTabView.TabType) {
+            override fun onTabSelected(type: FragmentTabView.TabType) {
                 when(type) {
                     FragmentTabView.TabType.Home -> {
                         selectedTab = FragmentTabView.TabType.Home.name
@@ -87,6 +88,10 @@ class RegisterActivity: BaseActivity(), BaseInterface{
                         (fragmentMap[selectedTab] as RankFragment).setFragmentListener(fragmentStateListener)
                     }
                 }
+            }
+
+            override fun onTabReselected() {
+                (fragmentMap[selectedTab] as BaseFragmentInterface).scrollTop()
             }
         })
 

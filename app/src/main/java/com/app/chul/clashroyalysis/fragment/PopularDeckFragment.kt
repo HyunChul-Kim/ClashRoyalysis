@@ -14,7 +14,7 @@ import com.app.chul.clashroyalysis.listener.FragmentStateListener
 import com.app.chul.clashroyalysis.view.FragmentTabView
 import kotlinx.android.synthetic.main.fragment_popular_deck.*
 
-class PopularDeckFragment: Fragment(), BaseFragmentInterface<PopularDeckList> {
+class PopularDeckFragment: Fragment(), BaseFragmentInterface {
 
     override fun scrollTop() {
         popular_deck_recycler_view?.scrollToPosition(0)
@@ -24,7 +24,7 @@ class PopularDeckFragment: Fragment(), BaseFragmentInterface<PopularDeckList> {
         adapter?.setData(deckList)
     }
 
-    override fun setData(data: PopularDeckList) {
+    fun setData(data: PopularDeckList) {
         deckList = data
         adapter?.setData(deckList)
     }

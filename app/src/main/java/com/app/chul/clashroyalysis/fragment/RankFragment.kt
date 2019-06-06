@@ -14,7 +14,7 @@ import com.app.chul.clashroyalysis.listener.FragmentStateListener
 import com.app.chul.clashroyalysis.view.FragmentTabView
 import kotlinx.android.synthetic.main.fragment_rank.*
 
-class RankFragment: Fragment(), BaseFragmentInterface<TopPlayerList> {
+class RankFragment: Fragment(), BaseFragmentInterface {
 
     private var location = "KR"
     private var page = 1
@@ -33,7 +33,7 @@ class RankFragment: Fragment(), BaseFragmentInterface<TopPlayerList> {
         adapter?.setData(rankList)
     }
 
-    override fun setData(data: TopPlayerList) {
+    fun setData(data: TopPlayerList) {
         rankList = data
         adapter?.setData(rankList)
     }

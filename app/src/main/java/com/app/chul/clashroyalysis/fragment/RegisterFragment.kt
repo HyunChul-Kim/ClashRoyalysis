@@ -20,7 +20,7 @@ import com.app.chul.clashroyalysis.utils.UserDataHelper
 import com.app.chul.clashroyalysis.view.FragmentTabView
 import kotlinx.android.synthetic.main.fragment_register.*
 
-class RegisterFragment: Fragment(), BaseFragmentInterface<PlayerDataList> {
+class RegisterFragment: Fragment(), BaseFragmentInterface {
 
     override fun scrollTop() {
         register_recycler_view?.scrollToPosition(0)
@@ -64,15 +64,14 @@ class RegisterFragment: Fragment(), BaseFragmentInterface<PlayerDataList> {
                         AlertDialog.Builder(it)
                                 .setTitle(R.string.delete_user)
                                 .setMessage(R.string.delete_user_ask)
-                                .setNegativeButton(R.string.cancel, { dialog, which ->
+                                .setNegativeButton(R.string.cancel) { dialog, which ->
                                     mAdapter?.insertItem(position)
                                     dialog.dismiss()
-                                })
-                                .setPositiveButton(R.string.ok, { dialog, which ->
+                                }
+                                .setPositiveButton(R.string.ok) { dialog, which ->
                                     UserDataHelper.getInstance(activity).deleteUserData(mAdapter!!.getDeletedItemTag())
-//                                    mAdapter?.deleteItem(position)
                                     dialog.dismiss()
-                                })
+                                }
                                 .setCancelable(false)
                                 .show()
                     }
@@ -86,7 +85,7 @@ class RegisterFragment: Fragment(), BaseFragmentInterface<PlayerDataList> {
         register_recycler_view.adapter = mAdapter
     }
 
-    override fun setData(data: PlayerDataList) {
+    fun setData(data: PlayerDataList) {
         userList = data
         ChulLog.log("Register Fragment SetData(), Adapter is ${if(mAdapter == null) "null" else "not null"}")
         mAdapter?.setData(userList)
