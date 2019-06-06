@@ -25,12 +25,13 @@ import com.facebook.ads.*
 import kotlinx.android.synthetic.main.activity_register.*
 import java.util.*
 
-class RegisterActivity: BaseActivity(), BaseInterface{
+class RegisterActivity: BaseActivity(), BaseInterface, NativeAdsManager.Listener{
 
     private lateinit var nativeAd: NativeAd
 
     private lateinit var nativeAdLayout: NativeAdLayout
     private lateinit var adView: LinearLayout
+    private var nativeAdsManager: NativeAdsManager? = null
 
     private val fragmentMap = HashMap<String, Fragment>()
     private var selectedTab = FragmentTabView.TabType.Home.name
@@ -48,7 +49,7 @@ class RegisterActivity: BaseActivity(), BaseInterface{
         initFragmentTab()
         initFragmentData()
         initSwipeRefresh()
-        loadNativeAd()
+        initNativeAdsManager()
     }
 
     private fun initFragment() {
@@ -215,6 +216,23 @@ class RegisterActivity: BaseActivity(), BaseInterface{
                         }
                     })
                 })
+    }
+
+    private fun initNativeAdsManager() {
+        var placementId = getString(R.string.ad_register_placement_id)
+        nativeAdsManager = NativeAdsManager(this, placementId, 5)
+        nativeAdsManager!!.loadAds()
+        nativeAdsManager!!.setListener(this)
+    }
+
+    override fun onAdsLoaded() {
+        if(fragmentMap[selectedTab] is RegisterFragment) {
+            (fragmentMap[selectedTab] as RegisterFragment).setNativeAdsManager(nativeAdsManager)
+        }
+    }
+
+    override fun onAdError(p0: AdError?) {
+
     }
 
     private fun loadNativeAd() {

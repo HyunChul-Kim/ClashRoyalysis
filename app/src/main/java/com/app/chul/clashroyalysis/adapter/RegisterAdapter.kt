@@ -1,62 +1,100 @@
 package com.app.chul.clashroyalysis.adapter
 
+import android.app.Activity
 import android.content.Context
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.app.chul.clashroyalysis.R
 import com.app.chul.clashroyalysis.jsonobject.PlayerData
 import com.app.chul.clashroyalysis.jsonobject.PlayerDataList
-import com.app.chul.clashroyalysis.utils.ChulLog
 import com.app.chul.clashroyalysis.utils.DragAndDropHelperCallback
+import com.app.chul.clashroyalysis.viewholder.adUnits.NativeAdViewHolder
 import com.app.chul.clashroyalysis.viewholder.register.RegisterViewHolder
 import com.app.chul.clashroyalysis.viewholder.register.SimpleInfoViewHolder
+import com.facebook.ads.NativeAd
+import com.facebook.ads.NativeAdLayout
+import com.facebook.ads.NativeAdsManager
 
-abstract class RegisterAdapter(private val context: Context?): RecyclerView.Adapter<RecyclerView.ViewHolder>(), DragAndDropHelperCallback.DragAndDropListener {
+abstract class RegisterAdapter(private val activity: Activity, private var nativeAdsManager: NativeAdsManager?): RecyclerView.Adapter<RecyclerView.ViewHolder>(), DragAndDropHelperCallback.DragAndDropListener {
 
+    private val mAdItems : MutableList<NativeAd>
     private var mUserList = PlayerDataList()
     private var mDeletedItem: PlayerData? = null
 
-    object ViewType {
-        const val ADD_VIEW_TYPE = 0
-        const val USER_VIEW_TYPE = 1
+    companion object ViewType {
+        const val AD_DISPLAY_FREQUENCY = 5
+        const val AD_VIEW_TYPE = 0
+        const val ADD_VIEW_TYPE = 1
+        const val USER_VIEW_TYPE = 2
+    }
+
+    init {
+        mAdItems = ArrayList()
+    }
+
+    fun setNativeAdsManager(manager: NativeAdsManager?) {
+        nativeAdsManager = manager
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when(viewType){
-            ViewType.ADD_VIEW_TYPE -> {
-                val view = LayoutInflater.from(context).inflate(R.layout.viewholder_register, parent, false)
+            AD_VIEW_TYPE -> {
+                val view = LayoutInflater.from(parent.context).inflate(R.layout.viewholder_native_ad_unit, parent, false) as NativeAdLayout
+                NativeAdViewHolder(view)
+            }
+            ADD_VIEW_TYPE -> {
+                val view = LayoutInflater.from(parent.context).inflate(R.layout.viewholder_register, parent, false)
                 RegisterViewHolder(view)
             }
-            ViewType.USER_VIEW_TYPE -> {
-                val view = LayoutInflater.from(context).inflate(R.layout.viewholder_user_simple_info, parent, false)
+            USER_VIEW_TYPE -> {
+                val view = LayoutInflater.from(parent.context).inflate(R.layout.viewholder_user_simple_info, parent, false)
                 SimpleInfoViewHolder(view)
             }
             else -> {
-                val view = LayoutInflater.from(context).inflate(R.layout.viewholder_register, parent, false)
+                val view = LayoutInflater.from(parent.context).inflate(R.layout.viewholder_register, parent, false)
                 RegisterViewHolder(view)
             }
         }
     }
 
     override fun getItemCount(): Int {
-        return mUserList.size + 1
+        return mUserList.size + mAdItems.size + 1
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(getItemViewType(position)){
-            ViewType.USER_VIEW_TYPE -> {
+            AD_VIEW_TYPE -> {
+                val ad: NativeAd?
+
+                if(mAdItems.size > position / AD_DISPLAY_FREQUENCY) {
+                    ad = mAdItems[position / AD_DISPLAY_FREQUENCY]
+                } else {
+                    ad = nativeAdsManager?.nextNativeAd()
+                    if(ad != null && !ad.isAdInvalidated) {
+                        mAdItems.add(ad)
+                    } else {
+                        Log.w(RegisterAdapter::class.java.simpleName, "Ad is invalidated!")
+                    }
+                }
+                (holder as NativeAdViewHolder).bind(ad, activity)
+            }
+            USER_VIEW_TYPE -> {
                 val viewHolder = holder as SimpleInfoViewHolder
-                viewHolder.bind(mUserList[position])
+                viewHolder.bind(mUserList[position - ((position / AD_DISPLAY_FREQUENCY) + 1)])
             }
         }
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if(position >= mUserList.size) {
-            ViewType.ADD_VIEW_TYPE
-        }else {
-            ViewType.USER_VIEW_TYPE
+        return if(position % AD_DISPLAY_FREQUENCY == 0) AD_VIEW_TYPE else {
+            if (position == itemCount - 1) {
+                ADD_VIEW_TYPE
+            } else {
+                USER_VIEW_TYPE
+            }
         }
     }
 

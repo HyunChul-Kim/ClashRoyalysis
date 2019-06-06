@@ -18,9 +18,11 @@ import com.app.chul.clashroyalysis.utils.ChulLog
 import com.app.chul.clashroyalysis.utils.DragAndDropHelperCallback
 import com.app.chul.clashroyalysis.utils.UserDataHelper
 import com.app.chul.clashroyalysis.view.FragmentTabView
+import com.facebook.ads.AdError
+import com.facebook.ads.NativeAdsManager
 import kotlinx.android.synthetic.main.fragment_register.*
 
-class RegisterFragment: Fragment(), BaseFragmentInterface {
+class RegisterFragment: Fragment(), BaseFragmentInterface, NativeAdsManager.Listener {
 
     override fun scrollTop() {
         register_recycler_view?.scrollToPosition(0)
@@ -30,6 +32,7 @@ class RegisterFragment: Fragment(), BaseFragmentInterface {
         mAdapter?.setData(userList)
     }
 
+    private var nativeAdsManager: NativeAdsManager? = null
     private var userList = PlayerDataList()
     private var mAdapter : RegisterAdapter ?= null
 
@@ -57,8 +60,7 @@ class RegisterFragment: Fragment(), BaseFragmentInterface {
     }
 
     private fun initAdapter() {
-        ChulLog.log("Init Adapter")
-        mAdapter = object: RegisterAdapter(activity) {
+        mAdapter = object: RegisterAdapter(activity, nativeAdsManager) {
                 override fun showDeleteDialog(position: Int) {
                     activity?.let {
                         AlertDialog.Builder(it)
@@ -83,6 +85,22 @@ class RegisterFragment: Fragment(), BaseFragmentInterface {
             itemTouchHelper.attachToRecyclerView(register_recycler_view)
         }
         register_recycler_view.adapter = mAdapter
+    }
+
+    fun setNativeAdsManager(nativeAdsManager: NativeAdsManager?) {
+        this.nativeAdsManager = nativeAdsManager
+        mAdapter?.setNativeAdsManager(nativeAdsManager)
+    }
+
+    override fun onAdError(p0: AdError?) {
+
+    }
+
+    override fun onAdsLoaded() {
+        if(activity == null) {
+            return
+        }
+        mAdapter?.setNativeAdsManager(nativeAdsManager)
     }
 
     fun setData(data: PlayerDataList) {

@@ -3,6 +3,7 @@
     <string name="ad_id">ca-app-pub-7690257336944861~6434351535</string>
     <string name="ad_top_banner_id">ca-app-pub-7690257336944861/8437698340</string>
     <string name="ad_top_banner_test_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="ad_register_placement_id">257266801836381_257268315169563</string>
 
     <string name="app_name">ClashRoyalysis</string>
     <string name="register_text">Add Player</string>
@@ -27,4 +28,5 @@
     <string name="no_clan">have no clans</string>
     <string name="upcoming_chests">Upcoming Chests</string>
     <string name="next">next</string>
+    <string name="sponsored">Sponsored</string>
 </resources>

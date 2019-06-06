@@ -39,12 +39,12 @@ class FixedSwipeRefreshLayout @JvmOverloads constructor(context: Context, attrs:
 
         if(child is RecyclerView) {
             val layoutManager = child.layoutManager
-            return layoutManager.childCount > 0 &&
+            return layoutManager?.childCount!! > 0 &&
                     (layoutManager != null &&
                             layoutManager is LinearLayoutManager &&
                             layoutManager.findFirstVisibleItemPosition() > 0) ||
                     (layoutManager.getChildAt(0) != null &&
-                            layoutManager.getChildAt(0).top < layoutManager.paddingTop)
+                            layoutManager.getChildAt(0)!!.top < layoutManager.paddingTop)
         }
         return child.canScrollVertically(-1) || child.scrollY > 0
     }
