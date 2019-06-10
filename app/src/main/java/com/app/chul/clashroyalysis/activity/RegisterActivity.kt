@@ -3,7 +3,6 @@ package com.app.chul.clashroyalysis.activity
 import android.app.Fragment
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
-import android.widget.LinearLayout
 import com.app.chul.clashroyalysis.R
 import com.app.chul.clashroyalysis.`interface`.BaseFragmentInterface
 import com.app.chul.clashroyalysis.`interface`.BaseInterface
@@ -25,13 +24,12 @@ import com.facebook.ads.*
 import kotlinx.android.synthetic.main.activity_register.*
 import java.util.*
 
-class RegisterActivity: BaseActivity(), BaseInterface, NativeAdsManager.Listener{
+class RegisterActivity: BaseActivity(), BaseInterface {
 
     private lateinit var nativeAd: NativeAd
 
-    private lateinit var nativeAdLayout: NativeAdLayout
-    private lateinit var adView: LinearLayout
-    private var nativeAdsManager: NativeAdsManager? = null
+    private var registerNativeAdsManager: NativeAdsManager? = null
+    private var popularDeckNativeAdsManager: NativeAdsManager? = null
 
     private val fragmentMap = HashMap<String, Fragment>()
     private var selectedTab = FragmentTabView.TabType.Home.name
@@ -50,6 +48,7 @@ class RegisterActivity: BaseActivity(), BaseInterface, NativeAdsManager.Listener
         initFragmentData()
         initSwipeRefresh()
         initNativeAdsManager()
+        initPopularDeckAdsManager()
     }
 
     private fun initFragment() {
@@ -219,84 +218,36 @@ class RegisterActivity: BaseActivity(), BaseInterface, NativeAdsManager.Listener
     }
 
     private fun initNativeAdsManager() {
-        var placementId = getString(R.string.ad_register_placement_id)
-        nativeAdsManager = NativeAdsManager(this, placementId, 5)
-        nativeAdsManager!!.loadAds()
-        nativeAdsManager!!.setListener(this)
-    }
-
-    override fun onAdsLoaded() {
-        if(fragmentMap[selectedTab] is RegisterFragment) {
-            (fragmentMap[selectedTab] as RegisterFragment).setNativeAdsManager(nativeAdsManager)
-        }
-    }
-
-    override fun onAdError(p0: AdError?) {
-
-    }
-
-    private fun loadNativeAd() {
-        nativeAd = NativeAd(this, "257266801836381_257268315169563")
-        nativeAd.setAdListener(object : NativeAdListener{
-            override fun onMediaDownloaded(ad: Ad?) {
+        val placementId = getString(R.string.ad_register_placement_id)
+        registerNativeAdsManager = NativeAdsManager(this, placementId, 5)
+        registerNativeAdsManager!!.loadAds()
+        registerNativeAdsManager!!.setListener(object : NativeAdsManager.Listener{
+            override fun onAdError(p0: AdError?) {
 
             }
 
-            override fun onError(ad: Ad?, error: AdError?) {
-
-            }
-
-            override fun onAdLoaded(ad: Ad?) {
-                if(nativeAd == null || nativeAd != ad) {
-                    return
-                }
-
-                inflateAd(nativeAd)
-            }
-
-            override fun onAdClicked(ad: Ad?) {
-
-            }
-
-            override fun onLoggingImpression(ad: Ad?) {
-
+            override fun onAdsLoaded() {
+                (fragmentMap[FragmentTabView.TabType.Home.name] as BaseFragmentInterface).setNativeAdsManager(registerNativeAdsManager)
+                /*if(fragmentMap[selectedTab] is RegisterFragment) {
+                    (fragmentMap[selectedTab] as RegisterFragment).setNativeAdsManager(registerNativeAdsManager)
+                }*/
             }
         })
-        nativeAd.loadAd()
     }
 
-    private fun inflateAd(nativeAd: NativeAd) {
-        /*nativeAd.unregisterView()
+    private fun initPopularDeckAdsManager() {
+        val placementId = getString(R.string.ad_popular_deck_placement_id)
+        popularDeckNativeAdsManager = NativeAdsManager(this, placementId, 5)
+        popularDeckNativeAdsManager!!.loadAds()
+        popularDeckNativeAdsManager!!.setListener(object : NativeAdsManager.Listener{
+            override fun onAdError(p0: AdError?) {
 
-        nativeAdLayout = findViewById(R.id.register_native_ad_container)
-        adView = LayoutInflater.from(this).inflate(R.layout.view_native_ad, nativeAdLayout, false) as LinearLayout
-        nativeAdLayout.addView(adView)
+            }
 
-        val adChoicesContainer = findViewById<LinearLayout>(R.id.ad_choices_container)
-        val adOptionsView = AdOptionsView(this, nativeAd, nativeAdLayout)
-        adChoicesContainer.removeAllViews()
-        adChoicesContainer.addView(adOptionsView, 0)
-
-        val nativeAdIcon = adView.findViewById<AdIconView>(R.id.native_ad_icon)
-        val nativeAdTitle = adView.findViewById<TextView>(R.id.native_ad_title)
-        val nativeAdMedia = adView.findViewById<MediaView>(R.id.native_ad_media)
-        val nativeAdSocialContext = adView.findViewById<TextView>(R.id.native_ad_social_context)
-        val nativeAdBody = adView.findViewById<TextView>(R.id.native_ad_body)
-        val sponsoredLabel = adView.findViewById<TextView>(R.id.native_ad_sponsored_label)
-        val nativeAdCallToAction = adView.findViewById<Button>(R.id.native_ad_call_to_action)
-
-        nativeAdTitle.text = nativeAd.advertiserName
-        nativeAdBody.text = nativeAd.adBodyText
-        nativeAdSocialContext.text = nativeAd.adSocialContext
-        nativeAdCallToAction.text = nativeAd.adCallToAction
-        nativeAdCallToAction.visibility = if(nativeAd.hasCallToAction()) View.VISIBLE else View.INVISIBLE
-        sponsoredLabel.text = nativeAd.sponsoredTranslation
-
-        val clickableViews = ArrayList<View>()
-        clickableViews.add(nativeAdTitle)
-        clickableViews.add(nativeAdCallToAction)
-
-        nativeAd.registerViewForInteraction(adView, nativeAdMedia, nativeAdIcon, clickableViews)*/
+            override fun onAdsLoaded() {
+                (fragmentMap[FragmentTabView.TabType.Deck.name] as BaseFragmentInterface).setNativeAdsManager(registerNativeAdsManager)
+            }
+        })
     }
 
     override fun addUser(tag: String) {

@@ -12,6 +12,7 @@ import com.app.chul.clashroyalysis.adapter.DeckListAdapter
 import com.app.chul.clashroyalysis.jsonobject.PopularDeckList
 import com.app.chul.clashroyalysis.listener.FragmentStateListener
 import com.app.chul.clashroyalysis.view.FragmentTabView
+import com.facebook.ads.NativeAdsManager
 import kotlinx.android.synthetic.main.fragment_popular_deck.*
 
 class PopularDeckFragment: Fragment(), BaseFragmentInterface {
@@ -28,6 +29,8 @@ class PopularDeckFragment: Fragment(), BaseFragmentInterface {
         deckList = data
         adapter?.setData(deckList)
     }
+
+    private var nativeAdsManager: NativeAdsManager? = null
 
     private var page = 0
     private var deckList = PopularDeckList()
@@ -52,9 +55,14 @@ class PopularDeckFragment: Fragment(), BaseFragmentInterface {
     }
 
     private fun initAdapter() {
-        adapter = DeckListAdapter(activity)
+        adapter = DeckListAdapter(activity, nativeAdsManager)
         adapter?.setData(deckList)
         popular_deck_recycler_view.adapter = adapter
+    }
+
+    override fun setNativeAdsManager(nativeAdsManager: NativeAdsManager?) {
+        this.nativeAdsManager = nativeAdsManager
+        adapter?.setNativeAdsManager(nativeAdsManager)
     }
 
     fun setFragmentListener(listener: FragmentStateListener?) {

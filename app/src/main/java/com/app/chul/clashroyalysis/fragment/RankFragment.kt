@@ -12,6 +12,8 @@ import com.app.chul.clashroyalysis.adapter.TopPlayerAdapter
 import com.app.chul.clashroyalysis.jsonobject.TopPlayerList
 import com.app.chul.clashroyalysis.listener.FragmentStateListener
 import com.app.chul.clashroyalysis.view.FragmentTabView
+import com.facebook.ads.NativeAdsManager
+import com.facebook.ads.NativeBannerAd
 import kotlinx.android.synthetic.main.fragment_rank.*
 
 class RankFragment: Fragment(), BaseFragmentInterface {
@@ -19,6 +21,8 @@ class RankFragment: Fragment(), BaseFragmentInterface {
     private var location = "KR"
     private var page = 1
     private val max = 50
+
+    private var nativeAdsManager: NativeAdsManager? = null
 
     private var rankList = TopPlayerList()
     private var adapter: TopPlayerAdapter ?= null
@@ -55,9 +59,14 @@ class RankFragment: Fragment(), BaseFragmentInterface {
     }
 
     private fun initAdapter() {
-        adapter = TopPlayerAdapter(activity)
+        adapter = TopPlayerAdapter(activity, nativeAdsManager)
         adapter?.setData(rankList)
         rank_recycler_view.adapter = adapter
+    }
+
+    override fun setNativeAdsManager(nativeAdsManager: NativeAdsManager?) {
+        this.nativeAdsManager = nativeAdsManager
+        adapter?.setNativeAdsManager(nativeAdsManager)
     }
 
     fun setFragmentListener(listener: FragmentStateListener?) {

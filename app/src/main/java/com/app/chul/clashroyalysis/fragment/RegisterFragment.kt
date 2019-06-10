@@ -22,7 +22,7 @@ import com.facebook.ads.AdError
 import com.facebook.ads.NativeAdsManager
 import kotlinx.android.synthetic.main.fragment_register.*
 
-class RegisterFragment: Fragment(), BaseFragmentInterface, NativeAdsManager.Listener {
+class RegisterFragment: Fragment(), BaseFragmentInterface {
 
     override fun scrollTop() {
         register_recycler_view?.scrollToPosition(0)
@@ -87,19 +87,8 @@ class RegisterFragment: Fragment(), BaseFragmentInterface, NativeAdsManager.List
         register_recycler_view.adapter = mAdapter
     }
 
-    fun setNativeAdsManager(nativeAdsManager: NativeAdsManager?) {
+    override fun setNativeAdsManager(nativeAdsManager: NativeAdsManager?) {
         this.nativeAdsManager = nativeAdsManager
-        mAdapter?.setNativeAdsManager(nativeAdsManager)
-    }
-
-    override fun onAdError(p0: AdError?) {
-
-    }
-
-    override fun onAdsLoaded() {
-        if(activity == null) {
-            return
-        }
         mAdapter?.setNativeAdsManager(nativeAdsManager)
     }
 

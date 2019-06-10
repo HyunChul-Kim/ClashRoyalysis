@@ -4,6 +4,7 @@
     <string name="ad_top_banner_id">ca-app-pub-7690257336944861/8437698340</string>
     <string name="ad_top_banner_test_id">ca-app-pub-3940256099942544/6300978111</string>
     <string name="ad_register_placement_id">257266801836381_257268315169563</string>
+    <string name="ad_popular_deck_placement_id">257266801836381_332043187692075</string>
 
     <string name="app_name">ClashRoyalysis</string>
     <string name="register_text">Add Player</string>
@@ -29,4 +30,5 @@
     <string name="upcoming_chests">Upcoming Chests</string>
     <string name="next">next</string>
     <string name="sponsored">Sponsored</string>
+    <string name="refresh_now">Refresh Now</string>
 </resources>
