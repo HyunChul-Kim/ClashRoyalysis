@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import com.app.chul.clashroyalysis.R
 import com.app.chul.clashroyalysis.jsonobject.TopPlayerList
 import com.app.chul.clashroyalysis.viewholder.adUnits.NativeAdViewHolder
+import com.app.chul.clashroyalysis.viewholder.adUnits.NativeBannerAdViewHolder
 import com.app.chul.clashroyalysis.viewholder.rank.TopPlayerViewHolder
 import com.facebook.ads.NativeAd
 import com.facebook.ads.NativeAdLayout
@@ -32,8 +33,8 @@ class TopPlayerAdapter(private val activity: Activity, private var nativeAdsMana
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when(viewType) {
             AD_VIEW_TYPE -> {
-                val view = LayoutInflater.from(parent.context).inflate(R.layout.viewholder_native_ad_unit, parent, false) as NativeAdLayout
-                NativeAdViewHolder(view)
+                val view = LayoutInflater.from(parent.context).inflate(R.layout.viewholder_native_banner_ad, parent, false) as NativeAdLayout
+                NativeBannerAdViewHolder(view)
             }
             else -> {
                 val view = LayoutInflater.from(parent.context).inflate(R.layout.viewholder_top_player, parent, false)
@@ -58,10 +59,10 @@ class TopPlayerAdapter(private val activity: Activity, private var nativeAdsMana
                     if(ad != null && !ad.isAdInvalidated) {
                         mAdItems.add(ad)
                     } else {
-                        Log.w(RegisterAdapter::class.java.simpleName, "Ad is invalidated!")
+                        Log.w(TopPlayerAdapter::class.java.simpleName, "Ad is invalidated!")
                     }
                 }
-                (holder as NativeAdViewHolder).bind(ad, activity)
+                (holder as NativeBannerAdViewHolder).bind(ad, activity)
             }
             PLAYER_VIEW_TYPE -> {
                 val viewHolder = holder as TopPlayerViewHolder

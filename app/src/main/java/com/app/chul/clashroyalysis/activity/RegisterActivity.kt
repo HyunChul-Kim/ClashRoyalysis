@@ -30,6 +30,7 @@ class RegisterActivity: BaseActivity(), BaseInterface {
 
     private var registerNativeAdsManager: NativeAdsManager? = null
     private var popularDeckNativeAdsManager: NativeAdsManager? = null
+    private var rankNativeAdsManager: NativeAdsManager? = null
 
     private val fragmentMap = HashMap<String, Fragment>()
     private var selectedTab = FragmentTabView.TabType.Home.name
@@ -49,6 +50,7 @@ class RegisterActivity: BaseActivity(), BaseInterface {
         initSwipeRefresh()
         initNativeAdsManager()
         initPopularDeckAdsManager()
+        initRankAdsManager()
     }
 
     private fun initFragment() {
@@ -246,6 +248,21 @@ class RegisterActivity: BaseActivity(), BaseInterface {
 
             override fun onAdsLoaded() {
                 (fragmentMap[FragmentTabView.TabType.Deck.name] as BaseFragmentInterface).setNativeAdsManager(registerNativeAdsManager)
+            }
+        })
+    }
+
+    private fun initRankAdsManager() {
+        val placementId = getString(R.string.ad_rank_placement_id)
+        rankNativeAdsManager = NativeAdsManager(this, placementId, 5)
+        rankNativeAdsManager!!.loadAds()
+        rankNativeAdsManager!!.setListener(object : NativeAdsManager.Listener{
+            override fun onAdError(p0: AdError?) {
+
+            }
+
+            override fun onAdsLoaded() {
+                (fragmentMap[FragmentTabView.TabType.Rank.name] as BaseFragmentInterface).setNativeAdsManager(rankNativeAdsManager)
             }
         })
     }

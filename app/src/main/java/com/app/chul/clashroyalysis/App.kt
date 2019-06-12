@@ -24,7 +24,7 @@ class App: Application() {
             return
         }
         AudienceNetworkInitializeHelper.initialize(this)
-        AdSettings.addTestDevice("8450cc6f-f28f-4756-83b2-baec77bece9a")
+        AdSettings.addTestDevice(getString(R.string.test_device_nexus))
         RoyalysisPreferenceManager.init(this)
         UserDataHelper.getInstance(this)
     }

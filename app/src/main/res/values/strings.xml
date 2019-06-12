@@ -5,6 +5,9 @@
     <string name="ad_top_banner_test_id">ca-app-pub-3940256099942544/6300978111</string>
     <string name="ad_register_placement_id">257266801836381_257268315169563</string>
     <string name="ad_popular_deck_placement_id">257266801836381_332043187692075</string>
+    <string name="ad_rank_placement_id">257266801836381_335890397307354</string>
+    <string name="test_device_home_emulator">8450cc6f-f28f-4756-83b2-baec77bece9a</string>
+    <string name="test_device_nexus">f1493ebd-c2bf-4cd7-b8d1-d981fb33da1c</string>
 
     <string name="app_name">ClashRoyalysis</string>
     <string name="register_text">Add Player</string>
