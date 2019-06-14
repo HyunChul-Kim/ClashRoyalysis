@@ -61,7 +61,7 @@ abstract class RegisterAdapter(private val activity: Activity, private var nativ
     }
 
     override fun getItemCount(): Int {
-        return mUserList.size + mAdItems.size + 1
+        return mUserList.size + ((mUserList.size / AD_DISPLAY_FREQUENCY) + 1) + 1
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -89,9 +89,9 @@ abstract class RegisterAdapter(private val activity: Activity, private var nativ
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if(position % AD_DISPLAY_FREQUENCY == 0) AD_VIEW_TYPE else {
-            if (position == itemCount - 1) {
-                ADD_VIEW_TYPE
+        return if(position == itemCount - 1) ADD_VIEW_TYPE else {
+            if (position % AD_DISPLAY_FREQUENCY == 0) {
+                AD_VIEW_TYPE
             } else {
                 USER_VIEW_TYPE
             }
@@ -99,8 +99,10 @@ abstract class RegisterAdapter(private val activity: Activity, private var nativ
     }
 
     override fun itemMoved(position: Int, targetPosition: Int): Boolean {
-        if(position >= 0 && targetPosition >= 0 && position < mUserList.size && targetPosition < mUserList.size) {
-            val item = mUserList[position]
+        if(position >= 0 && targetPosition >= 0
+                && getItemViewType(position) == USER_VIEW_TYPE
+                && getItemViewType(position) == USER_VIEW_TYPE) {
+            val item = mUserList[position - ((position / AD_DISPLAY_FREQUENCY) + 1)]
             mUserList.remove(item)
             mUserList.add(targetPosition, item)
             notifyItemMoved(position, targetPosition)
@@ -112,8 +114,8 @@ abstract class RegisterAdapter(private val activity: Activity, private var nativ
     }
 
     override fun itemSwiped(position: Int) {
-        if(position >= 0 && position < mUserList.size) {
-            mDeletedItem = mUserList[position]
+        if(position >= 0 && getItemViewType(position) == USER_VIEW_TYPE) {
+            mDeletedItem = mUserList[position - ((position / AD_DISPLAY_FREQUENCY) + 1)]
             deleteItem(position)
             showDeleteDialog(position)
         }
@@ -134,8 +136,8 @@ abstract class RegisterAdapter(private val activity: Activity, private var nativ
     }
 
     fun deleteItem(position: Int) {
-        if(position >= 0 && position < mUserList.size) {
-            mUserList.removeAt(position)
+        if(position >= 0 && getItemViewType(position) == USER_VIEW_TYPE) {
+            mUserList.removeAt(position - ((position / AD_DISPLAY_FREQUENCY) + 1))
             notifyItemRemoved(position)
         }
     }
