@@ -21,7 +21,7 @@ class TopPlayerAdapter(private val activity: Activity, private var nativeAdsMana
     private var topPlayerList: TopPlayerList = TopPlayerList()
 
     companion object ViewType {
-        const val AD_DISPLAY_FREQUENCY = 5
+        const val AD_DISPLAY_FREQUENCY = 10
         const val AD_VIEW_TYPE = 0
         const val PLAYER_VIEW_TYPE = 1
     }

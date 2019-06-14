@@ -20,7 +20,7 @@ class DeckListAdapter(private val activity: Activity, private var nativeAdsManag
     private var mDeckList = ArrayList<DeckInfo>()
 
     companion object ViewType {
-        const val AD_DISPLAY_FREQUENCY = 5
+        const val AD_DISPLAY_FREQUENCY = 8
         const val AD_VIEW_TYPE = 0
         const val DECK_VIEW_TYPE = 1
     }
