@@ -17,7 +17,7 @@ class NativeBannerAdViewHolder(private var nativeAdLayout: NativeAdLayout): Recy
     private val nativeAdIcon: MediaView = nativeAdLayout.findViewById(R.id.native_icon_view)
     private val nativeAdTitle: TextView = nativeAdLayout.findViewById(R.id.native_ad_title)
     private val nativeAdSocialContext: TextView = nativeAdLayout.findViewById(R.id.native_ad_social_context)
-    private val sponsoredLabel: TextView = nativeAdLayout.findViewById(R.id.native_ad_sponsored_label)
+//    private val sponsoredLabel: TextView = nativeAdLayout.findViewById(R.id.native_ad_sponsored_label)
     private val adChoicesContainer: LinearLayout = nativeAdLayout.findViewById(R.id.ad_choices_container)
     private val nativeAdCallToAction: Button = nativeAdLayout.findViewById(R.id.native_ad_call_to_action)
 
@@ -27,7 +27,7 @@ class NativeBannerAdViewHolder(private var nativeAdLayout: NativeAdLayout): Recy
         ad?.let {
             nativeAdTitle.text = ad.advertiserName
             nativeAdSocialContext.text = ad.adSocialContext
-            sponsoredLabel.setText(R.string.sponsored)
+//            sponsoredLabel.setText(R.string.sponsored)
             nativeAdCallToAction.text = ad.adCallToAction
             nativeAdCallToAction.visibility = if(ad.hasCallToAction()) View.VISIBLE else View.INVISIBLE
             val adOptionsView = AdOptionsView(activity, ad, nativeAdLayout)
