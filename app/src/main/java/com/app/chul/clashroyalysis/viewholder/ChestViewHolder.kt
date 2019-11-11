@@ -15,10 +15,8 @@ class ChestViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     private val chestLeftCount = itemView.findViewById<TextView>(R.id.chest_viewholder_left_count)
 
     fun bind(chest: Chest) {
-        var image = ChestUtils.getImage(chest.type)
-        if(image > 0) {
-            Glide.with(itemView.context).load(image).into(chestImageView)
-        }
+        val image = "https://royaleapi.com/static/img/chests/chest-${chest.type.toLowerCase()}.png"
+        Glide.with(itemView.context).load(image).into(chestImageView)
         chestLeftCount.text = if(chest.leftCount == 0) itemView.context.getString(R.string.next) else "+${chest.leftCount}"
     }
 
