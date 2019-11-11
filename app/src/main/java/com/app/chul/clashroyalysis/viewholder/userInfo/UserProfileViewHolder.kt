@@ -17,12 +17,9 @@ class UserProfileViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
     fun bind(name: String, arenaData: ArenaData?){
         userName.text = name
-        arenaData?.let { it ->
-            if(!TextUtils.isEmpty(it.arena)) {
-                ArenaInfo.get(it.arena)?.let { info ->
-                    Glide.with(itemView.context).load(info.resourceId).into(userArenaImage)
-                }
-            }
+        arenaData?.let { data ->
+            val param = "arena${data.id}.png"
+            Glide.with(itemView.context).load("https://royaleapi.com/static/img/arenas/${param}").into(userArenaImage)
         }
 
     }

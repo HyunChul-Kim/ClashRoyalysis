@@ -6,7 +6,7 @@ import android.os.Parcelable
 data class ArenaData(
         var name: String,
         var arena: String?,
-        var arenaID: Int,
+        var id: Int,
         var trophyLimit: Int): Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readString(),
@@ -17,7 +17,7 @@ data class ArenaData(
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(name)
         parcel.writeString(arena)
-        parcel.writeInt(arenaID)
+        parcel.writeInt(id)
         parcel.writeInt(trophyLimit)
     }
 

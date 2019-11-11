@@ -36,10 +36,10 @@ class TopPlayerViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
     fun bind(playerData: TopPlayer?) {
         playerData?.let {
-            it.clan?.let {clan ->
+            it.clan?.badge?.let {badge ->
                 Glide.with(itemView.context)
                         .applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.no_clan).error(R.drawable.no_clan))
-                        .load(clan.badge.image)
+                        .load(badge.image)
                         .into(clanImage)
             } ?: Glide.with(itemView.context).load(R.drawable.no_clan).into(clanImage)
 

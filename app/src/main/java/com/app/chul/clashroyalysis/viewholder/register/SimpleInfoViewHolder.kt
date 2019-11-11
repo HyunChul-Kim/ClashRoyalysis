@@ -33,10 +33,10 @@ class SimpleInfoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     private var userTag: String = ""
 
     fun bind(data: PlayerData) {
-        data.clan?.let {clan ->
+        data.clan?.badge?.let {badge ->
             Glide.with(itemView.context)
                     .applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.no_clan).error(R.drawable.no_clan))
-                    .load(clan.badge.image)
+                    .load(badge.image)
                     .into(userClanImg)
         } ?: Glide.with(itemView.context).load(R.drawable.no_clan).into(userClanImg)
         userDeck.bind(data.currentDeck)

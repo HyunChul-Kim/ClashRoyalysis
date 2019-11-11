@@ -112,14 +112,14 @@ class UserInfoAdapter(private val mContext: Context): Adapter<RecyclerView.ViewH
                 }
             }
             WIN_RATE_PROGRESS -> {
-                mPlayerData?.let {
+                mPlayerData?.let {data ->
                     var threeCrownWins = 0
                     var wins = 0
                     var winPercent = 0f
-                    it.stats?.let { threeCrownWins = it.threeCrownWins }
-                    it.games?.let {
+                    data.stats?.let { threeCrownWins = it.threeCrownWins }
+                    data.games?.let {
                         wins = it.wins
-                        winPercent = it.winsPercent
+                        winPercent = wins / it.total.toFloat()
                     }
                     (holder as DoubleRateViewHolder).bind(winPercent, (threeCrownWins / wins.toFloat()))
                 }

@@ -7,7 +7,8 @@ class ChestUtils {
     private val assetUrl = "https://royaleapi.github.io/cr-api-assets/"
 
     companion object {
-        fun getImage(type: String): Int {
+        fun getImage(chest: String): Int {
+            val type = chest.replace("\\s+", "")
             return when {
                 type.equals("wooden", true) -> {
                     R.drawable.chest_wooden
