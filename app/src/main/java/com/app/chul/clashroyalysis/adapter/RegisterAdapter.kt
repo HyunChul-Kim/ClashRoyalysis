@@ -17,6 +17,8 @@ import com.app.chul.clashroyalysis.viewholder.register.SimpleInfoViewHolder
 import com.facebook.ads.NativeAd
 import com.facebook.ads.NativeAdLayout
 import com.facebook.ads.NativeAdsManager
+import java.util.*
+import kotlin.collections.ArrayList
 
 abstract class RegisterAdapter(private val activity: Activity, private var nativeAdsManager: NativeAdsManager?): RecyclerView.Adapter<RecyclerView.ViewHolder>(), DragAndDropHelperCallback.DragAndDropListener {
 
@@ -104,8 +106,7 @@ abstract class RegisterAdapter(private val activity: Activity, private var nativ
                 && getItemViewType(position) == USER_VIEW_TYPE
                 && getItemViewType(position) == USER_VIEW_TYPE) {
             val item = mUserList[position - ((position / AD_DISPLAY_FREQUENCY) + 1)]
-            mUserList.remove(item)
-            mUserList.add(targetPosition, item)
+            Collections.swap(mUserList, position, targetPosition)
             notifyItemMoved(position, targetPosition)
 
             return true

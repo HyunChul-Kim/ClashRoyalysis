@@ -13,7 +13,7 @@ class DragAndDropHelperCallback(listenerAnd: DragAndDropHelperCallback.DragAndDr
 
     override fun onMove(p0: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
         if(viewHolder != null && target != null) {
-            return mListener.itemMoved(viewHolder.adapterPosition, viewHolder.adapterPosition)
+            return mListener.itemMoved(viewHolder.adapterPosition, target.adapterPosition)
         }
 
         return false
