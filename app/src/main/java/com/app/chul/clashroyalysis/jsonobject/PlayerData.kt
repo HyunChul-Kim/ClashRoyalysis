@@ -76,4 +76,12 @@ data class PlayerData (
         }
         return super.equals(other)
     }
+
+    override fun hashCode(): Int {
+        return tag.hashCode()
+    }
+
+    override fun toString(): String {
+        return tag
+    }
 }

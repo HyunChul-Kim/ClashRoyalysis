@@ -127,7 +127,7 @@ class RegisterActivity: BaseActivity(), BaseInterface {
                 (fragmentMap[FragmentTabView.TabType.Deck.name] as PopularDeckFragment).setData(response)
             }
         })
-        dataPresenter.requestRankList("kr", 50, object : BaseDataPresenter.ResponseListener<TopPlayerList>{
+        dataPresenter.requestRankList(50, object : BaseDataPresenter.ResponseListener<TopPlayerList>{
             override fun onError(message: String) {
 
             }
@@ -152,6 +152,19 @@ class RegisterActivity: BaseActivity(), BaseInterface {
                         register_swipe_refresh.setChildView(recyclerView)
                     }
                 }
+            }
+
+            override fun onRankLocationChanged(location: String) {
+                dataPresenter.setRankLocation(location)
+                dataPresenter.requestRankList(50, object : BaseDataPresenter.ResponseListener<TopPlayerList>{
+                    override fun onError(message: String) {
+
+                    }
+
+                    override fun onResponse(response: TopPlayerList) {
+                        (fragmentMap[FragmentTabView.TabType.Rank.name] as RankFragment).setData(response)
+                    }
+                })
             }
         }
     }
@@ -188,7 +201,7 @@ class RegisterActivity: BaseActivity(), BaseInterface {
                 }
 
                 FragmentTabView.TabType.Rank.name -> {
-                    dataPresenter.requestRankList("kr", 50, object : BaseDataPresenter.ResponseListener<TopPlayerList>{
+                    dataPresenter.requestRankList(50, object : BaseDataPresenter.ResponseListener<TopPlayerList>{
                         override fun onError(message: String) {
                             register_swipe_refresh.isRefreshing = false
                         }

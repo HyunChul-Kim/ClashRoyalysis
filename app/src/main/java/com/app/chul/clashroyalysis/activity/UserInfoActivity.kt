@@ -50,7 +50,7 @@ class UserInfoActivity : BaseActivity() {
             })
         }
 
-        BaseDataPresenter.getInstance(this).reqeustChestsData(data.tag, object : BaseDataPresenter.ResponseListener<UpcomingChestsData>{
+        BaseDataPresenter.getInstance(this).requestChestsData(data.tag, object : BaseDataPresenter.ResponseListener<UpcomingChestsData>{
             override fun onError(message: String) {
 
             }

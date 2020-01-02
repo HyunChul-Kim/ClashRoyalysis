@@ -18,6 +18,8 @@ class BaseDataPresenter private constructor(context: Context) {
     private var mDeckList = PopularDeckList()
     private var mRankList = TopPlayerList()
 
+    private var mRankLocation = "kr"
+
     interface ResponseListener<in T> {
         fun onError(message: String)
         fun onResponse(response: T)
@@ -120,7 +122,29 @@ class BaseDataPresenter private constructor(context: Context) {
         })
     }
 
-    fun reqeustChestsData(tag: String, listener: ResponseListener<UpcomingChestsData>?) {
+    fun requestRankList(max: Int, listener: ResponseListener<TopPlayerList>?) {
+        val topPlayerListCall = ClashRoyaleRetrofit.getService().getTopPlayers(mRankLocation, max)
+        topPlayerListCall.enqueue(object: Callback<TopPlayerList> {
+            override fun onFailure(call: Call<TopPlayerList>?, t: Throwable?) {
+                ChulLog.log("TopPlayer Service Failed ${t.toString()}")
+                listener?.onError(t.toString())
+            }
+
+            override fun onResponse(call: Call<TopPlayerList>?, response: Response<TopPlayerList>?) {
+                ChulLog.log("TopPlayer Service Response Success")
+                response?.let {
+                    if(it.body() != null) {
+                        mRankList = it.body() as TopPlayerList
+                        listener?.onResponse(mRankList)
+                    } else {
+                        it.errorBody()?.let { listener?.onError(it.toString()) }
+                    }
+                }
+            }
+        })
+    }
+
+    fun requestChestsData(tag: String, listener: ResponseListener<UpcomingChestsData>?) {
         val chestsCall = ClashRoyaleRetrofit.getService().getUpcomingChests(tag)
         chestsCall.enqueue(object : Callback<UpcomingChestsData> {
             override fun onFailure(call: Call<UpcomingChestsData>?, t: Throwable?) {
@@ -153,5 +177,9 @@ class BaseDataPresenter private constructor(context: Context) {
         } else {
             0
         }
+    }
+
+    fun setRankLocation(location: String) {
+        mRankLocation = location
     }
 }

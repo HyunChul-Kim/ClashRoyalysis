@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import com.app.chul.clashroyalysis.R
 import com.app.chul.clashroyalysis.jsonobject.PlayerData
 import com.app.chul.clashroyalysis.jsonobject.PlayerDataList
+import com.app.chul.clashroyalysis.utils.ChulLog
 import com.app.chul.clashroyalysis.utils.DragAndDropHelperCallback
 import com.app.chul.clashroyalysis.viewholder.adUnits.NativeAdViewHolder
 import com.app.chul.clashroyalysis.viewholder.register.RegisterViewHolder
@@ -144,8 +145,8 @@ abstract class RegisterAdapter(private val activity: Activity, private var nativ
 
     fun insertItem(position: Int) {
         if(position >= 0) {
-            mDeletedItem?.let {
-                mUserList.add(position, mDeletedItem!!)
+            mDeletedItem?.let { deletedItem ->
+                mUserList.add(position - ((position / AD_DISPLAY_FREQUENCY) + 1), deletedItem)
                 notifyItemInserted(position)
             }
         }
