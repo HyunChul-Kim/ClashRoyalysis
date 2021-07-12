@@ -1,8 +1,8 @@
 package com.app.chul.clashroyalysis.view
 
 import android.content.Context
-import android.support.constraint.ConstraintLayout
-import android.support.design.widget.TabLayout
+import androidx.constraintlayout.widget.ConstraintLayout
+import com.google.android.material.tabs.TabLayout
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import com.app.chul.clashroyalysis.R

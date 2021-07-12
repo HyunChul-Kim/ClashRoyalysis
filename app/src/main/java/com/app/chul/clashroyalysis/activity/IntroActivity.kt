@@ -24,6 +24,6 @@ class IntroActivity : BaseActivity() {
     }
 
     private fun initAds() {
-        MobileAds.initialize(this, getString(R.string.ad_id))
+        MobileAds.initialize(this)
     }
 }

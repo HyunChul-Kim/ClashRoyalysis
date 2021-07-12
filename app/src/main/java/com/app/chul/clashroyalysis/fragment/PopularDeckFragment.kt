@@ -2,7 +2,7 @@ package com.app.chul.clashroyalysis.fragment
 
 import android.app.Fragment
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -50,7 +50,8 @@ class PopularDeckFragment: Fragment(), BaseFragmentInterface {
     }
 
     private fun initRecyclerView() {
-        popular_deck_recycler_view.layoutManager = LinearLayoutManager(activity)
+        popular_deck_recycler_view.layoutManager =
+            LinearLayoutManager(activity)
         popular_deck_recycler_view.setHasFixedSize(true)
     }
 

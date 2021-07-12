@@ -2,7 +2,7 @@ package com.app.chul.clashroyalysis.activity
 
 import android.os.Bundle
 import android.os.PersistableBundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 
 abstract class RxBusActivity: BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {

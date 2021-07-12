@@ -10,11 +10,11 @@ data class AchievementData(
         var target: Int,
         var info: String): Parcelable {
     constructor(parcel: Parcel) : this(
-            parcel.readString(),
+            parcel.readString() ?: "",
             parcel.readInt(),
             parcel.readInt(),
             parcel.readInt(),
-            parcel.readString())
+            parcel.readString() ?: "")
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(name)

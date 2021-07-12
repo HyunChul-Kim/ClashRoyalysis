@@ -2,7 +2,7 @@ package com.app.chul.clashroyalysis.viewholder.register
 
 import android.content.Intent
 import android.graphics.Typeface
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.TextUtils
@@ -36,7 +36,7 @@ class SimpleInfoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         data.clan?.let {clan ->
             Glide.with(itemView.context)
                     .applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.no_clan).error(R.drawable.no_clan))
-                    .load(clan.badge.image)
+                    .load(clan.badge?.image)
                     .into(userClanImg)
         } ?: Glide.with(itemView.context).load(R.drawable.no_clan).into(userClanImg)
         userDeck.bind(data.currentDeck)

@@ -3,9 +3,9 @@ package com.app.chul.clashroyalysis.viewholder.register
 import android.content.ClipDescription.MIMETYPE_TEXT_PLAIN
 import android.content.ClipboardManager
 import android.content.Context
-import android.support.constraint.ConstraintLayout
-import android.support.constraint.ConstraintSet
-import android.support.v7.widget.RecyclerView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
+import androidx.recyclerview.widget.RecyclerView
 import android.text.InputFilter
 import android.transition.AutoTransition
 import android.transition.Transition
@@ -23,8 +23,10 @@ import com.app.chul.clashroyalysis.utils.isAvailableTag
 
 class RegisterViewHolder(itemView: View): RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
-    private val defaultSet: ConstraintSet = ConstraintSet()
-    private val addSet: ConstraintSet = ConstraintSet()
+    private val defaultSet: ConstraintSet =
+        ConstraintSet()
+    private val addSet: ConstraintSet =
+        ConstraintSet()
     private val constraintLayout: ConstraintLayout = itemView.findViewById(R.id.default_constraint_layout)
     private val registerTag: EditText = itemView.findViewById(R.id.simple_user_tag)
 
@@ -54,10 +56,11 @@ class RegisterViewHolder(itemView: View): RecyclerView.ViewHolder(itemView), Vie
         } else if(v == registerTag) {
             if(System.currentTimeMillis() < clickTime + 1000) {
                 clickTime = 0
-                var clipboard = itemView.context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                if(clipboard.hasPrimaryClip() && clipboard.primaryClipDescription.hasMimeType(MIMETYPE_TEXT_PLAIN)) {
-                    val item = clipboard.primaryClip.getItemAt(0)
-                    registerTag.text.append(item.text)
+                val clipboard = itemView.context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                val hasMimeType = clipboard.primaryClipDescription?.hasMimeType(MIMETYPE_TEXT_PLAIN) ?: false
+                if(clipboard.hasPrimaryClip() && hasMimeType) {
+                    val item = clipboard.primaryClip?.getItemAt(0)
+                    registerTag.text.append(item?.text)
                 }
             }else {
                 clickTime = System.currentTimeMillis()

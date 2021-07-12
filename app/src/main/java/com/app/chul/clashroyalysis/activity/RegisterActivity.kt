@@ -2,7 +2,7 @@ package com.app.chul.clashroyalysis.activity
 
 import android.app.Fragment
 import android.os.Bundle
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import com.app.chul.clashroyalysis.R
 import com.app.chul.clashroyalysis.`interface`.BaseFragmentInterface
 import com.app.chul.clashroyalysis.`interface`.BaseInterface

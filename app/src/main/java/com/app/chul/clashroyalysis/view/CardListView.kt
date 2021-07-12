@@ -1,9 +1,9 @@
 package com.app.chul.clashroyalysis.view
 
 import android.content.Context
-import android.support.constraint.ConstraintLayout
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.ImageView
@@ -23,7 +23,13 @@ class CardListView @JvmOverloads constructor(
         LayoutInflater.from(context).inflate(R.layout.view_card_list, this, true)
         mRecyclerView = findViewById(R.id.card_list_recycler_view)
         mRecyclerView.setHasFixedSize(true)
-        mRecyclerView.layoutManager = GridLayoutManager(context, 4, GridLayoutManager.VERTICAL, false)
+        mRecyclerView.layoutManager =
+            GridLayoutManager(
+                context,
+                4,
+                GridLayoutManager.VERTICAL,
+                false
+            )
         mRecyclerView.adapter = mAdapter
     }
 

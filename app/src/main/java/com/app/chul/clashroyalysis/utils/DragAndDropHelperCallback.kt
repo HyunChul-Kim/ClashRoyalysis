@@ -1,7 +1,7 @@
 package com.app.chul.clashroyalysis.utils
 
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.helper.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.ItemTouchHelper
 
 class DragAndDropHelperCallback(listenerAnd: DragAndDropHelperCallback.DragAndDropListener): ItemTouchHelper.Callback() {
     override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {

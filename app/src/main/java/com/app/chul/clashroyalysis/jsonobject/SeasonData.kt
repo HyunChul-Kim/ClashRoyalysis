@@ -9,7 +9,7 @@ data class SeasonData(
         var trophies: Int = 0,
         var bestTrophies: Int = 0): Parcelable {
     constructor(parcel: Parcel) : this(
-            parcel.readString(),
+            parcel.readString() ?: "",
             parcel.readInt(),
             parcel.readInt(),
             parcel.readInt())

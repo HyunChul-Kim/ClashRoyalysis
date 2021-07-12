@@ -2,7 +2,7 @@ package com.app.chul.clashroyalysis.viewholder
 
 import android.content.Intent
 import android.net.Uri
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView

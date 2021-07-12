@@ -9,7 +9,7 @@ data class ArenaData(
         var arenaID: Int,
         var trophyLimit: Int): Parcelable {
     constructor(parcel: Parcel) : this(
-            parcel.readString(),
+            parcel.readString() ?: "",
             parcel.readString(),
             parcel.readInt(),
             parcel.readInt())

@@ -1,6 +1,6 @@
 package com.app.chul.clashroyalysis.viewholder.rank
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -39,7 +39,7 @@ class TopPlayerViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
             it.clan?.let {clan ->
                 Glide.with(itemView.context)
                         .applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.no_clan).error(R.drawable.no_clan))
-                        .load(clan.badge.image)
+                        .load(clan.badge?.image)
                         .into(clanImage)
             } ?: Glide.with(itemView.context).load(R.drawable.no_clan).into(clanImage)
 

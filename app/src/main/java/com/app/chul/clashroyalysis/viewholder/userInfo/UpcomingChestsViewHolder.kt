@@ -1,7 +1,7 @@
 package com.app.chul.clashroyalysis.viewholder.userInfo
 
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.widget.TextView
 import com.app.chul.clashroyalysis.R
@@ -15,7 +15,8 @@ class UpcomingChestsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView
     private val adapter by lazy { UpcomingChestsAdapter(itemView.context) }
 
     init {
-        recyclerView.layoutManager = GridLayoutManager(itemView.context, 4)
+        recyclerView.layoutManager =
+            GridLayoutManager(itemView.context, 4)
         recyclerView.adapter = adapter
     }
 

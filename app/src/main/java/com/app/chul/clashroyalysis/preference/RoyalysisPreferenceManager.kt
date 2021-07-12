@@ -21,7 +21,7 @@ object RoyalysisPreferenceManager{
     }
 
     fun getUsers(): String {
-        return mPref.getString(USER_TAG_PREF, "")
+        return mPref.getString(USER_TAG_PREF, "") ?: ""
     }
 
     fun addUser(tag: String): Boolean {
@@ -66,7 +66,7 @@ object RoyalysisPreferenceManager{
         synchronized(this@RoyalysisPreferenceManager) {
             val list: ArrayList<String> = ArrayList()
             val emptyJson: String = Gson().toJson(list)
-            return mPref.getString(USER_TAG_PREF, emptyJson)
+            return mPref.getString(USER_TAG_PREF, emptyJson) ?: ""
         }
     }
 }

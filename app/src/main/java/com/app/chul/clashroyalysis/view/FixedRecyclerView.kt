@@ -1,11 +1,11 @@
 package com.app.chul.clashroyalysis.view
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.util.AttributeSet
 
 class FixedRecyclerView @JvmOverloads constructor(context: Context, attrs: AttributeSet ?= null, defStyleAttrs: Int = 0)
-    :RecyclerView(context, attrs, defStyleAttrs) {
+    : RecyclerView(context, attrs, defStyleAttrs) {
 
     override fun canScrollVertically(direction: Int): Boolean {
         if(direction < 1) {

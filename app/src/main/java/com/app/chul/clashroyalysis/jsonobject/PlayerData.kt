@@ -18,8 +18,8 @@ data class PlayerData (
         var cards: List<CardData>,
         var achievements: List<AchievementData>): Parcelable {
     constructor(parcel: Parcel) : this(
-            parcel.readString(),
-            parcel.readString(),
+            parcel.readString() ?: "",
+            parcel.readString() ?: "",
             parcel.readInt(),
             parcel.readInt(),
             parcel.readParcelable(ArenaData::class.java.classLoader),
@@ -27,10 +27,10 @@ data class PlayerData (
             parcel.readParcelable(PlayerStatsData::class.java.classLoader),
             parcel.readParcelable(PlayerGameData::class.java.classLoader),
             parcel.readParcelable(PlayerLeagueData::class.java.classLoader),
-            parcel.readString(),
-            parcel.createTypedArrayList(CardData),
-            parcel.createTypedArrayList(CardData),
-            parcel.createTypedArrayList(AchievementData))
+            parcel.readString() ?: "",
+            parcel.createTypedArrayList(CardData) ?: ArrayList<CardData>(),
+            parcel.createTypedArrayList(CardData) ?: ArrayList<CardData>(),
+            parcel.createTypedArrayList(AchievementData) ?: ArrayList<AchievementData>())
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(tag)

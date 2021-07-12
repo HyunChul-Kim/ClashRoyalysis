@@ -2,9 +2,9 @@ package com.app.chul.clashroyalysis.fragment
 
 import android.app.Fragment
 import android.os.Bundle
-import android.support.v7.app.AlertDialog
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.helper.ItemTouchHelper
+import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.ItemTouchHelper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -55,7 +55,8 @@ class RegisterFragment: Fragment(), BaseFragmentInterface {
     }
 
     private fun initRecyclerView() {
-        register_recycler_view.layoutManager = LinearLayoutManager(activity)
+        register_recycler_view.layoutManager =
+            LinearLayoutManager(activity)
         register_recycler_view.setHasFixedSize(true)
     }
 
